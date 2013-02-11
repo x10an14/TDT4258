@@ -86,7 +86,7 @@ handle_interrupt:
 debounce_more:
         sub     r12,    1 /* Substract the value 1 from the value in R12 */
         cp.w    r12,    0 /* Compare word value R12 with the value 0 */
-        brne    debounce_more /*If not zero, jump back to sleep_more and substract again */
+        brne    debounce_more /*If not zero, jump back to debounce_more and substract again */
         /* Re-read and do an AND comparison with previous read */
         ld.w    r9,     r1[AVR32_PIO_PDSR] /* Load switch Pin-Data Status Register value into R9 */
         com     r9	/* Invert the binary value in R9 */
@@ -98,37 +98,43 @@ debounce_more:
         ld.w    r6,  r7  /* Load value R7 points to into R6 */
  
 act_switch_left:
-        /* If paddle is not at leftmost max... */
-        cp.w     r6,      (1<<7)	/* Compare value of R6 with the binary value of 2⁷ */
-        breq     act_switch_right	/* If equal, the light is at the leftmost position
-	and we don't want to move it further left. Then jump to act_switch_right: */
+        /* If SW7 is down... */
+        mov      r12,     (1<<7) /* Move the binary value 2⁸ into R12 */
+        and      r12,     r8	/* Compare R12 and R8. If equal, SW7 is still pressed after debouncing. */
+        breq     act_switch_right  /* Then jump to act_switch_right if previous comment is untrue. */
 
-        /* ...and SW7 is down... */
-        mov      r12,     (1<<7) /* Compare value of R12 with the binary value of 2⁸ */
-        and      r12,     r8	/* If equal, the program is trying to move the light
-	further left when it is already at the leftmost position. */
-        breq     act_switch_right /* The jump to switch_right if previous comment is true. */
+        /* ... and paddle is not at leftmost max... */
+        cp.w     r6,      (1<<7)	/* Compare value of R6 with the binary value of 2⁷ */
+        breq     flip_from_left		/* If equal, the light is at the leftmost position
+	and we want to "flip it" all the way to the right. So jump to flip_from_left */
 
         /* ...move paddle pos left. */
         lsl      r6,      1	/* Else shift bit in R6 one place to the left. */
         rjmp     update_leds 	/* When done with act_switch_left, jump to update_leds */
  
 act_switch_right:
-        /* If paddle is not at rightmost max... */
-        cp.w     r6,     (1<<0)	/* Compare value in R6 withe the binary value of 2⁰ */
-        breq     update_leds	/* If equal, the light is at the rightmost position, 
-	and we don't want to move it further right, so jump to update_leds */
+        /* If SW6 is down... */
+        mov      r12,     (1<<6)/* Move the binary value 2⁶ into R12 */
+        and      r12,     r8	/* Compare R12 and R8. If equal, SW6 is still pressed after debouncing. */
+        breq     update_leds	/* If the above comment is untrue, jump to update_leds
 
-        /* ...and SW6 is down... */
-        mov      r12,     (1<<6)//Move the binary value 2⁶ into R12
-        and      r12,     r8	/* If equal, the program is trying to move the light
-	further right when it is already at the rightmost place */
-        breq     update_leds	/* If the above comment is true, jump to update_leds
+        /* ... and paddle is not at rightmost max... */
+        cp.w     r6,     (1<<0)	/* Compare value in R6 withe the binary value of 2⁰ */
+        breq     flip_from_right/* If equal, the light is at the rightmost position, 
+	and we want to "flip it" all the way to the right. So jump to flip_from_right */
 
         /* ...move paddle pos right. */
         lsr      r6,      1	/* Otherwise, light up the LED to the right by shifting
 	the binary value in R6 to the right */
  
+flip_from_left:
+	mov 	r6, 	(1<<0)	/* Flip the swith to the opposite end (make it cycle/wrap) */
+	rjmp	update_leds
+
+flip_from_right:
+	mov	r6, 	(1<<7) /*Flip the switch to the opposite end (make it cycle/wrap) */
+	rjmp 	update_leds
+
 update_leds:
         /* Smack up the LEDs. */
         st.w  r0[AVR32_PIO_SODR], r6	/* Store the value of R6 into LED Set Output Data Register */
