@@ -48,10 +48,10 @@ _start  :
  
         /* Initialize paddle pos and LEDs. */
         lddpc   r7,                  paddle_position_ptr /* Load pointer to paddle position variable into R7 relative to Program Counter */
-        mov     r6,                  (1<<3) /* Set bit nr. 3 to 1 and the rest to 0 in R6 */
+        mov     r6,                  (1<<7) /* Set bit nr. 7 to 1 and the rest to 0 in R6 */
         st.w    r7,                  r6 /* Store value of R6 into address pointed to by R7 */
         st.w    r0[AVR32_PIO_SODR],  r6 /* Set LED Output Data Register to the value in R6 */
-        com     r6			/* (One's Compliment)Invert the binary value of R6 */
+        com     r6			/* (One's Compliment) Invert the binary value of R6 */
         st.w    r0[AVR32_PIO_CODR],  r6 /* Set LED Clear Output Data Register to the value in R6 (inverted after SODR, due to same reason as IDR (boolean active values)) */
  
 loop:	/* Enter infinite loop of sleep mode 1 
@@ -81,12 +81,15 @@ handle_interrupt:
         /* Read switches. */
         ld.w    r8,     r1[AVR32_PIO_PDSR] /* Load switch Pin Data Status Register value into R8 */
         com     r8			   /* Invert value of R8, due to AND comparison after debouncing (Because of its 0-active boolean logic) */
+
         /* Spin a bit, for debouncing. */
         mov     r12,    0xffff /* Move value 0xffff (2^16) into R12 */
+
 debounce_more:
         sub     r12,    1 /* Substract the value 1 from the value in R12 */
         cp.w    r12,    0 /* Compare word value R12 with the value 0 */
         brne    debounce_more /*If not zero, jump back to debounce_more and substract again */
+
         /* Re-read and do an AND comparison with previous read */
         ld.w    r9,     r1[AVR32_PIO_PDSR] /* Load switch Pin-Data Status Register value into R9 */
         com     r9	/* Invert the binary value in R9 */
@@ -101,9 +104,9 @@ act_switch_left:
         /* If SW7 is down... */
         mov      r12,     (1<<7) /* Move the binary value 2⁸ into R12 */
         and      r12,     r8	/* Compare R12 and R8. If equal, SW7 is still pressed after debouncing. */
-        breq     act_switch_right  /* Then jump to act_switch_right if previous comment is untrue. */
+        brne     act_switch_right  /* Then jump to act_switch_right if previous comment is untrue. */
 
-        /* ... and paddle is not at leftmost max... */
+        /* ...and paddle is not at leftmost max... */
         cp.w     r6,      (1<<7)	/* Compare value of R6 with the binary value of 2⁷ */
         breq     flip_from_left		/* If equal, the light is at the leftmost position
 	and we want to "flip it" all the way to the right. So jump to flip_from_left */
@@ -116,9 +119,9 @@ act_switch_right:
         /* If SW6 is down... */
         mov      r12,     (1<<6)/* Move the binary value 2⁶ into R12 */
         and      r12,     r8	/* Compare R12 and R8. If equal, SW6 is still pressed after debouncing. */
-        breq     update_leds	/* If the above comment is untrue, jump to update_leds
+        brne     update_leds	/* If the above comment is untrue, jump to update_leds
 
-        /* ... and paddle is not at rightmost max... */
+        /* ...and paddle is not at rightmost max... */
         cp.w     r6,     (1<<0)	/* Compare value in R6 withe the binary value of 2⁰ */
         breq     flip_from_right/* If equal, the light is at the rightmost position, 
 	and we want to "flip it" all the way to the right. So jump to flip_from_right */
@@ -128,11 +131,11 @@ act_switch_right:
 	the binary value in R6 to the right */
  
 flip_from_left:
-	mov 	r6, 	(1<<0)	/* Flip the swith to the opposite end (make it cycle/wrap) */
+	mov 	r6, 	(1<<0)	/* Flip the LED to the opposite end (make it cycle/wrap) */
 	rjmp	update_leds
 
 flip_from_right:
-	mov	r6, 	(1<<7) /*Flip the switch to the opposite end (make it cycle/wrap) */
+	mov	r6, 	(1<<7) /*Flip the LED to the opposite end (make it cycle/wrap) */
 	rjmp 	update_leds
 
 update_leds:
