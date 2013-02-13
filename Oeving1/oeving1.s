@@ -104,7 +104,7 @@ act_switch_left:
         /* If SW7 is down... */
         mov      r12,     (1<<7) /* Move the binary value 2⁸ into R12 */
         and      r12,     r8	/* Compare R12 and R8. If equal, SW7 is still pressed after debouncing. */
-        brne     act_switch_right  /* Then jump to act_switch_right if previous comment is untrue. */
+        breq     act_switch_right  /* Then jump to act_switch_right if previous comment is untrue. */
 
         /* ...and paddle is not at leftmost max... */
         cp.w     r6,      (1<<7)	/* Compare value of R6 with the binary value of 2⁷ */
@@ -119,7 +119,7 @@ act_switch_right:
         /* If SW6 is down... */
         mov      r12,     (1<<6)/* Move the binary value 2⁶ into R12 */
         and      r12,     r8	/* Compare R12 and R8. If equal, SW6 is still pressed after debouncing. */
-        brne     update_leds	/* If the above comment is untrue, jump to update_leds
+        breq     update_leds	/* If the above comment is untrue, jump to update_leds
 
         /* ...and paddle is not at rightmost max... */
         cp.w     r6,     (1<<0)	/* Compare value in R6 withe the binary value of 2⁰ */
@@ -129,6 +129,7 @@ act_switch_right:
         /* ...move paddle pos right. */
         lsr      r6,      1	/* Otherwise, light up the LED to the right by shifting
 	the binary value in R6 to the right */
+	rjmp update_leds
  
 flip_from_left:
 	mov 	r6, 	(1<<0)	/* Flip the LED to the opposite end (make it cycle/wrap) */
