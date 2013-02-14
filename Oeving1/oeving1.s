@@ -24,7 +24,7 @@ _start  :
         /* Enable output on all 8 LEDs. */
         mov      r8,                 0xff /* Move the value 0xff into R8 */
         st.w     r0[AVR32_PIO_PER],  r8 /* Set LED Pin Enable Register to value for all  LEDs (0xff) */
-        st.w     r0[AVR32_PIO_OER],  r8 /* Same as above for LED Output Enable Register *
+        st.w     r0[AVR32_PIO_OER],  r8 /* Same as above for LED Output Enable Register */
  
         /* Enable switches 6 and 7 (including interrupts on them). */
         mov      r8,                 (1<<7)+(1<<6) /* Set bit nr.7 and 6 to value 1, and the rest to 0 in R8 */
@@ -94,7 +94,7 @@ debounce_more:
         ld.w    r9,     r1[AVR32_PIO_PDSR] /* Load switch Pin-Data Status Register value into R9 */
         com     r9	/* Invert the binary value in R9 */
         and     r8,     r9 /* Do an AND comparison of the values 
-	before and after debouncing (R8 & R) to make sure that after the debouncing
+	before and after debouncing (R8 & R9) to make sure that after the debouncing
 	the same paddle (switch) is still being pressed down by a finger */
  
         /* Load paddle position. */
@@ -102,7 +102,7 @@ debounce_more:
  
 act_switch_left:
         /* If SW7 is down... */
-        mov      r12,     (1<<7) /* Move the binary value 2⁸ into R12 */
+        mov      r12,     (1<<7) /* Move the binary value 2^7 into R12 */
         and      r12,     r8	/* Compare R12 and R8. If equal, SW7 is still pressed after debouncing. */
         breq     act_switch_right  /* Then jump to act_switch_right if previous comment is untrue. */
 
