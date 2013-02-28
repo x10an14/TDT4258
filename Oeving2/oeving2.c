@@ -4,7 +4,7 @@
  *
  *****************************************************************************/
 
-#include <stdio.h>
+#include "avr32"
 #include "oeving2.h"
 
 volatile avr32_pio_t *piob = &AVR32_PIOB;
