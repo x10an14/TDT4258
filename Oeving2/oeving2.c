@@ -1,10 +1,9 @@
 /*****************************************************************************
- * 
+ *
  * Øving 2 UCSysDes
  *
  *****************************************************************************/
 
-#include "avr32"
 #include "oeving2.h"
 
 volatile avr32_pio_t *piob = &AVR32_PIOB;
@@ -25,10 +24,11 @@ void initHardware (void) {
   initAudio();
 }
 
+/*//Lagt til i interrupts.c istedenfor.
 void initIntc(void) {
   set_interrupts_base((void *)AVR32_INTC_ADDRESS);
   init_interrupts();
-}
+}*/
 
 void initButtons(void) {
   register_interrupt( button_isr, AVR32_PIOB_IRQ/32, AVR32_PIOB_IRQ % 32, BUTTONS_INT_LEVEL);
@@ -44,6 +44,10 @@ void initAudio(void) {
   /* (...) */
 }
 
-void button_isr(void) {}
+void button_isr(void) {
 
-void abdac_isr(void) {}
+}
+
+void abdac_isr(void) {
+
+}
