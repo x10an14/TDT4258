@@ -33,6 +33,11 @@ void initIntc(void{
   init_interrupts();
 }*/
 
+void initAudio(void){
+  abdac->CR.en = 1;
+  abdac->IER.txready = 1;
+}
+
 void initButtons(void){
   //No clue so far what this line does
   register_interrupt(button_isr, AVR32_PIOB_IRQ/32, AVR32_PIOB_IRQ % 32, BUTTONS_INT_LEVEL);
