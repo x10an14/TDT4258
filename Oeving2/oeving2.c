@@ -5,6 +5,7 @@
  *****************************************************************************/
 
 #include "oeving2.h"
+#include "sys/interrupts.h"
 
 volatile avr32_pio_t *piob = &AVR32_PIOB;
 volatile avr32_pio_t *pioc = &AVR32_PIOC;
@@ -33,11 +34,6 @@ void initIntc(void{
   init_interrupts();
 }*/
 
-void initAudio(void){
-  abdac->CR.en = 1;
-  abdac->IER.txready = 1;
-}
-
 void initButtons(void){
   //No clue so far what this line does
   register_interrupt(button_isr, AVR32_PIOB_IRQ/32, AVR32_PIOB_IRQ % 32, BUTTONS_INT_LEVEL);
@@ -62,6 +58,8 @@ void initAudio(void){
   piob->ASR.p20 = 1;
   piob->ASR.p21 = 1;
   abdac_isr();
+  abdac->CR.en = 1;
+  abdac->IER.tx_ready = 1;
 }
 
 void button_isr(void){
