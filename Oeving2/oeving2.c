@@ -69,7 +69,8 @@ void button_isr(void){
   piob->isr;
   //Implementer debouncing...
   //Sjekk hvilken knapp som er trykket
-  pioc->sodr = 0xff;
+  int temp = piob->pdsr;
+  pioc->sodr = ~temp;
 }
 
 void abdac_isr(void){
