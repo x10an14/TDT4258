@@ -28,11 +28,12 @@ void initHardware (void){
   initAudio();
 }
 
-/* Flytter denne metoden ut i en egen C fil. Legger og til tilhørende metoder der.
-void initIntc(void{
+
+void initIntc(void){
   set_interrupts_base((void *)AVR32_INTC_ADDRESS);
+
   init_interrupts();
-}*/
+}
 
 void initButtons(void){
   //No clue so far what this line does
@@ -49,6 +50,8 @@ void initLeds(void){
   //Enable all LEDs on PIOB
   pioc->per = 0xfF; //0xff == all LEDs
   pioc->oer = 0xff;
+  pioc->sodr = 0x80;
+  pioc->codr = 0x7f;
 }
 
 void initAudio(void){
@@ -63,7 +66,10 @@ void initAudio(void){
 }
 
 void button_isr(void){
-
+  piob->isr;
+  //Implementer debouncing...
+  //Sjekk hvilken knapp som er trykket
+  pioc->sodr = 0xff;
 }
 
 void abdac_isr(void){
