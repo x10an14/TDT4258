@@ -57,10 +57,10 @@ void initLeds(void){
 
 void initAudio(void){
   //Oppsett av PowerManager for klokke og abdac...
-  pm->pm_gcctrl[6].oscsel = 0;
-  pm->pm_gcctrl[6].diven = 0;
-  pm->pm_gcctrl[6].pllsel = 0;
-  pm->pm_gcctrl[6].cen = 1;
+  pm->GCCTRL[6].oscsel = 0;
+  pm->GCCTRL[6].diven = 0;
+  pm->GCCTRL[6].pllsel = 0;
+  pm->GCCTRL[6].cen = 1;
   register_interrupt(abdac_isr, AVR32_ABDAC_IRQ/32, AVR32_ABDAC_IRQ % 32, ABDAC_INT_LEVEL);
   piob->PDR.p20 = 1;
   piob->PDR.p21 = 1;
