@@ -22,6 +22,11 @@ int main (int argc, char *argv[]){
 
 /* funksjon for å initialisere maskinvaren, må utvides */
 void initHardware (void){
+  //Oppsett av PowerManager for klokke og abdac...
+  pm->pm_gcctrl[6].oscsel = 0;
+  pm->pm_gcctrl[6].diven = 0;
+  pm->pm_gcctrl[6].pllsel = 0;
+  pm->pm_gcctrl[6].cen = 1;
   initIntc();
   initLeds();
   initButtons();
