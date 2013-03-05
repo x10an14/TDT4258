@@ -31,21 +31,21 @@ short triangleWave[ARRAYSIZE] = {0, 50, 100, 50, 0, -50, -100, -50, 0};; //Unuse
 //short sinusWave[ARRAYSIZE] = {0, 100, 0, -100, 0};
 
 void playSawTooth(void){
-  for (i = 0; i < ARRAYSIZE; i++){
+  for (int i = 0; i < ARRAYSIZE; i++){
     abdac->SDR.channel0 = (short)sawTooth[i];
     abdac->SDR.channel1 = (short)sawTooth[i];
   }
 }
 
 void playSquareWave(void){
-  for (i = 0; i < SQUARESIZE; i++){
+  for (int i = 0; i < SQUARESIZE; i++){
     abdac->SDR.channel0 = (short)squareWave[i];
     abdac->SDR.channel1 = (short)squareWave[i];
   }
 }
 
 void playTriangleWave(void){
-  for (i = 0; i < ARRAYSIZE; i++){
+  for (int i = 0; i < ARRAYSIZE; i++){
     abdac->SDR.channel0 = triangleWave[i];
     abdac->SDR.channel1 = triangleWave[i];
   }
@@ -128,16 +128,16 @@ void abdac_isr(void){
   if (button_PDSR == 0x0){//No switches
     return;
   } else if(button_PDSR == ~0x80){//Switch07
-    for (i = 0; i < maxSteps; i++){
+    for (int i = 0; i < maxSteps; i++){
 
       // playSawTooth();
     }
   } else if(button_PDSR == ~0x40){//Switch06
-    for (i = 0; i < maxSteps; i++){
+    for (int i = 0; i < maxSteps; i++){
       playTriangleWave();
     }
   } else if(button_PDSR == ~0x20){//Switch05
-    for (i = 0; i < maxSteps; i++){
+    for (int i = 0; i < maxSteps; i++){
       playSquareWave();
     }
   }/* else if(button_PDSR == 0x10){//Switch04
