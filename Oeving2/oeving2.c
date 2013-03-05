@@ -23,8 +23,8 @@ int static maxSteps = 440;
 short waveShapesSize = 9;
 short sawTooth[waveShapesSize] = {-100, -75, -50, -25, 0, 25, 50, 75, 100};
 short squareWave[waveShapesSize] = {-100, -100, -100, -100, 0, 100, 100, 100, 100};
-//short sinusWave[waveShapesSize] = {0, 100, 0, -100,, 0};
 short triangleWave[waveShapesSize] = {0, 50, 100, 50, 0, -50, -100, -50, 0};
+//short sinusWave[waveShapesSize] = {0, 100, 0, -100,, 0};
 
 void playSawTooth(void){
   for (int i = 0; i < count; ++i){
@@ -40,10 +40,10 @@ void playSquareWave(void){
   }
 }
 
-void playSinusWave(void){
+void playTriangleWave(void){
   for (int i = 0; i < count; ++i){
-    abdac->SDR.channel0 = sinusWave[i];
-    abdac->SDR.channel1 = sinusWave[i];
+    abdac->SDR.channel0 = triangleWave[i];
+    abdac->SDR.channel1 = triangleWave[i];
   }
 }
 
@@ -120,7 +120,7 @@ void abdac_isr(void){
   for (int i = 0; i < maxSteps; ++i){
     playSquareWave();
   }
-  // for (int i = 0; i < maxSteps; ++i){
-  //   playSinusWave();
-  // }
+  for (int i = 0; i < maxSteps; ++i){
+    playTriangleWave();
+  }
 }
