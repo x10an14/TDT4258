@@ -113,16 +113,13 @@ void button_isr(void){
 }
 
 void abdac_isr(void){
-  for (int i = 0; i < waveShapesSize; ++i){
-    abdac->SDR.channel0 = (short)(amplitude/divide)*SHRT_MAX;
-    abdac->SDR.channel1 = (short)(amplitude/divide)*SHRT_MAX;
+  for (int i = 0; i < maxSteps; ++i){
+    playSawTooth();
   }
-  while(frequency < maxSteps){
-    abdac->SDR.channel0 = (short)(amplitude/divide)*SHRT_MAX;
-    abdac->SDR.channel1 = (short)(amplitude/divide)*SHRT_MAX;
-    amplitude += 20;
-    frequency++;
+  for (int i = 0; i < maxSteps; ++i){
+    playSquareWave();
   }
-  frequency = 0;
-  amplitude = -500;
+  // for (int i = 0; i < maxSteps; ++i){
+  //   playSinusWave();
+  // }
 }
