@@ -10,6 +10,9 @@
 #include <limits.h>
 #include <math.h>
 
+#define ARRAYSIZE 9
+#define SQUARESIZE 8
+
 volatile avr32_pio_t *piob = &AVR32_PIOB;
 volatile avr32_pio_t *pioc = &AVR32_PIOC;
 volatile avr32_pm_t *pm = &AVR32_PM;
@@ -21,31 +24,28 @@ int static frequency = 0;
 int static maxSteps = 440;
 int static i;
 
-short static waveform_resolution[1024];
+short sawTooth[ARRAYSIZE]; //Unused
+short squareWave[SQUARESIZE];
+short triangleWave[ARRAYSIZE]; //Unused
 
-int static waveShapesSize = 2;
-short sawTooth[waveShapesSize]; //Unused
-short squareWave[waveShapesSize];
-short triangleWave[waveShapesSize]; //Unused
-
-//short sinusWave[waveShapesSize] = {0, 100, 0, -100,, 0};
+//short sinusWave[ARRAYSIZE] = {0, 100, 0, -100, 0};
 
 void playSawTooth(void){
-  for (i = 0; i < waveShapesSize; i++){
+  for (i = 0; i < ARRAYSIZE; i++){
     abdac->SDR.channel0 = sawTooth[i];
     abdac->SDR.channel1 = sawTooth[i];
   }
 }
 
 void playSquareWave(void){
-  for (i = 0; i < waveShapesSize; i++){
+  for (i = 0; i < SQUARESIZE; i++){
     abdac->SDR.channel0 = squareWave[i];
     abdac->SDR.channel1 = squareWave[i];
   }
 }
 
 void playTriangleWave(void){
-  for (i = 0; i < waveShapesSize; i++){
+  for (i = 0; i < ARRAYSIZE; i++){
     abdac->SDR.channel0 = triangleWave[i];
     abdac->SDR.channel1 = triangleWave[i];
   }
