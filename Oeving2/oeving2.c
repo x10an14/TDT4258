@@ -25,6 +25,26 @@ short sawTooth[waveShapesSize] = ;
 short squareWave[waveShapesSize];
 short sinusWave[waveShapesSize];
 
+void playSawTooth(void){
+  for (int i = 0; i < count; ++i){
+    abdac->SDR.channel0 = sawTooth[i];
+    abdac->SDR.channel1 = sawTooth[i];
+  }
+}
+
+void playSquareWave(void){
+  for (int i = 0; i < count; ++i){
+    abdac->SDR.channel0 = squareWave[i];
+    abdac->SDR.channel1 = squareWave[i];
+  }
+}
+
+void playSinusWave(void){
+  for (int i = 0; i < count; ++i){
+    abdac->SDR.channel0 = sinusWave[i];
+    abdac->SDR.channel1 = sinusWave[i];
+  }
+}
 
 int main (int argc, char *argv[]){
   initHardware();
@@ -38,7 +58,7 @@ void initHardware (void){
   initIntc();
   initLeds();
   initButtons();
-  initAudio();
+  initAudio();|
 }
 
 
@@ -93,6 +113,10 @@ void button_isr(void){
 }
 
 void abdac_isr(void){
+  for (int i = 0; i < waveShapesSize; ++i){
+    abdac->SDR.channel0 = (short)(amplitude/divide)*SHRT_MAX;
+    abdac->SDR.channel1 = (short)(amplitude/divide)*SHRT_MAX;
+  }
   while(frequency < maxSteps){
     abdac->SDR.channel0 = (short)(amplitude/divide)*SHRT_MAX;
     abdac->SDR.channel1 = (short)(amplitude/divide)*SHRT_MAX;
