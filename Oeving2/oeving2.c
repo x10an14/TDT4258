@@ -8,6 +8,7 @@
 #include "sys/interrupts.h"
 #include <stdlib.h>
 #include <limits.h>
+#include <math.h>
 
 volatile avr32_pio_t *piob = &AVR32_PIOB;
 volatile avr32_pio_t *pioc = &AVR32_PIOC;
@@ -19,35 +20,48 @@ int static amplitude = -500;
 int static frequency = 0;
 int static maxSteps = 440;
 
+int static i;
 
-short waveShapesSize = 9;
-short sawTooth[waveShapesSize] = {-100, -75, -50, -25, 0, 25, 50, 75, 100};
-short squareWave[waveShapesSize] = {-100, -100, -100, -100, 100, 100, 100, 100};
-short triangleWave[waveShapesSize] = {0, 50, 100, 50, 0, -50, -100, -50, 0};
+//short waveform_resolutin[1024];
+
+
+short static waveShapesSize = 2;
+short static sawTooth[waveShapesSize]; // unused
+short static squareWave[waveShapesSize]; 
+short static triangleWave[waveShapesSize]; //unused
+
 //short sinusWave[waveShapesSize] = {0, 100, 0, -100,, 0};
 
 void playSawTooth(void){
-  for (int i = 0; i < waveShapesSize; ++i){
+  for (i = 0; i < waveShapesSize; ++i){
     abdac->SDR.channel0 = sawTooth[i];
     abdac->SDR.channel1 = sawTooth[i];
   }
 }
 
 void playSquareWave(void){
-  for (int i = 0; i < waveShapesSize-1; ++i){
+  for (i = 0; i < waveShapesSize; ++i){
     abdac->SDR.channel0 = squareWave[i];
     abdac->SDR.channel1 = squareWave[i];
   }
 }
 
 void playTriangleWave(void){
-  for (int i = 0; i < waveShapesSize; ++i){
+  for (i = 0; i < waveShapesSize; ++i){
     abdac->SDR.channel0 = triangleWave[i];
     abdac->SDR.channel1 = triangleWave[i];
   }
 }
 
 int main (int argc, char *argv[]){
+//  sawTooth = {-100, -75, -50, -25, 0, 25, 50, 75, 100};
+//  short templist[9] = {-100, -100, -100, -100, 100, 100, 100, 100, 100};
+//  squareWave = templist;
+//  short templist[9]  = {0, 50, 100, 50, 0, -50, -100, -50, 0};
+//  triangleWave = templist;  
+  squareWave[0]=-1; 
+  squareWave[1]= 1;
+  
   initHardware();
 
   while(1);
@@ -59,9 +73,8 @@ void initHardware (void){
   initIntc();
   initLeds();
   initButtons();
-  initAudio();|
+  initAudio();
 }
-
 
 void initIntc(void){
   set_interrupts_base((void *)AVR32_INTC_ADDRESS);
@@ -114,13 +127,14 @@ void button_isr(void){
 }
 
 void abdac_isr(void){
-  for (int i = 0; i < maxSteps; ++i){
+/*  for (i = 0; i < maxSteps; ++i){
     playSawTooth();
   }
-  for (int i = 0; i < maxSteps; ++i){
-    playSquareWave();
-  }
-  for (int i = 0; i < maxSteps; ++i){
+  for (i = 0; i < maxSteps; ++i){
     playTriangleWave();
+  }
+*/
+  for (i = 0; i < maxSteps; ++i){
+    playSquareWave();
   }
 }
