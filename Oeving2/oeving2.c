@@ -22,7 +22,7 @@ int static maxSteps = 440;
 
 short waveShapesSize = 9;
 short sawTooth[waveShapesSize] = {-100, -75, -50, -25, 0, 25, 50, 75, 100};
-short squareWave[waveShapesSize] = {-100, -100, -100, -100, 0, 100, 100, 100, 100};
+short squareWave[waveShapesSize] = {-100, -100, -100, -100, 100, 100, 100, 100, 100};
 short triangleWave[waveShapesSize] = {0, 50, 100, 50, 0, -50, -100, -50, 0};
 //short sinusWave[waveShapesSize] = {0, 100, 0, -100,, 0};
 
