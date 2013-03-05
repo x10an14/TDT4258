@@ -19,35 +19,33 @@ int static divide = 100;
 int static amplitude = -500;
 int static frequency = 0;
 int static maxSteps = 440;
-
 int static i;
 
-//short waveform_resolutin[1024];
+short static waveform_resolution[1024];
 
-
-short static waveShapesSize = 2;
-short static sawTooth[waveShapesSize]; // unused
-short static squareWave[waveShapesSize]; 
-short static triangleWave[waveShapesSize]; //unused
+int static waveShapesSize = 2;
+short sawTooth[waveShapesSize]; //Unused
+short squareWave[waveShapesSize];
+short triangleWave[waveShapesSize]; //Unused
 
 //short sinusWave[waveShapesSize] = {0, 100, 0, -100,, 0};
 
 void playSawTooth(void){
-  for (i = 0; i < waveShapesSize; ++i){
+  for (i = 0; i < waveShapesSize; i++){
     abdac->SDR.channel0 = sawTooth[i];
     abdac->SDR.channel1 = sawTooth[i];
   }
 }
 
 void playSquareWave(void){
-  for (i = 0; i < waveShapesSize; ++i){
+  for (i = 0; i < waveShapesSize; i++){
     abdac->SDR.channel0 = squareWave[i];
     abdac->SDR.channel1 = squareWave[i];
   }
 }
 
 void playTriangleWave(void){
-  for (i = 0; i < waveShapesSize; ++i){
+  for (i = 0; i < waveShapesSize; i++){
     abdac->SDR.channel0 = triangleWave[i];
     abdac->SDR.channel1 = triangleWave[i];
   }
@@ -58,10 +56,9 @@ int main (int argc, char *argv[]){
 //  short templist[9] = {-100, -100, -100, -100, 100, 100, 100, 100, 100};
 //  squareWave = templist;
 //  short templist[9]  = {0, 50, 100, 50, 0, -50, -100, -50, 0};
-//  triangleWave = templist;  
-  squareWave[0]=-1; 
-  squareWave[1]= 1;
-  
+//  triangleWave = templist;
+  squareWave[0] = -1; squareWave[1] = 1;
+
   initHardware();
 
   while(1);
@@ -127,14 +124,14 @@ void button_isr(void){
 }
 
 void abdac_isr(void){
-/*  for (i = 0; i < maxSteps; ++i){
+/*  for (i = 0; i < maxSteps; i++){
     playSawTooth();
   }
-  for (i = 0; i < maxSteps; ++i){
+  for (i = 0; i < maxSteps; i++){
     playTriangleWave();
   }
 */
-  for (i = 0; i < maxSteps; ++i){
+  for (i = 0; i < maxSteps; i++){
     playSquareWave();
   }
 }
