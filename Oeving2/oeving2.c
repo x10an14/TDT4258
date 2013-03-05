@@ -20,6 +20,12 @@ int static frequency = 0;
 int static maxSteps = 440;
 
 
+short waveShapesSize = 17;
+short sawTooth[waveShapesSize] = ;
+short squareWave[waveShapesSize];
+short sinusWave[waveShapesSize];
+
+
 int main (int argc, char *argv[]){
   initHardware();
 
