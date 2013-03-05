@@ -90,7 +90,7 @@ void abdac_isr(void){
   while(frequency < maxSteps+1){
     abdac->SDR.channel0 = (short)(amplitude/divide)*SHRT_MAX;
     abdac->SDR.channel1 = (short)(amplitude/divide)*SHRT_MAX;
-    frequency++;
     amplitude += 20;
+    frequency++;
   }
 }
