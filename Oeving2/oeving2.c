@@ -88,9 +88,9 @@ void button_isr(void){
 
 void abdac_isr(void){
   while(frequency < maxSteps+1){
-    amplitude += 20;
     abdac->SDR.channel0 = (short)(amplitude/divide)*SHRT_MAX;
     abdac->SDR.channel1 = (short)(amplitude/divide)*SHRT_MAX;
     frequency++;
+    amplitude += 20;
   }
 }
