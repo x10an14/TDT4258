@@ -7,11 +7,17 @@
 #include "oeving2.h"
 #include "sys/interrupts.h"
 #include <stdlib.h>
+#include <limits.h>
 
 volatile avr32_pio_t *piob = &AVR32_PIOB;
 volatile avr32_pio_t *pioc = &AVR32_PIOC;
 volatile avr32_pm_t *pm = &AVR32_PM;
 volatile avr32_abdac_t *abdac = &AVR32_ABDAC;
+
+int static divide = 100;
+int static amplitude = 0;
+int static frequency = 0;
+int static maxSteps = 4;
 
 
 int main (int argc, char *argv[]){
@@ -81,6 +87,10 @@ void button_isr(void){
 }
 
 void abdac_isr(void){
-  abdac->SDR.channel0 = (short)rand();
-  abdac->SDR.channel1 = (short)rand();
+  while(frequency < maxSteps+1){
+    amplitude += 20;
+    abdac->SDR.channel0 = (short)(amplitude/divide)*SHRT_MAX;
+    abdac->SDR.channel1 = (short)(amplitude/divide)*SHRT_MAX;
+    frequency++;
+  }
 }
