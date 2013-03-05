@@ -22,7 +22,7 @@ int static divide = 100;
 int static amplitude = -500;
 int static frequency = 0;
 int static maxSteps = 440;
-int static i;
+int static button_PDSR;
 
 short sawTooth[ARRAYSIZE] = {-100, -75, -50, -25, 0, 25, 50, 75, 100};;//Unused
 short squareWave[SQUARESIZE] = {-100, -100, -100, -100, 100, 100, 100, 100};;
@@ -88,8 +88,6 @@ void initLeds(void){
   //Enable all LEDs on PIOB
   pioc->per = 0xfF; //0xff == all LEDs
   pioc->oer = 0xff;
-  pioc->sodr = 0x80;
-  pioc->codr = 0x7f;
 }
 
 void initAudio(void){
@@ -103,35 +101,53 @@ void initAudio(void){
   piob->PDR.p21 = 1;
   piob->ASR.p20 = 1;
   piob->ASR.p21 = 1;
-  abdac_isr();
   abdac->CR.en = 1;
   abdac->IER.tx_ready = 1;
 }
 
 void button_isr(void){
   piob->isr;
-  int temp = piob->pdsr;
+  button_PDSR = piob->pdsr;
   //Implementer debouncing...
   pioc->codr = 0xff;//Turn off all the lights
-  int debounce = 0xffff;
+  int debounce = 0xfeff;
   do{
     debounce--;
   }while(debounce > -1);
   //Sjekk hvilken knapp som er trykket
-  if(tmp != piob->pdsr){
+  if(button_PDSR != piob->pdsr){
     pioc->sodr = 0x0;//If debounce check didn't work
+    //Then turn on all the lights
+    return;
   }
-  pioc->sodr = ~temp;
+  pioc->sodr = ~button_PDSR;
 }
 
 void abdac_isr(void){
-  for (i = 0; i < maxSteps; i++){
-    playSawTooth();
-  }
-  for (i = 0; i < maxSteps; i++){
-    playTriangleWave();
-  }
-  for (i = 0; i < maxSteps; i++){
-    playSquareWave();
-  }
-}
+  //If-else to check what switch (buttons) are pressed
+  if (button_PDSR == 0x0){//No switches
+    return;
+  } else if(button_PDSR == 0x80){//Switch07
+    for (i = 0; i < maxSteps; i++){
+      playSawTooth();
+    }
+  } else if(button_PDSR == 0x40){//Switch06
+    for (i = 0; i < maxSteps; i++){
+      playTriangleWave();
+    }
+  } else if(button_PDSR == 0x20){//Switch05
+    for (i = 0; i < maxSteps; i++){
+      playSquareWave();
+    }
+  }/* else if(button_PDSR == 0x10){//Switch04
+
+  } else if(button_PDSR == 0x8){//Switch03
+
+  } else if(button_PDSR == 0x4){//Switch02
+
+  } else if(button_PDSR == 0x2){//Switch01
+
+  } else if(button_PDSR == 0x1){//Switch0
+
+  }*/
+
