@@ -24,7 +24,7 @@ int static frequency = 0;
 int static maxSteps = 440;
 int static button_PDSR;
 
-short sawTooth[ARRAYSIZE] = {-100, -75, -50, -25, 0, 25, 50, 75, 100};;//Unused
+short sawTooth[ARRAYSIZE] = {-10, (short)-0.75*SHRT_MIN, -50, -25, 0, 25, 50, 75, 100};;//Unused
 short squareWave[SQUARESIZE] = {-100, -100, -100, -100, 100, 100, 100, 100};;
 short triangleWave[ARRAYSIZE] = {0, 50, 100, 50, 0, -50, -100, -50, 0};; //Unused
 
@@ -32,15 +32,15 @@ short triangleWave[ARRAYSIZE] = {0, 50, 100, 50, 0, -50, -100, -50, 0};; //Unuse
 
 void playSawTooth(void){
   for (i = 0; i < ARRAYSIZE; i++){
-    abdac->SDR.channel0 = sawTooth[i];
-    abdac->SDR.channel1 = sawTooth[i];
+    abdac->SDR.channel0 = (short)sawTooth[i];
+    abdac->SDR.channel1 = (short)sawTooth[i];
   }
 }
 
 void playSquareWave(void){
   for (i = 0; i < SQUARESIZE; i++){
-    abdac->SDR.channel0 = squareWave[i];
-    abdac->SDR.channel1 = squareWave[i];
+    abdac->SDR.channel0 = (short)squareWave[i];
+    abdac->SDR.channel1 = (short)squareWave[i];
   }
 }
 
@@ -127,15 +127,16 @@ void abdac_isr(void){
   //If-else to check what switch (buttons) are pressed
   if (button_PDSR == 0x0){//No switches
     return;
-  } else if(button_PDSR == 0x80){//Switch07
+  } else if(button_PDSR == ~0x80){//Switch07
     for (i = 0; i < maxSteps; i++){
-      playSawTooth();
+
+      // playSawTooth();
     }
-  } else if(button_PDSR == 0x40){//Switch06
+  } else if(button_PDSR == ~0x40){//Switch06
     for (i = 0; i < maxSteps; i++){
       playTriangleWave();
     }
-  } else if(button_PDSR == 0x20){//Switch05
+  } else if(button_PDSR == ~0x20){//Switch05
     for (i = 0; i < maxSteps; i++){
       playSquareWave();
     }
@@ -150,4 +151,4 @@ void abdac_isr(void){
   } else if(button_PDSR == 0x1){//Switch0
 
   }*/
-
+}
