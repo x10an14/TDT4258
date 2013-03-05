@@ -26,6 +26,26 @@ short squareWave[waveShapesSize] = {-100, -100, -100, -100, 0, 100, 100, 100, 10
 //short sinusWave[waveShapesSize] = {0, 100, 0, -100,, 0};
 short triangleWave[waveShapesSize] = {0, 50, 100, 50, 0, -50, -100, -50, 0};
 
+void playSawTooth(void){
+  for (int i = 0; i < count; ++i){
+    abdac->SDR.channel0 = sawTooth[i];
+    abdac->SDR.channel1 = sawTooth[i];
+  }
+}
+
+void playSquareWave(void){
+  for (int i = 0; i < count; ++i){
+    abdac->SDR.channel0 = squareWave[i];
+    abdac->SDR.channel1 = squareWave[i];
+  }
+}
+
+void playSinusWave(void){
+  for (int i = 0; i < count; ++i){
+    abdac->SDR.channel0 = sinusWave[i];
+    abdac->SDR.channel1 = sinusWave[i];
+  }
+}
 
 int main (int argc, char *argv[]){
   initHardware();
@@ -39,7 +59,7 @@ void initHardware (void){
   initIntc();
   initLeds();
   initButtons();
-  initAudio();
+  initAudio();|
 }
 
 
@@ -94,12 +114,13 @@ void button_isr(void){
 }
 
 void abdac_isr(void){
-  while(frequency < maxSteps){
-    abdac->SDR.channel0 = (short)(amplitude/divide)*SHRT_MAX;
-    abdac->SDR.channel1 = (short)(amplitude/divide)*SHRT_MAX;
-    amplitude += 20;
-    frequency++;
+  for (int i = 0; i < maxSteps; ++i){
+    playSawTooth();
   }
-  frequency = 0;
-  amplitude = -500;
+  for (int i = 0; i < maxSteps; ++i){
+    playSquareWave();
+  }
+  // for (int i = 0; i < maxSteps; ++i){
+  //   playSinusWave();
+  // }
 }
