@@ -24,9 +24,9 @@ int static frequency = 0;
 int static maxSteps = 440;
 int static i;
 
-short sawTooth[ARRAYSIZE]; //Unused
-short squareWave[SQUARESIZE];
-short triangleWave[ARRAYSIZE]; //Unused
+short sawTooth[ARRAYSIZE] = {-100, -75, -50, -25, 0, 25, 50, 75, 100};;//Unused
+short squareWave[SQUARESIZE] = {-100, -100, -100, -100, 100, 100, 100, 100};;
+short triangleWave[ARRAYSIZE] = {0, 50, 100, 50, 0, -50, -100, -50, 0};; //Unused
 
 //short sinusWave[ARRAYSIZE] = {0, 100, 0, -100, 0};
 
@@ -52,12 +52,6 @@ void playTriangleWave(void){
 }
 
 int main (int argc, char *argv[]){
-//  sawTooth = {-100, -75, -50, -25, 0, 25, 50, 75, 100};
-//  short templist[9] = {-100, -100, -100, -100, 100, 100, 100, 100, 100};
-//  squareWave = templist;
-//  short templist[9]  = {0, 50, 100, 50, 0, -50, -100, -50, 0};
-//  triangleWave = templist;
-  squareWave[0] = -1; squareWave[1] = 1;
 
   initHardware();
 
@@ -116,21 +110,27 @@ void initAudio(void){
 
 void button_isr(void){
   piob->isr;
-  //Implementer debouncing...
-  //Sjekk hvilken knapp som er trykket
-  pioc->codr = 0xff;
   int temp = piob->pdsr;
+  //Implementer debouncing...
+  pioc->codr = 0xff;//Turn off all the lights
+  int debounce = 0xffff;
+  do{
+    debounce--;
+  }while(debounce > -1);
+  //Sjekk hvilken knapp som er trykket
+  if(tmp != piob->pdsr){
+    pioc->sodr = 0x0;//If debounce check didn't work
+  }
   pioc->sodr = ~temp;
 }
 
 void abdac_isr(void){
-/*  for (i = 0; i < maxSteps; i++){
+  for (i = 0; i < maxSteps; i++){
     playSawTooth();
   }
   for (i = 0; i < maxSteps; i++){
     playTriangleWave();
   }
-*/
   for (i = 0; i < maxSteps; i++){
     playSquareWave();
   }
