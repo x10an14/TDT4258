@@ -15,9 +15,9 @@ volatile avr32_pm_t *pm = &AVR32_PM;
 volatile avr32_abdac_t *abdac = &AVR32_ABDAC;
 
 int static divide = 100;
-int static amplitude = 0;
+int static amplitude = -500;
 int static frequency = 0;
-int static maxSteps = 4;
+int static maxSteps = 440;
 
 
 int main (int argc, char *argv[]){
@@ -87,10 +87,12 @@ void button_isr(void){
 }
 
 void abdac_isr(void){
-  while(frequency < maxSteps+1){
+  while(frequency < maxSteps){
     abdac->SDR.channel0 = (short)(amplitude/divide)*SHRT_MAX;
     abdac->SDR.channel1 = (short)(amplitude/divide)*SHRT_MAX;
     amplitude += 20;
     frequency++;
   }
+  frequency = 0;
+  amplitude = -500;
 }
