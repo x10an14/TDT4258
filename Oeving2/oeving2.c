@@ -12,6 +12,11 @@
 
 #define ARRAYSIZE 9
 #define SQUARESIZE 8
+#define SW7 0x80
+#define SW6 0x40
+#define SW5 0x20
+#define SW4 0x10
+#define SW3 0x8
 
 volatile avr32_pio_t *piob = &AVR32_PIOB;
 volatile avr32_pio_t *pioc = &AVR32_PIOC;
@@ -22,32 +27,34 @@ int static divide = 100;
 int static amplitude = -500;
 int static frequency = 0;
 int static maxSteps = 440;
-int static button_PDSR;
+short static volatile button_PDSR;
+int static i;
 
-short sawTooth[ARRAYSIZE] = {-10, (short)-0.75*SHRT_MIN, -50, -25, 0, 25, 50, 75, 100};;//Unused
-short squareWave[SQUARESIZE] = {-100, -100, -100, -100, 100, 100, 100, 100};;
-short triangleWave[ARRAYSIZE] = {0, 50, 100, 50, 0, -50, -100, -50, 0};; //Unused
+short sawTooth[ARRAYSIZE] = {-1, -0.75, -0.50, -0.25, 0, 0.25, 0.50, 0.75, 1};
+short squareWave[SQUARESIZE] = {-1, -1, -1, -1, 1, 1, 1, 1};
+short triangleWave[ARRAYSIZE] = {0, 0.50, 1, 0.50, 0, -0.50, -1, -0.50, 0};
 
 //short sinusWave[ARRAYSIZE] = {0, 100, 0, -100, 0};
 
 void playSawTooth(void){
-  for (int i = 0; i < ARRAYSIZE; i++){
-    abdac->SDR.channel0 = (short)sawTooth[i];
-    abdac->SDR.channel1 = (short)sawTooth[i];
+  for (i = 0; i < ARRAYSIZE; i++){
+    abdac->SDR.channel0 = (short)sawTooth[i]*SHRT_MAX;
+    abdac->SDR.channel1 = (short)sawTooth[i]*SHRT_MAX;
   }
 }
 
 void playSquareWave(void){
-  for (int i = 0; i < SQUARESIZE; i++){
-    abdac->SDR.channel0 = (short)squareWave[i];
-    abdac->SDR.channel1 = (short)squareWave[i];
+  for (i = 0; i < SQUARESIZE; i++){
+    abdac->SDR.channel0 = (short)squareWave[i]*SHRT_MAX;
+    abdac->SDR.channel1 = (short)squareWave[i]*SHRT_MAX;
   }
 }
 
+//Denne fungerer ikke!!!! (why!??)
 void playTriangleWave(void){
-  for (int i = 0; i < ARRAYSIZE; i++){
-    abdac->SDR.channel0 = triangleWave[i];
-    abdac->SDR.channel1 = triangleWave[i];
+  for (i = 0; i < ARRAYSIZE; i++){
+    abdac->SDR.channel0 = (short)triangleWave[i]*SHRT_MAX;
+    abdac->SDR.channel1 = (short)triangleWave[i]*SHRT_MAX;
   }
 }
 
@@ -106,8 +113,8 @@ void initAudio(void){
 }
 
 void button_isr(void){
-  piob->isr;
-  button_PDSR = piob->pdsr;
+  button_PDSR = piob->isr;//To read interrupt vector, enabling next interrupt
+  button_PDSR = piob->pdsr;//Read which switch was pushed
   //Implementer debouncing...
   pioc->codr = 0xff;//Turn off all the lights
   int debounce = 0xfeff;
@@ -115,29 +122,27 @@ void button_isr(void){
     debounce--;
   }while(debounce > -1);
   //Sjekk hvilken knapp som er trykket
-  if(button_PDSR != piob->pdsr){
-    pioc->sodr = 0x0;//If debounce check didn't work
-    //Then turn on all the lights
-    return;
-  }
-  pioc->sodr = ~button_PDSR;
+  debounce = button_PDSR;
+  pioc->sodr = ~debounce;
 }
 
 void abdac_isr(void){
   //If-else to check what switch (buttons) are pressed
-  if (button_PDSR == 0x0){//No switches
+  //playSawTooth();
+  //playTriangleWave();
+  playSquareWave();
+  if (button_PDSR == SW7){//No switches
     return;
-  } else if(button_PDSR == ~0x80){//Switch07
-    for (int i = 0; i < maxSteps; i++){
-
-      // playSawTooth();
+  } else if(button_PDSR == SW6){//Switch07
+    for (i = 0; i < maxSteps; i++){
+      playSawTooth();
     }
-  } else if(button_PDSR == ~0x40){//Switch06
-    for (int i = 0; i < maxSteps; i++){
+  } else if(button_PDSR == SW5){//Switch06
+    for (i = 0; i < maxSteps; i++){
       playTriangleWave();
     }
-  } else if(button_PDSR == ~0x20){//Switch05
-    for (int i = 0; i < maxSteps; i++){
+  } else if(button_PDSR == SW4){//Switch05
+    for (i = 0; i < maxSteps; i++){
       playSquareWave();
     }
   }/* else if(button_PDSR == 0x10){//Switch04
