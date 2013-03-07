@@ -10,7 +10,7 @@
 #include <limits.h>
 #include <math.h>
 
-#define ARRAYSIZE 9
+#define ARRAYSIZE 17
 #define SW7 0x80
 #define SW6 0x40
 #define SW5 0x20
@@ -27,9 +27,9 @@ int static maxSteps = 440;
 short static volatile newButtonState;
 int static i;
 
-short sawTooth[ARRAYSIZE] = {-1, -0.75, -0.50, -0.25, 0, 0.25, 0.50, 0.75, 1};
-short squareWave[SQUARESIZE] = {-1, -1, -1, -1, 1, 1, 1, 1, 1};
-short triangleWave[ARRAYSIZE] = {0, 0.50, 1, 0.50, 0, -0.50, -1, -0.50, 0};
+short sawTooth[ARRAYSIZE] = {-1, -(7/8), -0.75, -(5/8), -0.50, -(3/8), -0.25, -(1/8), 0, (1/8), 0.25, (3/8), 0.50, (5/8), 0.75, (7/8), 1};
+short squareWave[SQUARESIZE] = {-1, -1, -1, -1, -1, -1, -1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+short triangleWave[ARRAYSIZE] = {0, 0.25, 0.50, 0.75, 1, 0.75, 0.50, 0.25, 0, -0.25, -0.50, -0.75, -1, -0.75, -0.50, -0.25, 0};
 
 //short sinusWave[ARRAYSIZE] = {0, 100, 0, -100, 0};
 
