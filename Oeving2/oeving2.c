@@ -61,8 +61,6 @@ void playSquareWave(void){
   }  
 }
 
-//short sinusWave[ARRAYSIZE] = {0, 100, 0, -100, 0};
-
 int main (int argc, char *argv[]){
 
   initHardware();
