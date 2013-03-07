@@ -122,8 +122,8 @@ void button_isr(void){
     debounce--;
   }while(debounce > -1);
   //Sjekk hvilken knapp som er trykket
-  debounce = button_PDSR;
-  pioc->sodr = ~debounce;
+  button_PDSR ^= piob->pdsr;
+  pioc->sodr = ~button_PDSR;
 }
 
 void abdac_isr(void){
