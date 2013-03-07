@@ -36,7 +36,7 @@ short triangleWave[ARRAYSIZE] = {0, 0.50, 1, 0.50, 0, -0.50, -1, -0.50, 0};
 //short sinusWave[ARRAYSIZE] = {0, 100, 0, -100, 0};
 
 void playSawTooth(void){
-  for (i = 0; i < (SAWSIZE*FREQDIV); i++){
+  for (i = 0; i < (ARRAYSIZE*FREQDIV); i++){
     int j;
     j =(int) floor((float)i/FREQDIV); 
     abdac->SDR.channel0 = (short)sawTooth[i]*SHRT_MAX*0.1;
