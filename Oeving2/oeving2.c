@@ -86,7 +86,6 @@ void initButtons(void){
   piob->ier = 0xe0;
   //Disable the rest of the switches
   piob->idr = 0x1f;
-  button_isr();
 }
 
 void initLeds(void){
