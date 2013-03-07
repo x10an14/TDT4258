@@ -112,7 +112,7 @@ void initAudio(void){
 void button_isr(void){
   int button_ISR = piob->isr;//To read interrupt vector, enabling next interrupt
   button_PDSR = ~piob->pdsr;//Read which switch was pushed
-  int newButton = button_ISR&button_PDSR;
+  int volatile newButton = button_ISR&button_PDSR;
   //Implementer debouncing...
   pioc->codr = 0xff;//Turn off all the lights
   int debounce = 0xffff;
