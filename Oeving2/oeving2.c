@@ -28,8 +28,8 @@ short static volatile newButtonState;
 int static i;
 
 short sawTooth[ARRAYSIZE] = {-1, -(7/8), -0.75, -(5/8), -0.50, -(3/8), -0.25, -(1/8), 0, (1/8), 0.25, (3/8), 0.50, (5/8), 0.75, (7/8), 1};
-short squareWave[SQUARESIZE] = {-1, -1, -1, -1, -1, -1, -1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
 short triangleWave[ARRAYSIZE] = {0, 0.25, 0.50, 0.75, 1, 0.75, 0.50, 0.25, 0, -0.25, -0.50, -0.75, -1, -0.75, -0.50, -0.25, 0};
+short squareWave[ARRAYSIZE] = {-1, -1, -1, -1, -1, -1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
 
 //short sinusWave[ARRAYSIZE] = {0, 100, 0, -100, 0};
 
@@ -42,21 +42,21 @@ void playSawTooth(void){
   }
 }
 
+void playTriangleWave(void){
+  for (i = 0; i < (ARRAYSIZE*FREQDIV); i++){
+    int j;
+    j =(int) floor((float)i/FREQDIV); 
+    abdac->SDR.channel0 = (short)triangleWave[j]*SHRT_MAX*0.1;
+    abdac->SDR.channel1 = (short)triangleWave[j]*SHRT_MAX*0.1;
+  }
+}
+
 void playSquareWave(void){
   for (i = 0; i < (ARRAYSIZE*FREQDIV); i++){
     int j;
     j =(int) floor((float)i/FREQDIV); 
     abdac->SDR.channel0 = (short)squareWave[j]*SHRT_MAX*0.1;
     abdac->SDR.channel1 = (short)squareWave[j]*SHRT_MAX*0.1;
-  }
-}
-
-void playTriangleWave(void){
-  for (i = 0; i < (ARRAYSIZE*FREQDIV); i++){
-    int j;
-    j =(int) floor((float)i/FREQDIV);  
-    abdac->SDR.channel0 = (short)triangleWave[j]*SHRT_MAX*0.1;
-    abdac->SDR.channel1 = (short)triangleWave[j]*SHRT_MAX*0.1;
   }
 }
 
