@@ -102,9 +102,7 @@ void button_isr(void){
   newButtonState &= piob->isr;//To read interrupt vector, enabling next interrupt
   pioc->codr = 0xff;//Turn off all the lights
 
-  if (newButtonState == 0){//No switches
-    return;
-  } else if(newButtonState == SW7){//Switch07
+  if(newButtonState == SW7){//Switch07
     playListPtr = &sawTooth;
   } else if(newButtonState == SW6){//Switch06
     playListPtr = &triangleWave;
@@ -125,5 +123,10 @@ void button_isr(void){
 }
 
 void abdac_isr(void){
+  for(i = 0; i < ARRAYSIZE*FREQDIV; i++){
+    abdac->SDR.channel0 = (short)triangleWave[i%FREQDIV]*SHRT_MAX*0.1;
+    abdac->SDR.channel1 = (short)triangleWave[i%FREQDIV]*SHRT_MAX*0.1;
+  }
+  playListPtr == NULL;
 
 }
