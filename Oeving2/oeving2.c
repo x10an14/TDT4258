@@ -86,7 +86,6 @@ void initButtons(void){
   piob->ier = 0xe0;
   //Disable the rest of the switches
   piob->idr = 0x1f;
-  button_isr();
 }
 
 void initLeds(void){
@@ -122,13 +121,8 @@ void button_isr(void){
   /*Checking which button is pushed by and'ing them after the debouncing.*/
   button_PDSR ^= piob->pdsr;
   pioc->sodr = ~button_PDSR;
-}
 
-void abdac_isr(void){
-  //If-else to check what switch (buttons) are pressed
-  //playSawTooth();
-  //playTriangleWave();
-  playSquareWave();
+
   if (button_PDSR == SW7){//No switches
     return;
   } else if(button_PDSR == SW6){//Switch07
@@ -154,4 +148,10 @@ void abdac_isr(void){
   } else if(button_PDSR == 0x1){//Switch0
 
   }*/
+}
+
+void abdac_isr(void){
+  //If-else to check what switch (buttons) are pressed
+  playSawTooth();
+  playSquareWave();
 }
