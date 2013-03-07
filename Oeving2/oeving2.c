@@ -28,9 +28,9 @@ short static volatile newButtonState;
 int static i;
 
 short **playListPtr;
-short sawTooth[ARRAYSIZE] = {-1, -0.75, -0.50, -0.25, 0, 0.25, 0.50, 0.75, 1};
-short squareWave[SQUARESIZE] = {-1, -1, -1, -1, 1, 1, 1, 1, 1};
-short triangleWave[ARRAYSIZE] = {0, 0.50, 1, 0.50, 0, -0.50, -1, -0.50, 0};
+short *sawTooth[ARRAYSIZE] = {-1, -0.75, -0.50, -0.25, 0, 0.25, 0.50, 0.75, 1};
+short *squareWave[SQUARESIZE] = {-1, -1, -1, -1, 1, 1, 1, 1, 1};
+short *triangleWave[ARRAYSIZE] = {0, 0.50, 1, 0.50, 0, -0.50, -1, -0.50, 0};
 
 //short sinusWave[ARRAYSIZE] = {0, 100, 0, -100, 0};
 
@@ -103,11 +103,11 @@ void button_isr(void){
   pioc->codr = 0xff;//Turn off all the lights
 
   if(newButtonState == SW7){//Switch07
-    playListPtr = &sawTooth;
+    playListPtr = sawTooth;
   } else if(newButtonState == SW6){//Switch06
-    playListPtr = &triangleWave;
+    playListPtr = triangleWave;
   } else if(newButtonState == SW5){//Switch05
-    playListPtr = &squareWave;
+    playListPtr = squareWave;
   }/* else if(newButtonState == 0x10){//Switch04
 
   } else if(newButtonState == 0x8){//Switch03
@@ -123,10 +123,12 @@ void button_isr(void){
 }
 
 void abdac_isr(void){
-  for(i = 0; i < ARRAYSIZE*FREQDIV; i++){
-    abdac->SDR.channel0 = (short)triangleWave[i%FREQDIV]*SHRT_MAX*0.1;
-    abdac->SDR.channel1 = (short)triangleWave[i%FREQDIV]*SHRT_MAX*0.1;
+  for(i = 0; i < ARRAYSIZE; i++){
+    for(j = 0; j < FREQDIV; j++){
+    abdac->SDR.channel0 = (short)playListPtr*SHRT_MAX*0.1;
+    abdac->SDR.channel1 = (short)playListPtr*SHRT_MAX*0.1;
+    }
+    playListPtr++;
   }
   playListPtr == NULL;
-
 }
