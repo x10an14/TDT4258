@@ -17,12 +17,16 @@
 #define SW4 0x10
 #define SW3 0x8
 
+#define SAWRATE 20  
+#define SQUARERATE 15
+#define TRIANGLERATE 18
+
 volatile avr32_pio_t *piob = &AVR32_PIOB;
 volatile avr32_pio_t *pioc = &AVR32_PIOC;
 volatile avr32_pm_t *pm = &AVR32_PM;
 volatile avr32_abdac_t *abdac = &AVR32_ABDAC;
 
-int static FREQDIV = 20; // tonehøye = clk/FREQDIV
+//int static FREQDIV = 20; // tonehøye = clk/FREQDIV
 int static maxSteps = 440;
 short static volatile newButtonState;
 
@@ -31,9 +35,10 @@ short static volatile newButtonState;
 int current_repetition = 0;
 int wave_position = 0;
 int *playListPtr = NULL;
+int *ratePtr = NULL;
 int sawTooth[] = {-1, -(7/8), -0.75, -(5/8), -0.50, -(3/8), -0.25, -(1/8), 0, (1/8), 0.25, (3/8), 0.50, (5/8), 0.75, (7/8), 1};
-int squareWave[] = {0, 0.25, 0.50, 0.75, 1, 0.75, 0.50, 0.25, 0, -0.25, -0.50, -0.75, -1, -0.75, -0.50, -0.25, 0};
-int triangleWave[] = {-1, -1, -1, -1, -1, -1, -1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+int triangleWave[] = {0, 0.25, 0.50, 0.75, 1, 0.75, 0.50, 0.25, 0, -0.25, -0.50, -0.75, -1, -0.75, -0.50, -0.25, 0};
+int squareWave[] = {-1, -1, -1, -1, -1, -1, -1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
 
 int main (int argc, char *argv[]){
 
@@ -98,10 +103,13 @@ void button_isr(void){
 
   if(newButtonState == SW7){//Switch07
     playListPtr = sawTooth;
+    *ratePtr = SAWRATE;
   } else if(newButtonState == SW6){//Switch06
     playListPtr = triangleWave;
+    *ratePtr = TRIANGLERATE;
   } else if(newButtonState == SW5){//Switch05
     playListPtr = squareWave;
+    *ratePtr = SQUARERATE;
   }/* else if(newButtonState == 0x10){//Switch04
 
   } else if(newButtonState == 0x8){//Switch03
@@ -120,7 +128,7 @@ void abdac_isr(void){
   if (playListPtr != NULL){
     output = playListPtr[wave_position];
     current_repetition++;
-    if (current_repetition >= FREQDIV) {
+    if (current_repetition >= *ratePtr) {
       wave_position++;
       current_repetition = 0;
       if (wave_position >= ARRAYSIZE) {
