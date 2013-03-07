@@ -110,41 +110,41 @@ void initAudio(void){
 }
 
 void button_isr(void){
-  button_PDSR = piob->isr;//To read interrupt vector, enabling next interrupt
-  button_PDSR = piob->pdsr;//Read which switch was pushed
+  int button_ISR = piob->isr;//To read interrupt vector, enabling next interrupt
+  button_PDSR = ~piob->pdsr;//Read which switch was pushed
+  int newButton = button_ISR&button_PDSR;
   //Implementer debouncing...
   pioc->codr = 0xff;//Turn off all the lights
   int debounce = 0xffff;
   do{
     debounce--;
   }while(debounce > -1);
-  /*Checking which button is pushed by and'ing them after the debouncing.*/
-  button_PDSR ^= piob->pdsr;
-  pioc->sodr = ~button_PDSR;
-
-  if (button_PDSR == SW7){//No switches
+  button_ISR = piob->isr;
+  button_PDSR = piob->pdsr;
+  newButton ^= button_PDSR^button_ISR;
+  if (newButton == SW7){//No switches
     return;
-  } else if(button_PDSR == SW6){//Switch07
+  } else if(newButton == SW6){//Switch07
     for (i = 0; i < maxSteps; i++){
       playSawTooth();
     }
-  } else if(button_PDSR == SW5){//Switch06
+  } else if(newButton == SW5){//Switch06
     for (i = 0; i < maxSteps; i++){
       playTriangleWave();
     }
-  } else if(button_PDSR == SW4){//Switch05
+  } else if(newButton == SW4){//Switch05
     for (i = 0; i < maxSteps; i++){
       playSquareWave();
     }
-  }/* else if(button_PDSR == 0x10){//Switch04
+  }/* else if(newButton == 0x10){//Switch04
 
-  } else if(button_PDSR == 0x8){//Switch03
+  } else if(newButton == 0x8){//Switch03
 
-  } else if(button_PDSR == 0x4){//Switch02
+  } else if(newButton == 0x4){//Switch02
 
-  } else if(button_PDSR == 0x2){//Switch01
+  } else if(newButton == 0x2){//Switch01
 
-  } else if(button_PDSR == 0x1){//Switch0
+  } else if(newButton == 0x1){//Switch0
 
   }*/
 }
