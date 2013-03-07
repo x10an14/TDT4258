@@ -114,14 +114,13 @@ void button_isr(void){
   button_PDSR = piob->pdsr;//Read which switch was pushed
   //Implementer debouncing...
   pioc->codr = 0xff;//Turn off all the lights
-  int debounce = 0xfeff;
+  int debounce = 0xffff;
   do{
     debounce--;
   }while(debounce > -1);
   /*Checking which button is pushed by and'ing them after the debouncing.*/
   button_PDSR ^= piob->pdsr;
   pioc->sodr = ~button_PDSR;
-
 
   if (button_PDSR == SW7){//No switches
     return;
