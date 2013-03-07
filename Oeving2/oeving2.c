@@ -22,14 +22,14 @@ volatile avr32_pio_t *pioc = &AVR32_PIOC;
 volatile avr32_pm_t *pm = &AVR32_PM;
 volatile avr32_abdac_t *abdac = &AVR32_ABDAC;
 
-int static FREQDIV = 20; // tonehøye = clk/FREQDIV
+int static FREQDIV = 25; // tonehøye = clk/FREQDIV
 int static maxSteps = 440;
 short static volatile newButtonState;
 int static i;
 
 short sawTooth[ARRAYSIZE] = {-1, -(7/8), -0.75, -(5/8), -0.50, -(3/8), -0.25, -(1/8), 0, (1/8), 0.25, (3/8), 0.50, (5/8), 0.75, (7/8), 1};
 short triangleWave[ARRAYSIZE] = {0, 0.25, 0.50, 0.75, 1, 0.75, 0.50, 0.25, 0, -0.25, -0.50, -0.75, -1, -0.75, -0.50, -0.25, 0};
-short squareWave[ARRAYSIZE] = {-1, -1, -1, -1, -1, -1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+short squareWave[ARRAYSIZE] = {-1, -1, -1, -1, -1, -1, -1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
 
 //short sinusWave[ARRAYSIZE] = {0, 100, 0, -100, 0};
 
