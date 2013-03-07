@@ -12,7 +12,7 @@
 
 #define ARRAYSIZE 9
 #define SQUARESIZE 8
-#define FREQDIV 20    // tonehøye = clk/FREQDIV
+//#define FREQDIV 20    
 #define SW7 0x80
 #define SW6 0x40
 #define SW5 0x20
@@ -24,7 +24,7 @@ volatile avr32_pio_t *pioc = &AVR32_PIOC;
 volatile avr32_pm_t *pm = &AVR32_PM;
 volatile avr32_abdac_t *abdac = &AVR32_ABDAC;
 
-int static frequencyDivide = 100;
+int static FREQDIV = 100; // tonehøye = clk/FREQDIV
 int static maxSteps = 440;
 short static volatile newButtonState;
 int static i;
