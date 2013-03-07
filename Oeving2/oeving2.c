@@ -10,7 +10,7 @@
 #include <limits.h>
 #include <math.h>
 
-#define ARRAYSIZE 9
+#define ARRAYSIZE 17
 #define SW7 0x80
 #define SW6 0x40
 #define SW5 0x20
@@ -22,26 +22,48 @@ volatile avr32_pio_t *pioc = &AVR32_PIOC;
 volatile avr32_pm_t *pm = &AVR32_PM;
 volatile avr32_abdac_t *abdac = &AVR32_ABDAC;
 
-int static FREQDIV = 20; // tonehøye = clk/FREQDIV
+int static FREQDIV = 25; // tonehøye = clk/FREQDIV
 int static maxSteps = 440;
 short static volatile newButtonState;
 int static i;
 
+
+short sawTooth[ARRAYSIZE] = {-1, -(7/8), -0.75, -(5/8), -0.50, -(3/8), -0.25, -(1/8), 0, (1/8), 0.25, (3/8), 0.50, (5/8), 0.75, (7/8), 1};
+short triangleWave[ARRAYSIZE] = {0, 0.25, 0.50, 0.75, 1, 0.75, 0.50, 0.25, 0, -0.25, -0.50, -0.75, -1, -0.75, -0.50, -0.25, 0};
+short squareWave[ARRAYSIZE] = {-1, -1, -1, -1, -1, -1, -1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+
+//short sinusWave[ARRAYSIZE] = {0, 100, 0, -100, 0};
+
+void playSawTooth(void){
+  for (i = 0; i < (ARRAYSIZE*FREQDIV); i++){
+    int j;
+    j =(int) floor((float)i/FREQDIV); 
+    abdac->SDR.channel0 = (short)sawTooth[j]*SHRT_MAX*0.1;
+    abdac->SDR.channel1 = (short)sawTooth[j]*SHRT_MAX*0.1;
+  }
+}
+
+void playTriangleWave(void){
+  for (i = 0; i < (ARRAYSIZE*FREQDIV); i++){
+    int j;
+    j =(int) floor((float)i/FREQDIV); 
+    abdac->SDR.channel0 = (short)triangleWave[j]*SHRT_MAX*0.1;
+    abdac->SDR.channel1 = (short)triangleWave[j]*SHRT_MAX*0.1;
+  }
+}
+
+void playSquareWave(void){
+  for (i = 0; i < (ARRAYSIZE*FREQDIV); i++){
+    int j;
+    j =(int) floor((float)i/FREQDIV); 
+    abdac->SDR.channel0 = (short)squareWave[j]*SHRT_MAX*0.1;
+    abdac->SDR.channel1 = (short)squareWave[j]*SHRT_MAX*0.1;
 short **playListPtr;
 short *sawTooth[ARRAYSIZE] = {-1, -0.75, -0.50, -0.25, 0, 0.25, 0.50, 0.75, 1};
 short *squareWave[SQUARESIZE] = {-1, -1, -1, -1, 1, 1, 1, 1, 1};
 short *triangleWave[ARRAYSIZE] = {0, 0.50, 1, 0.50, 0, -0.50, -1, -0.50, 0};
 
 //short sinusWave[ARRAYSIZE] = {0, 100, 0, -100, 0};
-
-void playTriangleWave(void){
-  for (i = 0; i < (ARRAYSIZE*FREQDIV); i++){
-    int j;
-    j =(int) floor((float)i/FREQDIV);
-    abdac->SDR.channel0 = (short)triangleWave[j]*SHRT_MAX*0.1;
-    abdac->SDR.channel1 = (short)triangleWave[j]*SHRT_MAX*0.1;
-  }
-}
 
 int main (int argc, char *argv[]){
 
