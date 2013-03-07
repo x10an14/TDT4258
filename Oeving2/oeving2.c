@@ -101,6 +101,7 @@ void button_isr(void){
   newButtonState = ~piob->pdsr;//Read which switch was pushed
   newButtonState &= piob->isr;//To read interrupt vector, enabling next interrupt
   pioc->codr = 0xff;//Turn off all the lights
+  pioc->sodr = newButtonState; //Turn on the light corresponding to the button pushed
 
   if(newButtonState == SW7){//Switch07
     playListPtr = sawTooth;
@@ -119,7 +120,6 @@ void button_isr(void){
   } else if(newButtonState == 0x1){//Switch0
 
   }*/
-  pioc->sodr = newButtonState;
 }
 
 void abdac_isr(void){
