@@ -11,8 +11,8 @@
 #include <math.h>
 
 #define ARRAYSIZE 9
-#define SAWSIZE 18
 #define SQUARESIZE 8
+#define FREQDIV 20    // tonehøye = clk/FREQDIV
 #define SW7 0x80
 #define SW6 0x40
 #define SW5 0x20
@@ -29,30 +29,36 @@ int static maxSteps = 440;
 short static volatile button_PDSR;
 int static i;
 
-short sawTooth[SAWSIZE] = {-1,-1, -0.75,-0.75, -0.50,-0.50, -0.25, -0.25, 0,0, 0.25,0.25, 0.50,0.50, 0.75,0.75, 1, 1};
+short sawTooth[ARRAYSIZE] = {-1, -0.75, -0.50, -0.25, 0, 0.25, 0.50, 0.75, 1};
 short squareWave[SQUARESIZE] = {-1, -1, -1, -1, 1, 1, 1, 1};
 short triangleWave[ARRAYSIZE] = {0, 0.50, 1, 0.50, 0, -0.50, -1, -0.50, 0};
 
 //short sinusWave[ARRAYSIZE] = {0, 100, 0, -100, 0};
 
 void playSawTooth(void){
-  for (i = 0; i < SAWSIZE; i++){
+  for (i = 0; i < (SAWSIZE*FREQDIV); i++){
+    int j;
+    j =(int) floor((float)i/FREQDIV); 
     abdac->SDR.channel0 = (short)sawTooth[i]*SHRT_MAX*0.1;
     abdac->SDR.channel1 = (short)sawTooth[i]*SHRT_MAX*0.1;
   }
 }
 
 void playSquareWave(void){
-  for (i = 0; i < SQUARESIZE; i++){
+  for (i = 0; i < (SQUARESIZE*FREQDIV); i++){
+    int j;
+    j =(int) floor((float)i/FREQDIV); 
     abdac->SDR.channel0 = (short)squareWave[i]*SHRT_MAX;
     abdac->SDR.channel1 = (short)squareWave[i]*SHRT_MAX;
   }
 }
 
 void playTriangleWave(void){
-  for (i = 0; i < ARRAYSIZE; i++){
-    abdac->SDR.channel0 = (short)triangleWave[i]*SHRT_MAX;
-    abdac->SDR.channel1 = (short)triangleWave[i]*SHRT_MAX;
+  for (i = 0; i < (ARRAYSIZE*FREQDIV); i++){
+    int j;
+    j =(int) floor((float)i/FREQDIV);  
+    abdac->SDR.channel0 = (short)triangleWave[j]*SHRT_MAX*0.1;
+    abdac->SDR.channel1 = (short)triangleWave[j]*SHRT_MAX*0.1;
   }
 }
 
