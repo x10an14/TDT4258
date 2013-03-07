@@ -12,7 +12,6 @@
 
 #define ARRAYSIZE 9
 #define SQUARESIZE 8
-//#define FREQDIV 20    
 #define SW7 0x80
 #define SW6 0x40
 #define SW5 0x20
@@ -39,8 +38,8 @@ void playSawTooth(void){
   for (i = 0; i < (ARRAYSIZE*FREQDIV); i++){
     int j;
     j =(int) floor((float)i/FREQDIV); 
-    abdac->SDR.channel0 = (short)sawTooth[i]*SHRT_MAX*0.1;
-    abdac->SDR.channel1 = (short)sawTooth[i]*SHRT_MAX*0.1;
+    abdac->SDR.channel0 = (short)sawTooth[j]*SHRT_MAX*0.1;
+    abdac->SDR.channel1 = (short)sawTooth[j]*SHRT_MAX*0.1;
   }
 }
 
@@ -48,8 +47,8 @@ void playSquareWave(void){
   for (i = 0; i < (SQUARESIZE*FREQDIV); i++){
     int j;
     j =(int) floor((float)i/FREQDIV); 
-    abdac->SDR.channel0 = (short)squareWave[i]*SHRT_MAX;
-    abdac->SDR.channel1 = (short)squareWave[i]*SHRT_MAX;
+    abdac->SDR.channel0 = (short)squareWave[j]*SHRT_MAX;
+    abdac->SDR.channel1 = (short)squareWave[j]*SHRT_MAX;
   }
 }
 
@@ -121,17 +120,17 @@ void button_isr(void){
   newButtonState &= piob->isr;//To read interrupt vector, enabling next interrupt
   pioc->codr = 0xff;//Turn off all the lights
 
-  if (newButtonState == SW7){//No switches
+  if (newButtonState == 0){//No switches
     return;
-  } else if(newButtonState == SW6){//Switch07
+  } else if(newButtonState == SW7){//Switch07
     for (i = 0; i < maxSteps; i++){
       playSawTooth();
     }
-  } else if(newButtonState == SW5){//Switch06
+  } else if(newButtonState == SW6){//Switch06
     for (i = 0; i < maxSteps; i++){
       playTriangleWave();
     }
-  } else if(newButtonState == SW4){//Switch05
+  } else if(newButtonState == SW5){//Switch05
     for (i = 0; i < maxSteps; i++){
       playSquareWave();
     }
