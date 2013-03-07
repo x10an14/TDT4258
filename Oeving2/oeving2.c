@@ -30,9 +30,9 @@ int static i;
 //short sinusWave[ARRAYSIZE] = {0, 100, 0, -100, 0};
 
 short **playListPtr;
-short *sawTooth1[ARRAYSIZE] = {-1, -(7/8), -0.75, -(5/8), -0.50, -(3/8), -0.25, -(1/8), 0, (1/8), 0.25, (3/8), 0.50, (5/8), 0.75, (7/8), 1};
-short *squareWave1[ARRAYSIZE] = {0, 0.25, 0.50, 0.75, 1, 0.75, 0.50, 0.25, 0, -0.25, -0.50, -0.75, -1, -0.75, -0.50, -0.25, 0};
-short *triangleWave1[ARRAYSIZE] = {-1, -1, -1, -1, -1, -1, -1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+short *sawTooth[ARRAYSIZE] = {-1, -(7/8), -0.75, -(5/8), -0.50, -(3/8), -0.25, -(1/8), 0, (1/8), 0.25, (3/8), 0.50, (5/8), 0.75, (7/8), 1};
+short *squareWave[ARRAYSIZE] = {0, 0.25, 0.50, 0.75, 1, 0.75, 0.50, 0.25, 0, -0.25, -0.50, -0.75, -1, -0.75, -0.50, -0.25, 0};
+short *triangleWave[ARRAYSIZE] = {-1, -1, -1, -1, -1, -1, -1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
 
 void playSawTooth(void){
   for (i = 0; i < (ARRAYSIZE*FREQDIV); i++){
