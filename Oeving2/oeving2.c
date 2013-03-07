@@ -47,8 +47,8 @@ void playSquareWave(void){
   for (i = 0; i < (SQUARESIZE*FREQDIV); i++){
     int j;
     j =(int) floor((float)i/FREQDIV); 
-    abdac->SDR.channel0 = (short)squareWave[j]*SHRT_MAX;
-    abdac->SDR.channel1 = (short)squareWave[j]*SHRT_MAX;
+    abdac->SDR.channel0 = (short)squareWave[j]*SHRT_MAX*0.1;
+    abdac->SDR.channel1 = (short)squareWave[j]*SHRT_MAX*0.1;
   }
 }
 
@@ -102,8 +102,8 @@ void initLeds(void){
 void initAudio(void){
   //Oppsett av PowerManager for klokke og abdac...
   pm->GCCTRL[6].oscsel = 0;
-  pm->GCCTRL[6].diven = 1;
-  pm->GCCTRL[6].div = SHRT_MAX/2;
+  pm->GCCTRL[6].diven = 0;
+//  pm->GCCTRL[6].div = SHRT_MAX/2;
   pm->GCCTRL[6].pllsel = 0;
   pm->GCCTRL[6].cen = 1;
   register_interrupt(abdac_isr, AVR32_ABDAC_IRQ/32, AVR32_ABDAC_IRQ % 32, ABDAC_INT_LEVEL);
