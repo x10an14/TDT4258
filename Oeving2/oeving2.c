@@ -11,6 +11,7 @@
 #include <math.h>
 
 #define ARRAYSIZE 9
+#define SAWSIZE 18
 #define SQUARESIZE 8
 #define SW7 0x80
 #define SW6 0x40
@@ -28,16 +29,16 @@ int static maxSteps = 440;
 short static volatile button_PDSR;
 int static i;
 
-short sawTooth[ARRAYSIZE] = {-1, -0.75, -0.50, -0.25, 0, 0.25, 0.50, 0.75, 1};
+short sawTooth[SAWSIZE] = {-1,-1, -0.75,-0.75, -0.50,-0.50, -0.25, -0.25, 0,0, 0.25,0.25, 0.50,0.50, 0.75,0.75, 1, 1};
 short squareWave[SQUARESIZE] = {-1, -1, -1, -1, 1, 1, 1, 1};
 short triangleWave[ARRAYSIZE] = {0, 0.50, 1, 0.50, 0, -0.50, -1, -0.50, 0};
 
 //short sinusWave[ARRAYSIZE] = {0, 100, 0, -100, 0};
 
 void playSawTooth(void){
-  for (i = 0; i < ARRAYSIZE; i++){
-    abdac->SDR.channel0 = (short)sawTooth[i]*SHRT_MAX;
-    abdac->SDR.channel1 = (short)sawTooth[i]*SHRT_MAX;
+  for (i = 0; i < SAWSIZE; i++){
+    abdac->SDR.channel0 = (short)sawTooth[i]*SHRT_MAX*0.1;
+    abdac->SDR.channel1 = (short)sawTooth[i]*SHRT_MAX*0.1;
   }
 }
 
@@ -48,7 +49,6 @@ void playSquareWave(void){
   }
 }
 
-//Denne fungerer ikke!!!! (why!??)
 void playTriangleWave(void){
   for (i = 0; i < ARRAYSIZE; i++){
     abdac->SDR.channel0 = (short)triangleWave[i]*SHRT_MAX;
@@ -97,7 +97,8 @@ void initLeds(void){
 void initAudio(void){
   //Oppsett av PowerManager for klokke og abdac...
   pm->GCCTRL[6].oscsel = 0;
-  pm->GCCTRL[6].diven = 0;
+  pm->GCCTRL[6].diven = 1;
+  pm->GCCTRL[6].div = SHRT_MAX/2;
   pm->GCCTRL[6].pllsel = 0;
   pm->GCCTRL[6].cen = 1;
   register_interrupt(abdac_isr, AVR32_ABDAC_IRQ/32, AVR32_ABDAC_IRQ % 32, ABDAC_INT_LEVEL);
@@ -114,7 +115,7 @@ void button_isr(void){
   button_PDSR = piob->pdsr;//Read which switch was pushed
   //Implementer debouncing...
   pioc->codr = 0xff;//Turn off all the lights
-  int debounce = 0xfeff;
+  int debounce = 0xffff;
   do{
     debounce--;
   }while(debounce > -1);
@@ -152,6 +153,7 @@ void button_isr(void){
 
 void abdac_isr(void){
   //If-else to check what switch (buttons) are pressed
-  playSawTooth();
-  playSquareWave();
+//  playSawTooth();
+//  playSquareWave();
+  playTriangleWave();
 }
