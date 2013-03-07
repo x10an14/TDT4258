@@ -25,7 +25,7 @@ volatile avr32_abdac_t *abdac = &AVR32_ABDAC;
 
 int static frequencyDivide = 100;
 int static maxSteps = 440;
-short static volatile button_PDSR;
+short static volatile newButtonState;
 int static i;
 
 short sawTooth[ARRAYSIZE] = {-1, -0.75, -0.50, -0.25, 0, 0.25, 0.50, 0.75, 1};
@@ -111,8 +111,8 @@ void initAudio(void){
 
 void button_isr(void){
   int button_ISR = piob->isr;//To read interrupt vector, enabling next interrupt
-  button_PDSR = ~piob->pdsr;//Read which switch was pushed
-  int volatile newButton = button_ISR&button_PDSR;
+  int button_PDSR = ~piob->pdsr;//Read which switch was pushed
+  newButtonState = button_ISR&button_PDSR;
   //Implementer debouncing...
   pioc->codr = 0xff;//Turn off all the lights
   int debounce = 0xffff;
@@ -121,30 +121,30 @@ void button_isr(void){
   }while(debounce > -1);
   button_ISR = piob->isr;
   button_PDSR = piob->pdsr;
-  newButton ^= button_PDSR^button_ISR;
-  if (newButton == SW7){//No switches
+  newButtonState ^= button_PDSR^button_ISR;
+  if (newButtonState == SW7){//No switches
     return;
-  } else if(newButton == SW6){//Switch07
+  } else if(newButtonState == SW6){//Switch07
     for (i = 0; i < maxSteps; i++){
       playSawTooth();
     }
-  } else if(newButton == SW5){//Switch06
+  } else if(newButtonState == SW5){//Switch06
     for (i = 0; i < maxSteps; i++){
       playTriangleWave();
     }
-  } else if(newButton == SW4){//Switch05
+  } else if(newButtonState == SW4){//Switch05
     for (i = 0; i < maxSteps; i++){
       playSquareWave();
     }
-  }/* else if(newButton == 0x10){//Switch04
+  }/* else if(newButtonState == 0x10){//Switch04
 
-  } else if(newButton == 0x8){//Switch03
+  } else if(newButtonState == 0x8){//Switch03
 
-  } else if(newButton == 0x4){//Switch02
+  } else if(newButtonState == 0x4){//Switch02
 
-  } else if(newButton == 0x2){//Switch01
+  } else if(newButtonState == 0x2){//Switch01
 
-  } else if(newButton == 0x1){//Switch0
+  } else if(newButtonState == 0x1){//Switch0
 
   }*/
 }
