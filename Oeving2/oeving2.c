@@ -11,7 +11,6 @@
 #include <math.h>
 
 #define ARRAYSIZE 9
-#define SQUARESIZE 8
 #define SW7 0x80
 #define SW6 0x40
 #define SW5 0x20
@@ -23,13 +22,13 @@ volatile avr32_pio_t *pioc = &AVR32_PIOC;
 volatile avr32_pm_t *pm = &AVR32_PM;
 volatile avr32_abdac_t *abdac = &AVR32_ABDAC;
 
-int static FREQDIV = 100; // tonehøye = clk/FREQDIV
+int static FREQDIV = 20; // tonehøye = clk/FREQDIV
 int static maxSteps = 440;
 short static volatile newButtonState;
 int static i;
 
 short sawTooth[ARRAYSIZE] = {-1, -0.75, -0.50, -0.25, 0, 0.25, 0.50, 0.75, 1};
-short squareWave[SQUARESIZE] = {-1, -1, -1, -1, 1, 1, 1, 1};
+short squareWave[SQUARESIZE] = {-1, -1, -1, -1, 1, 1, 1, 1, 1};
 short triangleWave[ARRAYSIZE] = {0, 0.50, 1, 0.50, 0, -0.50, -1, -0.50, 0};
 
 //short sinusWave[ARRAYSIZE] = {0, 100, 0, -100, 0};
@@ -44,7 +43,7 @@ void playSawTooth(void){
 }
 
 void playSquareWave(void){
-  for (i = 0; i < (SQUARESIZE*FREQDIV); i++){
+  for (i = 0; i < (ARRAYSIZE*FREQDIV); i++){
     int j;
     j =(int) floor((float)i/FREQDIV); 
     abdac->SDR.channel0 = (short)squareWave[j]*SHRT_MAX*0.1;
@@ -102,8 +101,8 @@ void initLeds(void){
 void initAudio(void){
   //Oppsett av PowerManager for klokke og abdac...
   pm->GCCTRL[6].oscsel = 0;
-  pm->GCCTRL[6].diven = 0;
-//  pm->GCCTRL[6].div = SHRT_MAX/2;
+  pm->GCCTRL[6].diven = 1;
+  pm->GCCTRL[6].div = SHRT_MAX/2;
   pm->GCCTRL[6].pllsel = 0;
   pm->GCCTRL[6].cen = 1;
   register_interrupt(abdac_isr, AVR32_ABDAC_IRQ/32, AVR32_ABDAC_IRQ % 32, ABDAC_INT_LEVEL);
@@ -151,5 +150,5 @@ void abdac_isr(void){
   //If-else to check what switch (buttons) are pressed
 //  playSawTooth();
 //  playSquareWave();
-  playTriangleWave();
+//  playTriangleWave();
 }
