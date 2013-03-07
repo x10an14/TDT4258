@@ -27,6 +27,7 @@ int static maxSteps = 440;
 short static volatile newButtonState;
 int static i;
 
+
 short sawTooth[ARRAYSIZE] = {-1, -(7/8), -0.75, -(5/8), -0.50, -(3/8), -0.25, -(1/8), 0, (1/8), 0.25, (3/8), 0.50, (5/8), 0.75, (7/8), 1};
 short triangleWave[ARRAYSIZE] = {0, 0.25, 0.50, 0.75, 1, 0.75, 0.50, 0.25, 0, -0.25, -0.50, -0.75, -1, -0.75, -0.50, -0.25, 0};
 short squareWave[ARRAYSIZE] = {-1, -1, -1, -1, -1, -1, -1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
@@ -57,8 +58,12 @@ void playSquareWave(void){
     j =(int) floor((float)i/FREQDIV); 
     abdac->SDR.channel0 = (short)squareWave[j]*SHRT_MAX*0.1;
     abdac->SDR.channel1 = (short)squareWave[j]*SHRT_MAX*0.1;
-  }
-}
+short **playListPtr;
+short *sawTooth[ARRAYSIZE] = {-1, -0.75, -0.50, -0.25, 0, 0.25, 0.50, 0.75, 1};
+short *squareWave[SQUARESIZE] = {-1, -1, -1, -1, 1, 1, 1, 1, 1};
+short *triangleWave[ARRAYSIZE] = {0, 0.50, 1, 0.50, 0, -0.50, -1, -0.50, 0};
+
+//short sinusWave[ARRAYSIZE] = {0, 100, 0, -100, 0};
 
 int main (int argc, char *argv[]){
 
@@ -119,20 +124,12 @@ void button_isr(void){
   newButtonState &= piob->isr;//To read interrupt vector, enabling next interrupt
   pioc->codr = 0xff;//Turn off all the lights
 
-  if (newButtonState == 0){//No switches
-    return;
-  } else if(newButtonState == SW7){//Switch07
-    for (i = 0; i < maxSteps; i++){
-      playSawTooth();
-    }
+  if(newButtonState == SW7){//Switch07
+    playListPtr = sawTooth;
   } else if(newButtonState == SW6){//Switch06
-    for (i = 0; i < maxSteps; i++){
-      playTriangleWave();
-    }
+    playListPtr = triangleWave;
   } else if(newButtonState == SW5){//Switch05
-    for (i = 0; i < maxSteps; i++){
-      playSquareWave();
-    }
+    playListPtr = squareWave;
   }/* else if(newButtonState == 0x10){//Switch04
 
   } else if(newButtonState == 0x8){//Switch03
@@ -144,11 +141,16 @@ void button_isr(void){
   } else if(newButtonState == 0x1){//Switch0
 
   }*/
+  pioc->sodr = newButtonState;
 }
 
 void abdac_isr(void){
-  //If-else to check what switch (buttons) are pressed
-//  playSawTooth();
-//  playSquareWave();
-//  playTriangleWave();
+  for(i = 0; i < ARRAYSIZE; i++){
+    for(j = 0; j < FREQDIV; j++){
+    abdac->SDR.channel0 = (short)playListPtr*SHRT_MAX*0.1;
+    abdac->SDR.channel1 = (short)playListPtr*SHRT_MAX*0.1;
+    }
+    playListPtr++;
+  }
+  playListPtr == NULL;
 }
