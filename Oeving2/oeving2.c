@@ -23,9 +23,7 @@ volatile avr32_pio_t *pioc = &AVR32_PIOC;
 volatile avr32_pm_t *pm = &AVR32_PM;
 volatile avr32_abdac_t *abdac = &AVR32_ABDAC;
 
-int static divide = 100;
-int static amplitude = -500;
-int static frequency = 0;
+int static frequencyDivide = 100;
 int static maxSteps = 440;
 short static volatile button_PDSR;
 int static i;
