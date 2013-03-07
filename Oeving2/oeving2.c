@@ -38,8 +38,8 @@ void playSawTooth(void){
   for (i = 0; i < (ARRAYSIZE*FREQDIV); i++){
     int j;
     j =(int) floor((float)i/FREQDIV); 
-    abdac->SDR.channel0 = (short)sawTooth[j]*SHRT_MAX*0.1;
-    abdac->SDR.channel1 = (short)sawTooth[j]*SHRT_MAX*0.1;
+    abdac->SDR.channel0 = (short)*sawTooth[j]*SHRT_MAX*0.1;
+    abdac->SDR.channel1 = (short)*sawTooth[j]*SHRT_MAX*0.1;
   }
 }
 
@@ -47,8 +47,8 @@ void playTriangleWave(void){
   for (i = 0; i < (ARRAYSIZE*FREQDIV); i++){
     int j;
     j =(int) floor((float)i/FREQDIV); 
-    abdac->SDR.channel0 = (short)triangleWave[j]*SHRT_MAX*0.1;
-    abdac->SDR.channel1 = (short)triangleWave[j]*SHRT_MAX*0.1;
+    abdac->SDR.channel0 = (short)*triangleWave[j]*SHRT_MAX*0.1;
+    abdac->SDR.channel1 = (short)*triangleWave[j]*SHRT_MAX*0.1;
   }
 }
 
@@ -56,8 +56,8 @@ void playSquareWave(void){
   for (i = 0; i < (ARRAYSIZE*FREQDIV); i++){
     int j;
     j =(int) floor((float)i/FREQDIV); 
-    abdac->SDR.channel0 = (short)squareWave[j]*SHRT_MAX*0.1;
-    abdac->SDR.channel1 = (short)squareWave[j]*SHRT_MAX*0.1;
+    abdac->SDR.channel0 = (short)*squareWave[j]*SHRT_MAX*0.1;
+    abdac->SDR.channel1 = (short)*squareWave[j]*SHRT_MAX*0.1;
   }  
 }
 
