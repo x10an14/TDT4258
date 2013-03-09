@@ -17,7 +17,7 @@
 #define SW4 0x10
 #define SW3 0x8
 
-#define SAWRATE 20  
+#define SAWRATE 20
 #define SQUARERATE 15
 #define TRIANGLERATE 18
 
@@ -137,6 +137,6 @@ void abdac_isr(void){
       }
     }
   }
-  abdac->SDR.channel0 = output*SHRT_MAX;
-  abdac->SDR.channel1 = output*SHRT_MAX;
+  abdac->SDR.channel0 = output*SHRT_MAX*0.05;
+  abdac->SDR.channel1 = output*SHRT_MAX*0.05;
 }
