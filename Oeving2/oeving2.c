@@ -64,11 +64,12 @@ int main (int argc, char *argv[]){
   int cntr = 0;
   for(i = 0; i < flaaklypa->size; i++){
     int j;
-    for(int j = 0; j < flaaklypa->list[i]->size; j++){
-      FLAAKLYPA->list =
-      if(flaaklypa->list[i]->list[j-1] == flaaklypa->list[i]->list[j] ||
-        j+1 == flaaklypa->list[i]->size){
-        memCntr += 5; //Silence
+    for(j = 0; j < flaaklypa->list[i]->size; j++){
+      smallSample *small = *flaaklypa->list[i];
+      addFrequency(small->freqList[j],small->list[j], FLAAKLYPA->list, cntr);
+      if(small->list[j-1] == small->list[j] ||
+        j+1 == small->size){
+        void addZeroes(5, FLAAKLYPA->list, cntr);
       }
     }
   }
@@ -104,16 +105,23 @@ int main (int argc, char *argv[]){
   return 0;
 }
 
-int getFrequencySize(int secDiv, short tone, int waveFormSize){
+int getFrequencySize(int timeDiv, short tone, int waveFormSize){
   return (int) (46875*(1/(secDiv*waveFormSize*tone)));
 }
 
 /*Function to add the time a tone will be played to a list, given a tone, length (div), and list*/
-void addFrequency(int div, short tone, short **list, int start){
-  int cntr = 46875*(1/(div*tone));
-  int i = start;
-  for(i == 0; i < cntr; i++){
+void addFrequency(int timeDiv, short tone, short **list, int start){
+  int cntr = 46875*(1/(timeDiv*tone));
+  int i;
+  for(i = start; i < cntr + start; i++){
+    list[i] = tone;
+  }
+}
 
+void addZeroes(int amount, short **list, int start){
+  int i;
+  for(i = start; i < amount + start; i++){
+    list[i] = 0;
   }
 }
 
