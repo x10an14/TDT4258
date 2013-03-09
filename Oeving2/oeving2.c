@@ -33,7 +33,7 @@ int *ratePtr = NULL;
 int sawTooth[] = {-1, -(7/8), -0.75, -(5/8), -0.50, -(3/8), -0.25, -(1/8), 0, (1/8), 0.25, (3/8), 0.50, (5/8), 0.75, (7/8), 1};
 int triangleWave[] = {0, 0.25, 0.50, 0.75, 1, 0.75, 0.50, 0.25, 0, -0.25, -0.50, -0.75, -1, -0.75, -0.50, -0.25, 0};
 int squareWave[SQUARESIZE] = {-1, 1};
-int toneScale[TONESIZE] = {C,D,E,F,G,A,B};
+int toneScale[TONESIZE] = {C4,D4,E4,F4,G4,A4,B4};
 smallSample *FLAAKLYPA;
 
 int main (int argc, char *argv[]){
