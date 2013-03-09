@@ -65,7 +65,8 @@ int main (int argc, char *argv[]){
   flaaklyp->list = (smallSample**) malloc(sizeof(smallSample*));
   flaaklyp->size = 10;
   //The below line declares the list member of the sample pointer to be the addresses of the above smallSample pointers
-  *(flaaklyp->list) = {&flaa1, &flaa2, &flaa1, &flaa3, &flaa4, &flaa4, &flaa1, &flaa2, &flaa1, &flaa3};
+  *(flaaklyp->list) = {&flaa1, &flaa2, &flaa1, &flaa3, &flaa4,
+    &flaa4, &flaa1, &flaa2, &flaa1, &flaa3};
 
   //Count to see how much space is needed
   //for-loop cntr
