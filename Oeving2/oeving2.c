@@ -42,10 +42,79 @@ int main (int argc, char *argv[]){
   smallSample *flaa4ptr = &flaa4;
   flaaklypa->list = {flaa1ptr,flaa2ptr,flaa1ptr,flaa3ptr,
     flaa4ptr,flaa4ptr,flaa1ptr,flaa2ptr,flaa1ptr,flaa3ptr};
+
+  int i;
+  int memCntr = 0;
+  for(i == 0; i < flaaklypa->size; i++){
+    int j;
+    for(int j = 0; j < flaaklypa->list[i]->size; j++){
+      memCntr += getFrequencySize(flaaklypa->list[i]->freqList[j], flaaklypa->list[i]->list[j],2);
+      if(flaaklypa->list[i]->list[j-1] == flaaklypa->list[i]->list[j] ||
+        j+1 == flaaklypa->list[i]->size){
+        memCntr += 5; //Silence
+      }
+    }
+  }
+
+  smallSample *FLAAKLYPA;
+  FLAAKLYPA = (smallSample*) malloc(sizeof(smallSample*));
+  FLAAKLYPA->size = memCntr;
+  FLAAKLYPA->list = (short) calloc(memCntr*sizeof(short)); //Total size of tune
+
+  int cntr = 0;
+  for(i = 0; i < flaaklypa->size; i++){
+    int j;
+    for(int j = 0; j < flaaklypa->list[i]->size; j++){
+      FLAAKLYPA->list =
+      if(flaaklypa->list[i]->list[j-1] == flaaklypa->list[i]->list[j] ||
+        j+1 == flaaklypa->list[i]->size){
+        memCntr += 5; //Silence
+      }
+    }
+  }
+  for(i = 0; i < flaaklypa->size; i++){
+    int j;
+    if(i == 0 || i == 2 || i == 6 || i == 8){
+      for(j = 0; j < flaaklypa->list[i]->size; j++){
+
+        FLAAKLYPA->list[cntr] = *flaaklypa->list[i]->list[j];
+        cntr++;
+      }
+    } else if(i == 1 || i == 7){
+      for(j = 0; j < flaaklypa->list[i]->size; j++){
+        FLAAKLYPA->list[cntr] = *flaaklypa->list[i]->list[j];
+        cntr++;
+      }
+    } else if(i == 3 || i == 9){
+      for(j = 0; j < flaaklypa->list[i]->size; j++){
+        FLAAKLYPA->list[cntr] = *flaaklypa->list[i]->list[j];
+        cntr++;
+      }
+    } else{
+      for(j = 0; j < flaaklypa->list[i]->size; j++){
+        FLAAKLYPA->list[cntr] = *flaaklypa->list[i]->list[j];
+        cntr++;
+      }
+    }
+  }
+  *flaaklypa = *FLAAKLYPA;
   initHardware();
 
   while(1);
   return 0;
+}
+
+int getFrequencySize(int secDiv, short tone, int waveFormSize){
+  return (int) (46875*(1/(secDiv*waveFormSize*tone)));
+}
+
+/*Function to add the time a tone will be played to a list, given a tone, length (div), and list*/
+void addFrequency(int div, short tone, short **list, int start){
+  int cntr = 46875*(1/(div*tone));
+  int i = start;
+  for(i == 0; i < cntr; i++){
+
+  }
 }
 
 /* funksjon for å initialisere maskinvaren, må utvides */
@@ -114,7 +183,7 @@ void button_isr(void){
     // *ratePtr = SQUARERATE;
     *ratePtr = toneScale[tone_position];
   } else if(newButtonState == 0x10){//Switch04
-    playListPtr =
+    playListPtr = flaaklypa->list;
   }/* else if(newButtonState == 0x8){//Switch03
 
   } else if(newButtonState == 0x4){//Switch02
