@@ -28,7 +28,6 @@ int current_repetition = 0;
 int tone_position = 0;
 int wave_position = 0;
 int toneCntr = 0;
-int toneSumCntr = 0;
 int volatile cntr = 0;
 short *playListPtr = NULL;
 int *ratePtr = NULL;
@@ -173,10 +172,11 @@ void initIntc(void){
 
 void initButtons(void){
   register_interrupt(button_isr, AVR32_PIOB_IRQ/32, AVR32_PIOB_IRQ % 32, BUTTONS_INT_LEVEL);
+  //Setting the below switch-values to variable active
   short active = SW7+SW6+SW5+SW4;
-  piob->per = active; //Switches 7-4 active
-  piob->puer = active;
-  piob->ier = active;
+  piob->per = active; //Activating switches in variable active
+  piob->puer = active; //Activating switches in variable active
+  piob->ier = active; //Activating interrupt for switches in variable active
   //Disable the rest of the switches
   piob->idr = ~active;
 }
@@ -241,16 +241,9 @@ void abdac_isr(void){
     output = playListPtr[toneCntr];
     //toneCntr iterates over the WHOLE tune
     ++toneCntr;
-      //If value changed (aka tone changed) (zeroes are "added" to previous value, so they are ignored)
-    if(playListPtr[toneCntr-1] != playListPtr[toneCntr] &&
-      playListPtr[toneCntr] != 0){
-      toneSumCntr += flaaTone[tone_position]*2;
-      tone_position++;
-    }
     //Below I check to see if we're at the end of the file
     if(toneCntr == cntr){
       toneCntr = 0;
-      toneSumCntr = 0;
       tone_position = 0;
     }
   } else if(playListPtr != NULL &&
