@@ -13,6 +13,9 @@
 
 
 
+sample flaaklyp;
+smallSample flaa1, flaa2, flaa3, flaa3, flaa4;
+
 volatile avr32_pio_t *piob = &AVR32_PIOB;
 volatile avr32_pio_t *pioc = &AVR32_PIOC;
 volatile avr32_pm_t *pm = &AVR32_PM;
