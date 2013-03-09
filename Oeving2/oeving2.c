@@ -18,7 +18,7 @@
 #define SW3 0x8
 
 #define SAWRATE 20
-#define SQUARERATE 15
+#define SQUARERATE 11
 #define TRIANGLERATE 18
 
 volatile avr32_pio_t *piob = &AVR32_PIOB;
