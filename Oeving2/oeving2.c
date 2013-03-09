@@ -11,6 +11,7 @@
 #include <math.h>
 
 #define ARRAYSIZE 17
+#define SQUARESIZE 10
 #define SW7 0x80
 #define SW6 0x40
 #define SW5 0x20
@@ -20,6 +21,15 @@
 #define SAWRATE 20
 #define SQUARERATE 11
 #define TRIANGLERATE 18
+
+#define C 19
+#define D 17.5
+#define E 15
+#define F 14
+#define G 12.5
+#define A 11
+#define B 10
+
 
 volatile avr32_pio_t *piob = &AVR32_PIOB;
 volatile avr32_pio_t *pioc = &AVR32_PIOC;
@@ -33,12 +43,15 @@ short static volatile newButtonState;
 //short sinusWave[ARRAYSIZE] = {0, 100, 0, -100, 0};
 
 int current_repetition = 0;
+int current_tone = 0;
 int wave_position = 0;
+int toneCntr  = 0;
 int *playListPtr = NULL;
 int *ratePtr = NULL;
 int sawTooth[] = {-1, -(7/8), -0.75, -(5/8), -0.50, -(3/8), -0.25, -(1/8), 0, (1/8), 0.25, (3/8), 0.50, (5/8), 0.75, (7/8), 1};
 int triangleWave[] = {0, 0.25, 0.50, 0.75, 1, 0.75, 0.50, 0.25, 0, -0.25, -0.50, -0.75, -1, -0.75, -0.50, -0.25, 0};
-int squareWave[] = {-1, -1, -1, -1, -1, -1, -1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+int squareWave[SQUARESIZE] = {-1, -1, -1, -1, -1, 1, 1, 1, 1, 1};
+int toneScale[] = {C,D,E,F,G,A,B};
 
 int main (int argc, char *argv[]){
 
@@ -110,7 +123,8 @@ void button_isr(void){
     *ratePtr = TRIANGLERATE;
   } else if(newButtonState == SW5){//Switch05
     playListPtr = squareWave;
-    *ratePtr = SQUARERATE;
+    // *ratePtr = SQUARERATE;
+    *ratePtr = toneScale[current_tone];
   }/* else if(newButtonState == 0x10){//Switch04
 
   } else if(newButtonState == 0x8){//Switch03
@@ -128,14 +142,27 @@ void abdac_isr(void){
   short output = 0;
   if (playListPtr != NULL){
     output = playListPtr[wave_position];
-    current_repetition++;
-    if (current_repetition >= *ratePtr) {
-      wave_position++;
-      current_repetition = 0;
-      if (wave_position >= ARRAYSIZE) {
+    toneCntr++;
+    if(toneCntr >= *ratePtr){
+      toneCntr = 0;
+      ++wave_position;
+      *ratePtr = toneScale[current_tone];
+      if(wave_position >= 9){
+        ++current_tone;
         wave_position = 0;
-        //playListPtr = NULL; //Uncomment this to make it stop endless repeat
+        if(current_tone >= 7){
+          current_tone = 0;
+        }
       }
+     /* current_repetition++;
+      if (current_repetition >= *ratePtr) {
+        wave_position++;
+        current_repetition = 0;
+        if (wave_position >= ARRAYSIZE) {
+          wave_position = 0;
+          //playListPtr = NULL; //Uncomment this to make it stop endless repeat
+        }
+      }*/
     }
   }
   abdac->SDR.channel0 = output*SHRT_MAX*0.4;
