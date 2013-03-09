@@ -25,7 +25,7 @@ typedef struct smallSample{
 }smallSample;
 
 typedef struct sample{
-    smallSample **list;
+    smallSample *list;
     short size;
 }sample;
 
@@ -57,9 +57,6 @@ typedef struct sample{
 #define A4 220
 #define B4 247
 #define C5 262
-
-sample flaaklyp;
-smallSample flaa1, flaa2, flaa3, flaa3, flaa4;
 
 
 /* prototyper */
