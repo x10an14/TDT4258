@@ -28,11 +28,11 @@ int current_repetition = 0;
 int tone_position = 0;
 int wave_position = 0;
 int toneCntr  = 0;
-int *playListPtr = NULL;
+short *playListPtr = NULL;
 int *ratePtr = NULL;
-int sawTooth[] = {-1, -(7/8), -0.75, -(5/8), -0.50, -(3/8), -0.25, -(1/8), 0, (1/8), 0.25, (3/8), 0.50, (5/8), 0.75, (7/8), 1};
-int triangleWave[] = {0, 0.25, 0.50, 0.75, 1, 0.75, 0.50, 0.25, 0, -0.25, -0.50, -0.75, -1, -0.75, -0.50, -0.25, 0};
-int squareWave[SQUARESIZE] = {-1, 1};
+short sawTooth[] = {-1, -(7/8), -0.75, -(5/8), -0.50, -(3/8), -0.25, -(1/8), 0, (1/8), 0.25, (3/8), 0.50, (5/8), 0.75, (7/8), 1};
+short triangleWave[] = {0, 0.25, 0.50, 0.75, 1, 0.75, 0.50, 0.25, 0, -0.25, -0.50, -0.75, -1, -0.75, -0.50, -0.25, 0};
+short squareWave[SQUARESIZE] = {-1, 1};
 int toneScale[TONESIZE] = {C4,D4,E4,F4,G4,A4,B4};
 smallSample *FLAAKLYPA;
 
@@ -195,7 +195,7 @@ void button_isr(void){
     *ratePtr = toneScale[tone_position];
   } else if(newButtonState == 0x10){//Switch04
     playListPtr = FLAAKLYPA->list;
-    *ratePtr = 2;
+    *ratePtr = SQUARESIZE;
   }/* else if(newButtonState == 0x8){//Switch03
 
   } else if(newButtonState == 0x4){//Switch02
@@ -209,7 +209,7 @@ void button_isr(void){
 
 void abdac_isr(void){
   short output = 0;
-  if(playListPtr == FLAAKLYPA){
+  if(playListPtr == FLAAKLYPA->list){
 
   } else if(playListPtr != NULL){
     output = playListPtr[wave_position];
