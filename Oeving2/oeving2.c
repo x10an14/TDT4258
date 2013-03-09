@@ -223,7 +223,7 @@ void button_isr(void){
     *ratePtr = SQUARERATE;
     *ratePtr = toneScale[tone_position];
   } else if(newButtonState == 0x10){//Switch04
-    playListPtr = flaaTone->list;
+    playListPtr = flaaklypa->list;
   }/* else if(newButtonState == 0x8){//Switch03
 
   } else if(newButtonState == 0x4){//Switch02
