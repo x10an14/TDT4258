@@ -72,7 +72,7 @@ int main (int argc, char *argv[]){
   for(i = 0; i < flaaklypa->size; i++){
     int j;
     for(j = 0; j < flaaklypa->list[i]->size; j++){
-      memCntr += getFrequencySize(flaaklypa->list[i]->freqList[j], flaaklypa->list[i]->list[j],2) +2; //+2 to add when waveform shifts
+      memCntr += getFrequencySize(*(flaaklypa->list[i])->freqList[j], *(flaaklypa->list[i])->list[j],2) +2; //+2 to add when waveform shifts
       if(flaaklypa->list[i]->list[j-1] == flaaklypa->list[i]->list[j] ||
         j+1 == flaaklypa->list[i]->size){
         memCntr += 5; //Silence
