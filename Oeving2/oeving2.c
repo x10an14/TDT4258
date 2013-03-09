@@ -98,8 +98,8 @@ int main (int argc, char *argv[]){
         memCntr += 4; //Silence
         flaaTone[cntr] += 4;
       }
-      //Dividing by 2 and adding 2 for audio_isr cntrs to work in audio_isr
-      flaaTone[cntr] /= 2; flaaTone += 2;
+      //Dividing by 2 so that audio_isr cntrs to work in audio_isr
+      flaaTone[cntr] /= 2;
       //increasing cntr to manipulate next element in flaaTone
       cntr += 1;
     }
@@ -133,6 +133,7 @@ int main (int argc, char *argv[]){
   return 0;
 }
 
+//Fun
 int getFrequencySize(int timeDiv, short tone, int waveFormSize){
   return (int) (46875*(1/(timeDiv*waveFormSize*tone)));
 }
@@ -142,7 +143,10 @@ void addFrequency(int timeDiv, short tone, short *list, int start){
   int freqCntr = 46875*(1/(timeDiv*tone));
   int i;
   for(i = start; i < freqCntr + start; i++){
-    list[i] = -tone;
+    if(i < freqCntr/2){
+      list[i] = -tone;
+    }
+    list[i] = tone;
   }
 }
 
@@ -243,14 +247,11 @@ void abdac_isr(void){
       toneSumCntr += flaaTone[tone_position]*2;
       tone_position++;
     }
-    //Below we check if the current note is halfway through its play (that's when we want to change the sign to get a squareWave)
-    if(toneCntr >= toneSumCntr+flaaTone[tone_position]){
-      output *= -1;
-      if(toneCntr == cntr){
-        toneCntr = 0;
-        toneSumCntr = 0;
-        tone_position = 0;
-      }
+    //Below I check to see if we're at the end of the file
+    if(toneCntr == cntr){
+      toneCntr = 0;
+      toneSumCntr = 0;
+      tone_position = 0;
     }
   } else if(playListPtr != NULL &&
     playListPtr != flaaklypa->list){
