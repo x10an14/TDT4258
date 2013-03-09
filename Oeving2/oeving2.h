@@ -19,13 +19,13 @@
 
 /*Structs we've made ourselves for this assignment*/
 typedef struct smallSample{
-    short **list;
-    short **timeList;
+    short *list;
+    short *timeList;
     short size;
 }smallSample;
 
 typedef struct sample{
-    smallSample **list;
+    smallSample *list;
     short size;
 }sample;
 
