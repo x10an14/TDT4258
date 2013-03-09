@@ -62,7 +62,7 @@ int main (int argc, char *argv[]){
   flaa4->timeList = foo8;
 
   flaaklypa->size = 10;
-  smallSample foo9[] = {flaa1,flaa2,flaa1,flaa3,
+  smallSample *foo9[] = {flaa1,flaa2,flaa1,flaa3,
     flaa4,flaa4,flaa1,flaa2,flaa1,flaa3};
   flaaklypa->list = foo9;
 
@@ -71,7 +71,7 @@ int main (int argc, char *argv[]){
   int memCntr = 0;
   for(i = 0; i < flaaklypa->size; i++){
     int j;
-    for(int j = 0; j < flaaklypa->list[i]->size; j++){
+    for(j = 0; j < flaaklypa->list[i]->size; j++){
       memCntr += getFrequencySize(flaaklypa->list[i]->freqList[j], flaaklypa->list[i]->list[j],2) +2; //+2 to add when waveform shifts
       if(flaaklypa->list[i]->list[j-1] == flaaklypa->list[i]->list[j] ||
         j+1 == flaaklypa->list[i]->size){
