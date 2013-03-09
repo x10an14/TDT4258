@@ -40,7 +40,7 @@ int main (int argc, char *argv[]){
   flaa1->size = 8;
   short foo1[] = {E4,A4,B4,C5,B4,A4,G4,E4};
   short foo2[] = {4,4,4,5,4,4,3,4};
-  flaa1->list = foo;
+  flaa1->list = foo1;
   flaa1->timeList = foo2;
 
   flaa2->size = 12;
@@ -62,8 +62,9 @@ int main (int argc, char *argv[]){
   flaa4->timeList = foo8;
 
   flaaklypa->size = 10;
-  flaaklypa->list = {flaa1,flaa2,flaa1,flaa3,
+  smallSample foo9[] = {flaa1,flaa2,flaa1,flaa3,
     flaa4,flaa4,flaa1,flaa2,flaa1,flaa3};
+  flaaklypa->list = foo9;
 
   //Count to see how much space is needed
   int i;
