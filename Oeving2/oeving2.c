@@ -27,13 +27,15 @@ short static volatile newButtonState;
 int current_repetition = 0;
 int tone_position = 0;
 int wave_position = 0;
-int toneCntr  = 0;
+int toneCntr = 0;
+int toneCntr2 = 0;
 short *playListPtr = NULL;
 int *ratePtr = NULL;
 short sawTooth[] = {-1, -(7/8), -0.75, -(5/8), -0.50, -(3/8), -0.25, -(1/8), 0, (1/8), 0.25, (3/8), 0.50, (5/8), 0.75, (7/8), 1};
 short triangleWave[] = {0, 0.25, 0.50, 0.75, 1, 0.75, 0.50, 0.25, 0, -0.25, -0.50, -0.75, -1, -0.75, -0.50, -0.25, 0};
 short squareWave[SQUARESIZE] = {-1, 1};
-int toneScale[TONESIZE] = {C4,D4,E4,F4,G4,A4,B4};
+short toneScale[TONESIZE] = {C4,D4,E4,F4,G4,A4,B4};
+short FLAAWAVE[];
 smallSample *FLAAKLYPA;
 
 int main (int argc, char *argv[]){
@@ -67,18 +69,26 @@ int main (int argc, char *argv[]){
   flaaklypa->list = foo9;
 
   //Count to see how much space is needed
-  int i;
+  int i, cntr;
+  cntr = 0;
   int memCntr = 0;
+  short flaaTone[102];
   for(i = 0; i < flaaklypa->size; i++){
     int j;
     for(j = 0; j < flaaklypa->list[i]->size; j++){
-      memCntr += getFrequencySize(flaaklypa->list[i]->timeList[j], flaaklypa->list[i]->list[j],2) +2; //+2 to add when waveform shifts
+      int size = getFrequencySize(flaaklypa->list[i]->timeList[j], flaaklypa->list[i]->list[j],2);
+      memCntr += size;
+      flaaTone[cntr] = size;
       if(flaaklypa->list[i]->list[j-1] == flaaklypa->list[i]->list[j] ||
         j+1 == flaaklypa->list[i]->size){
         memCntr += 5; //Silence
+        flaaTone[cntr] += 5;
       }
+      flaaTone[cntr] /= 2;
+      cntr += 1;
     }
   }
+  FLAAWAVE = flaaTone;
 
   //Assign space
   FLAAKLYPA = (smallSample*) malloc(sizeof(smallSample*));
@@ -86,7 +96,7 @@ int main (int argc, char *argv[]){
   FLAAKLYPA->list = (short*) calloc((short) 0, memCntr*sizeof(short)); //Total size of tune
 
   //Assign values to final list (FLAAKLYPA->list)
-  int cntr = 0;
+  cntr = 0;
   for(i = 0; i < flaaklypa->size; i++){
     int j;
     for(j = 0; j < flaaklypa->list[i]->size; j++){
@@ -117,7 +127,7 @@ void addFrequency(int timeDiv, short tone, short *list, int start){
   int cntr = 46875*(1/(timeDiv*tone));
   int i;
   for(i = start; i < cntr + start; i++){
-    list[i] = tone;
+    list[i] = -tone;
   }
 }
 
@@ -195,7 +205,6 @@ void button_isr(void){
     *ratePtr = toneScale[tone_position];
   } else if(newButtonState == 0x10){//Switch04
     playListPtr = FLAAKLYPA->list;
-    *ratePtr = SQUARESIZE;
   }/* else if(newButtonState == 0x8){//Switch03
 
   } else if(newButtonState == 0x4){//Switch02
@@ -210,8 +219,23 @@ void button_isr(void){
 void abdac_isr(void){
   short output = 0;
   if(playListPtr == FLAAKLYPA->list){
+    output = playListPtr[toneCntr];
+    ++toneCntr;
+    //toneCntr iterates over the WHOLE tune
+    if(playListPtr[toneCntr-1] != playListPtr[toneCntr]){
+      //If value changed (aka tone changed)
+      tone_position++;
 
-  } else if(playListPtr != NULL){
+    }
+    if(toneCntr >= FLAAWAVE[tone_position]){
+      output *= -1;
+
+    }
+      if(/* condition */){
+        /* code */
+      }
+  } else if(playListPtr != NULL &&
+    playListPtr != FLAAKLYPA->list){
     output = playListPtr[wave_position];
     toneCntr++;
     if(toneCntr >= *ratePtr){
