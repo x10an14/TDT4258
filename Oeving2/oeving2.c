@@ -38,26 +38,37 @@ smallSample *FLAAKLYPA;
 
 int main (int argc, char *argv[]){
   flaa1->size = 8;
-  flaa1->list = {E4,A4,B4,C5,B4,A4,G4,E4};
-  flaa1->timeList = {4,4,4,5,4,4,3,4};
-  flaa2->size = 12;
-  flaa2->list = {C4,D4,E4,F4,E4,D4,C4,D4,E4,D4,C4,B3};
-  flaa2->timeList = {4,4,4,4,4,4,4,4,4,4,4,2};
-  flaa3->size = 8;
-  flaa3->list = {C4,D4,E4,D4,C4,B3,A3,A3};
-  flaa3->timeList = {4,4,2,4,4,2,2,2};
-  flaa4->size = 15;
-  flaa4->list = {A3,A4,G4,F4,E4,C4,A3,B3,C4,D4,E4,F4,E4,D4,C4};
-  flaa4->timeList = {2,2,4,4,4,4,2,4,4,2,4,4,4,4,4};
-  flaaklypa->size = 10;
+  short foo1[] = {E4,A4,B4,C5,B4,A4,G4,E4};
+  short foo2[] = {4,4,4,5,4,4,3,4};
+  flaa1->list = foo;
+  flaa1->timeList = foo2;
 
-  flaaklypa->list = {flaa1ptr,flaa2ptr,flaa1ptr,flaa3ptr,
-    flaa4ptr,flaa4ptr,flaa1ptr,flaa2ptr,flaa1ptr,flaa3ptr};
+  flaa2->size = 12;
+  short foo3[] = {C4,D4,E4,F4,E4,D4,C4,D4,E4,D4,C4,B3};
+  short foo4[] = {4,4,4,4,4,4,4,4,4,4,4,2};
+  flaa2->list = foo3;
+  flaa2->timeList = foo4;
+
+  flaa3->size = 8;
+  short foo5[] = {C4,D4,E4,D4,C4,B3,A3,A3};
+  short foo6[] = {4,4,2,4,4,2,2,2};
+  flaa3->list = foo5;
+  flaa3->timeList = foo6;
+
+  flaa4->size = 15;
+  short foo7[] = {A3,A4,G4,F4,E4,C4,A3,B3,C4,D4,E4,F4,E4,D4,C4};
+  short foo8[] = {2,2,4,4,4,4,2,4,4,2,4,4,4,4,4};
+  flaa4->list = foo7;
+  flaa4->timeList = foo8;
+
+  flaaklypa->size = 10;
+  flaaklypa->list = {flaa1,flaa2,flaa1,flaa3,
+    flaa4,flaa4,flaa1,flaa2,flaa1,flaa3};
 
   //Count to see how much space is needed
   int i;
   int memCntr = 0;
-  for(i == 0; i < flaaklypa->size; i++){
+  for(i = 0; i < flaaklypa->size; i++){
     int j;
     for(int j = 0; j < flaaklypa->list[i]->size; j++){
       memCntr += getFrequencySize(flaaklypa->list[i]->freqList[j], flaaklypa->list[i]->list[j],2) +2; //+2 to add when waveform shifts
