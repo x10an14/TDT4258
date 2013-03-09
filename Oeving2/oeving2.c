@@ -29,6 +29,7 @@ int tone_position = 0;
 int wave_position = 0;
 int toneCntr = 0;
 int toneCntr2 = 0;
+int volatile cntr = 0;
 short *playListPtr = NULL;
 int *ratePtr = NULL;
 short sawTooth[] = {-1, -(7/8), -0.75, -(5/8), -0.50, -(3/8), -0.25, -(1/8), 0, (1/8), 0.25, (3/8), 0.50, (5/8), 0.75, (7/8), 1};
@@ -69,8 +70,7 @@ int main (int argc, char *argv[]){
   flaaklypa->list = foo9;
 
   //Count to see how much space is needed
-  int i, cntr;
-  cntr = 0;
+  int i;
   int memCntr = 0;
   short flaaTone[102];
   for(i = 0; i < flaaklypa->size; i++){
@@ -88,7 +88,7 @@ int main (int argc, char *argv[]){
       cntr += 1;
     }
   }
-  FLAAWAVE = flaaTone;
+  FLAAWAVE = &flaaTone;
 
   //Assign space
   FLAAKLYPA = (smallSample*) malloc(sizeof(smallSample*));
@@ -124,9 +124,9 @@ int getFrequencySize(int timeDiv, short tone, int waveFormSize){
 
 /*Function to add the time a tone will be played to a list, given a tone, length (div), and list*/
 void addFrequency(int timeDiv, short tone, short *list, int start){
-  int cntr = 46875*(1/(timeDiv*tone));
+  int freqCntr = 46875*(1/(timeDiv*tone));
   int i;
-  for(i = start; i < cntr + start; i++){
+  for(i = start; i < freqCntr + start; i++){
     list[i] = -tone;
   }
 }
@@ -222,18 +222,21 @@ void abdac_isr(void){
     output = playListPtr[toneCntr];
     ++toneCntr;
     //toneCntr iterates over the WHOLE tune
-    if(playListPtr[toneCntr-1] != playListPtr[toneCntr]){
-      //If value changed (aka tone changed)
+    if(playListPtr[toneCntr-1] != playListPtr[toneCntr] &&
+      playListPtr[toneCntr] != 0){
+      //If value changed (aka tone changed) (zeroes are "added" to previous value, so they are ignored)
+      toneCntr2 += FLAAWAVE[tone_position]*2;
       tone_position++;
-
     }
-    if(toneCntr >= FLAAWAVE[tone_position]){
+    //Below we check if the current note is halfway through its play (that's when we want to change the sign to get a squareWave)
+    if(toneCntr >= toneCntr2+FLAAWAVE[tone_position]){
       output *= -1;
-
-    }
-      if(/* condition */){
-        /* code */
+      if(toneCntr == cntr){
+        toneCntr = 0;
+        toneCntr2 = 0;
+        tone_position = 0;
       }
+    }
   } else if(playListPtr != NULL &&
     playListPtr != FLAAKLYPA->list){
     output = playListPtr[wave_position];
