@@ -60,19 +60,6 @@ typedef struct sample{
 
 sample *flaaklypa;
 smallSample *flaa1, *flaa2, *flaa3, *flaa3, *flaa4;
-flaa1->size = 8;
-flaa1->list = {E4,A4,B4,C5,B4,A4,G4,E4};
-flaa1->timeList = {4,4,4,5,4,4,3,4};
-flaa2->size = 12;
-flaa2->list = {C4,D4,E4,F4,E4,D4,C4,D4,E4,D4,C4,B3};
-flaa2->timeList = {4,4,4,4,4,4,4,4,4,4,4,2};
-flaa3->size = 8;
-flaa3->list = {C4,D4,E4,D4,C4,B3,A3,A3};
-flaa3->timeList = {4,4,2,4,4,2,2,2};
-flaa4->size = 15;
-flaa4->list = {A3,A4,G4,F4,E4,C4,A3,B3,C4,D4,E4,F4,E4,D4,C4};
-flaa4->timeList = {2,2,4,4,4,4,2,4,4,2,4,4,4,4,4};
-flaaklypa->size = 10;
 
 
 /* prototyper */
