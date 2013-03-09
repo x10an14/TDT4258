@@ -90,9 +90,9 @@ int main (int argc, char *argv[]){
   for(i = 0; i < flaaklypa->size; i++){
     int j;
     for(j = 0; j < flaaklypa->list[i]->size; j++){
-      smallSample *small = *flaaklypa->list[i];
-      int size = getFrequencySize(small->freqList[j], small->list[j], 2);
-      addFrequency(small->freqList[j],small->list[j], FLAAKLYPA->list, cntr);
+      smallSample *small = flaaklypa->list[i];
+      int size = getFrequencySize(small->timeList[j], small->list[j], 2);
+      addFrequency(small->timeList[j],small->list[j], FLAAKLYPA->list, cntr);
       cntr += size;
       if(small->list[j-1] == small->list[j] ||
         j+1 == small->size){
