@@ -69,7 +69,7 @@ int main (int argc, char *argv[]){
 
   //Repeat of above, but here to collect them all into a sample instead of a smallSample
   flaaklyp.size = 10;
-  smallSample *foo9[] = {&flaa1,&flaa2,&flaa1,&flaa3,
+  smallSample *foo9[10] = {&flaa1,&flaa2,&flaa1,&flaa3,
     &flaa4,&flaa4,&flaa1,&flaa2,&flaa1,&flaa3};
   flaaklyp.list = foo9;
 
