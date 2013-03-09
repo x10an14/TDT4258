@@ -10,25 +10,7 @@
 #include <limits.h>
 #include <math.h>
 
-#define ARRAYSIZE 17
-#define SQUARESIZE 10
-#define SW7 0x80
-#define SW6 0x40
-#define SW5 0x20
-#define SW4 0x10
-#define SW3 0x8
 
-#define SAWRATE 20
-#define SQUARERATE 11
-#define TRIANGLERATE 18
-
-#define C 19
-#define D 17.5
-#define E 15
-#define F 14
-#define G 12.5
-#define A 11
-#define B 10
 
 
 volatile avr32_pio_t *piob = &AVR32_PIOB;
@@ -43,18 +25,23 @@ short static volatile newButtonState;
 //short sinusWave[ARRAYSIZE] = {0, 100, 0, -100, 0};
 
 int current_repetition = 0;
-int current_tone = 0;
+int tone_position = 0;
 int wave_position = 0;
 int toneCntr  = 0;
 int *playListPtr = NULL;
 int *ratePtr = NULL;
 int sawTooth[] = {-1, -(7/8), -0.75, -(5/8), -0.50, -(3/8), -0.25, -(1/8), 0, (1/8), 0.25, (3/8), 0.50, (5/8), 0.75, (7/8), 1};
 int triangleWave[] = {0, 0.25, 0.50, 0.75, 1, 0.75, 0.50, 0.25, 0, -0.25, -0.50, -0.75, -1, -0.75, -0.50, -0.25, 0};
-int squareWave[SQUARESIZE] = {-1, -1, -1, -1, -1, 1, 1, 1, 1, 1};
-int toneScale[] = {C,D,E,F,G,A,B};
+int squareWave[SQUARESIZE] = {-1, 1};
+int toneScale[TONESIZE] = {C,D,E,F,G,A,B};
 
 int main (int argc, char *argv[]){
-
+  smallSample *flaa1ptr = &flaa1;
+  smallSample *flaa2ptr = &flaa2;
+  smallSample *flaa3ptr = &flaa3;
+  smallSample *flaa4ptr = &flaa4;
+  flaaklypa.list = {flaa1ptr,flaa2ptr,flaa1ptr,flaa3ptr,
+    flaa4ptr,flaa4ptr,flaa1ptr,flaa2ptr,flaa1ptr,flaa3ptr};
   initHardware();
 
   while(1);
@@ -77,11 +64,12 @@ void initIntc(void){
 
 void initButtons(void){
   register_interrupt(button_isr, AVR32_PIOB_IRQ/32, AVR32_PIOB_IRQ % 32, BUTTONS_INT_LEVEL);
-  piob->per = 0xe0; //Switches 7-5 active
-  piob->puer = 0xe0;
-  piob->ier = 0xe0;
+  short active = SW7+SW6+SW5+SW4;
+  piob->per = active; //Switches 7-4 active
+  piob->puer = active;
+  piob->ier = active;
   //Disable the rest of the switches
-  piob->idr = 0x1f;
+  piob->idr = ~active;
 }
 
 void initLeds(void){
@@ -124,10 +112,10 @@ void button_isr(void){
   } else if(newButtonState == SW5){//Switch05
     playListPtr = squareWave;
     // *ratePtr = SQUARERATE;
-    *ratePtr = toneScale[current_tone];
-  }/* else if(newButtonState == 0x10){//Switch04
-
-  } else if(newButtonState == 0x8){//Switch03
+    *ratePtr = toneScale[tone_position];
+  } else if(newButtonState == 0x10){//Switch04
+    playListPtr
+  }/* else if(newButtonState == 0x8){//Switch03
 
   } else if(newButtonState == 0x4){//Switch02
 
@@ -146,12 +134,12 @@ void abdac_isr(void){
     if(toneCntr >= *ratePtr){
       toneCntr = 0;
       ++wave_position;
-      *ratePtr = toneScale[current_tone];
+      *ratePtr = toneScale[tone_position];
       if(wave_position >= 9){
-        ++current_tone;
+        ++tone_position;
         wave_position = 0;
-        if(current_tone >= 7){
-          current_tone = 0;
+        if(tone_position >= 7){
+          tone_position = 0;
         }
       }
      /* current_repetition++;
