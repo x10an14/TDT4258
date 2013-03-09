@@ -58,8 +58,8 @@ typedef struct sample{
 #define B4 247
 #define C5 262
 
-sample *flaaklyp;
-smallSample *flaa1, *flaa2, *flaa3, *flaa3, *flaa4;
+sample flaaklyp;
+smallSample flaa1, flaa2, flaa3, flaa3, flaa4;
 
 
 /* prototyper */

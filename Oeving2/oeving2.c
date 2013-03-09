@@ -18,10 +18,8 @@ volatile avr32_pio_t *pioc = &AVR32_PIOC;
 volatile avr32_pm_t *pm = &AVR32_PM;
 volatile avr32_abdac_t *abdac = &AVR32_ABDAC;
 
-//int static FREQDIV = 20; // tonehøye = clk/FREQDIV
+//buttonState variable
 short static volatile newButtonState;
-
-//short sinusWave[ARRAYSIZE] = {0, 100, 0, -100, 0};
 
 //All below are global, CAPS are
 int current_repetition = 0;
@@ -40,13 +38,13 @@ smallSample *flaaklypa;
 
 int main (int argc, char *argv[]){
   //flaa1 is a smallSample that has size, timelist, and list members
-  flaa1->size = 8;
+  flaa1.size = 8;
   //Temp lists
   short foo1[] = {E4,A4,B4,C5,B4,A4,G4,E4};
   short foo2[] = {4,4,4,5,4,4,3,4};
   //Putting lists onto struct
-  flaa1->list = foo1;
-  flaa1->timeList = foo2;
+  flaa1.list = foo1;
+  flaa1.timeList = foo2;
 
   //Repeat of above
   flaa2->size = 12;
