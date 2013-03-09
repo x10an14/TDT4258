@@ -34,21 +34,23 @@ int sawTooth[] = {-1, -(7/8), -0.75, -(5/8), -0.50, -(3/8), -0.25, -(1/8), 0, (1
 int triangleWave[] = {0, 0.25, 0.50, 0.75, 1, 0.75, 0.50, 0.25, 0, -0.25, -0.50, -0.75, -1, -0.75, -0.50, -0.25, 0};
 int squareWave[SQUARESIZE] = {-1, 1};
 int toneScale[TONESIZE] = {C,D,E,F,G,A,B};
+smallSample *FLAAKLYPA;
 
 int main (int argc, char *argv[]){
-  smallSample *flaa1ptr = &flaa1;
-  smallSample *flaa2ptr = &flaa2;
-  smallSample *flaa3ptr = &flaa3;
-  smallSample *flaa4ptr = &flaa4;
+  smallSample *flaa1ptr = *flaa1;
+  smallSample *flaa2ptr = *flaa2;
+  smallSample *flaa3ptr = *flaa3;
+  smallSample *flaa4ptr = *flaa4;
   flaaklypa->list = {flaa1ptr,flaa2ptr,flaa1ptr,flaa3ptr,
     flaa4ptr,flaa4ptr,flaa1ptr,flaa2ptr,flaa1ptr,flaa3ptr};
 
+  //Count to see how much space is needed
   int i;
   int memCntr = 0;
   for(i == 0; i < flaaklypa->size; i++){
     int j;
     for(int j = 0; j < flaaklypa->list[i]->size; j++){
-      memCntr += getFrequencySize(flaaklypa->list[i]->freqList[j], flaaklypa->list[i]->list[j],2);
+      memCntr += getFrequencySize(flaaklypa->list[i]->freqList[j], flaaklypa->list[i]->list[j],2) +2; //+2 to add when waveform shifts
       if(flaaklypa->list[i]->list[j-1] == flaaklypa->list[i]->list[j] ||
         j+1 == flaaklypa->list[i]->size){
         memCntr += 5; //Silence
@@ -56,48 +58,28 @@ int main (int argc, char *argv[]){
     }
   }
 
-  smallSample *FLAAKLYPA;
+  //Assign space
   FLAAKLYPA = (smallSample*) malloc(sizeof(smallSample*));
   FLAAKLYPA->size = memCntr;
   FLAAKLYPA->list = (short) calloc(memCntr*sizeof(short)); //Total size of tune
 
+  //Assign values to final list (FLAAKLYPA->list)
   int cntr = 0;
   for(i = 0; i < flaaklypa->size; i++){
     int j;
     for(j = 0; j < flaaklypa->list[i]->size; j++){
       smallSample *small = *flaaklypa->list[i];
+      int size = getFrequencySize(small->freqList[j], small->list[j], 2);
       addFrequency(small->freqList[j],small->list[j], FLAAKLYPA->list, cntr);
+      cntr += size;
       if(small->list[j-1] == small->list[j] ||
         j+1 == small->size){
         void addZeroes(5, FLAAKLYPA->list, cntr);
+        cntr += 5;
       }
     }
   }
-  for(i = 0; i < flaaklypa->size; i++){
-    int j;
-    if(i == 0 || i == 2 || i == 6 || i == 8){
-      for(j = 0; j < flaaklypa->list[i]->size; j++){
 
-        FLAAKLYPA->list[cntr] = *flaaklypa->list[i]->list[j];
-        cntr++;
-      }
-    } else if(i == 1 || i == 7){
-      for(j = 0; j < flaaklypa->list[i]->size; j++){
-        FLAAKLYPA->list[cntr] = *flaaklypa->list[i]->list[j];
-        cntr++;
-      }
-    } else if(i == 3 || i == 9){
-      for(j = 0; j < flaaklypa->list[i]->size; j++){
-        FLAAKLYPA->list[cntr] = *flaaklypa->list[i]->list[j];
-        cntr++;
-      }
-    } else{
-      for(j = 0; j < flaaklypa->list[i]->size; j++){
-        FLAAKLYPA->list[cntr] = *flaaklypa->list[i]->list[j];
-        cntr++;
-      }
-    }
-  }
   *flaaklypa = *FLAAKLYPA;
   initHardware();
 
@@ -191,7 +173,8 @@ void button_isr(void){
     // *ratePtr = SQUARERATE;
     *ratePtr = toneScale[tone_position];
   } else if(newButtonState == 0x10){//Switch04
-    playListPtr = flaaklypa->list;
+    playListPtr = FLAAKLYPA->list;
+    *ratePtr = 2;
   }/* else if(newButtonState == 0x8){//Switch03
 
   } else if(newButtonState == 0x4){//Switch02
@@ -205,7 +188,9 @@ void button_isr(void){
 
 void abdac_isr(void){
   short output = 0;
-  if (playListPtr != NULL){
+  if(playListPtr == FLAAKLYPA){
+
+  } else if(playListPtr != NULL){
     output = playListPtr[wave_position];
     toneCntr++;
     if(toneCntr >= *ratePtr){
