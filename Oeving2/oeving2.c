@@ -27,7 +27,7 @@ volatile avr32_pm_t *pm = &AVR32_PM;
 volatile avr32_abdac_t *abdac = &AVR32_ABDAC;
 
 //int static FREQDIV = 20; // tonehøye = clk/FREQDIV
-int static maxSteps = 440;
+int static maxSteps = 188;
 short static volatile newButtonState;
 
 //short sinusWave[ARRAYSIZE] = {0, 100, 0, -100, 0};
@@ -63,7 +63,6 @@ void initIntc(void){
 }
 
 void initButtons(void){
-  //No clue so far what this line does
   register_interrupt(button_isr, AVR32_PIOB_IRQ/32, AVR32_PIOB_IRQ % 32, BUTTONS_INT_LEVEL);
   piob->per = 0xe0; //Switches 7-5 active
   piob->puer = 0xe0;
@@ -96,9 +95,11 @@ void initAudio(void){
 }
 
 void button_isr(void){
-  newButtonState = ~piob->pdsr;//Read which switch was pushed
-  newButtonState &= piob->isr;//To read interrupt vector, enabling next interrupt
-  pioc->codr = 0xff;//Turn off all the lights
+  newButtonState = ~piob->pdsr;//Read which switch was pushed (invert)
+  newButtonState &= piob->isr;//Read interrupt vector, and with pushed button-value, and enabling next interrupt
+  if(newButtonState > 0){
+    pioc->codr = 0xff;//Turn off all the lights
+  }
   pioc->sodr = newButtonState; //Turn on the light corresponding to the button pushed
 
   if(newButtonState == SW7){//Switch07
@@ -133,10 +134,10 @@ void abdac_isr(void){
       current_repetition = 0;
       if (wave_position >= ARRAYSIZE) {
         wave_position = 0;
-        //playListPtr = NULL;
+        //playListPtr = NULL; //Uncomment this to make it stop endless repeat
       }
     }
   }
-  abdac->SDR.channel0 = output*SHRT_MAX*0.05;
-  abdac->SDR.channel1 = output*SHRT_MAX*0.05;
+  abdac->SDR.channel0 = output*SHRT_MAX*0.4;
+  abdac->SDR.channel1 = output*SHRT_MAX*0.4;
 }
