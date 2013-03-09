@@ -69,9 +69,11 @@ int main (int argc, char *argv[]){
 
   //Repeat of above, but here to collect them all into a sample instead of a smallSample
   flaaklyp.size = 10;
-  smallSample *foo9[10] = {&flaa1,&flaa2,&flaa1,&flaa3,
-    &flaa4,&flaa4,&flaa1,&flaa2,&flaa1,&flaa3};
-  flaaklyp.list = foo9;
+  smallSample *foo9[10];
+  foo9[0] = &flaa1; foo9[2] = &flaa1; foo9[6] = &flaa1; foo9[8] = &flaa1;
+  foo9[1] = &flaa2; foo9[7] = &flaa2;
+  foo9[3] = &flaa3; foo9[9] = &flaa3;
+  foo9[4] = &flaa4; foo9[5] = &flaa4;
 
   //Count to see how much space is needed
   //for-loop cntr
