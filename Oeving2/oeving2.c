@@ -19,16 +19,16 @@ volatile avr32_pm_t *pm = &AVR32_PM;
 volatile avr32_abdac_t *abdac = &AVR32_ABDAC;
 
 //int static FREQDIV = 20; // tonehøye = clk/FREQDIV
-int static maxSteps = 188;
 short static volatile newButtonState;
 
 //short sinusWave[ARRAYSIZE] = {0, 100, 0, -100, 0};
 
+//All below are global, CAPS are
 int current_repetition = 0;
 int tone_position = 0;
 int wave_position = 0;
 int toneCntr = 0;
-int toneCntr2 = 0;
+int toneSumCntr = 0;
 int volatile cntr = 0;
 short *playListPtr = NULL;
 int *ratePtr = NULL;
@@ -36,78 +36,93 @@ short sawTooth[] = {-1, -(7/8), -0.75, -(5/8), -0.50, -(3/8), -0.25, -(1/8), 0, 
 short triangleWave[] = {0, 0.25, 0.50, 0.75, 1, 0.75, 0.50, 0.25, 0, -0.25, -0.50, -0.75, -1, -0.75, -0.50, -0.25, 0};
 short squareWave[SQUARESIZE] = {-1, 1};
 short toneScale[TONESIZE] = {C4,D4,E4,F4,G4,A4,B4};
-short FLAAWAVE[];
-smallSample *FLAAKLYPA;
+short flaaTone[102];
+smallSample *flaaklypa;
 
 int main (int argc, char *argv[]){
+  //flaa1 is a smallSample that has size, timelist, and list members
   flaa1->size = 8;
+  //Temp lists
   short foo1[] = {E4,A4,B4,C5,B4,A4,G4,E4};
   short foo2[] = {4,4,4,5,4,4,3,4};
+  //Putting lists onto struct
   flaa1->list = foo1;
   flaa1->timeList = foo2;
 
+  //Repeat of above
   flaa2->size = 12;
   short foo3[] = {C4,D4,E4,F4,E4,D4,C4,D4,E4,D4,C4,B3};
   short foo4[] = {4,4,4,4,4,4,4,4,4,4,4,2};
   flaa2->list = foo3;
   flaa2->timeList = foo4;
 
+  //Repeat of above
   flaa3->size = 8;
   short foo5[] = {C4,D4,E4,D4,C4,B3,A3,A3};
   short foo6[] = {4,4,2,4,4,2,2,2};
   flaa3->list = foo5;
   flaa3->timeList = foo6;
 
+  //Repeat of above
   flaa4->size = 15;
   short foo7[] = {A3,A4,G4,F4,E4,C4,A3,B3,C4,D4,E4,F4,E4,D4,C4};
   short foo8[] = {2,2,4,4,4,4,2,4,4,2,4,4,4,4,4};
   flaa4->list = foo7;
   flaa4->timeList = foo8;
 
-  flaaklypa->size = 10;
+  //Repeat of above, but here to collect them all into a sample instead of a smallSample
+  flaaklyp->size = 10;
   smallSample *foo9[] = {flaa1,flaa2,flaa1,flaa3,
     flaa4,flaa4,flaa1,flaa2,flaa1,flaa3};
-  flaaklypa->list = foo9;
+  flaaklyp->list = foo9;
 
   //Count to see how much space is needed
+  //for-loop cntr
   int i;
+  //cntr for how much space we need
   int memCntr = 0;
-  short flaaTone[102];
-  for(i = 0; i < flaaklypa->size; i++){
+  //cntr-list with how many times each tone is played
+  for(i = 0; i < flaaklyp->size; i++){
+    //for-loop cntr
     int j;
-    for(j = 0; j < flaaklypa->list[i]->size; j++){
-      int size = getFrequencySize(flaaklypa->list[i]->timeList[j], flaaklypa->list[i]->list[j],2);
+    for(j = 0; j < flaaklyp->list[i]->size; j++){
+      //temp variable with how many times each tone is played
+      short size = (short) getFrequencySize(flaaklyp->list[i]->timeList[j], flaaklyp->list[i]->list[j],2);
+      //Self-explanatory
       memCntr += size;
+      //Again, self explanatory
       flaaTone[cntr] = size;
-      if(flaaklypa->list[i]->list[j-1] == flaaklypa->list[i]->list[j] ||
-        j+1 == flaaklypa->list[i]->size){
-        memCntr += 5; //Silence
-        flaaTone[cntr] += 5;
+      //If tonevalue changes, or we've reached the end of a playlist(sample)
+      if(flaaklyp->list[i]->list[j-1] == flaaklyp->list[i]->list[j] ||
+        j+1 == flaaklyp->list[i]->size){
+        memCntr += 4; //Silence
+        flaaTone[cntr] += 4;
       }
-      flaaTone[cntr] /= 2;
+      //Dividing by 2 and adding 2 for audio_isr cntrs to work in audio_isr
+      flaaTone[cntr] /= 2; flaaTone += 2;
+      //increasing cntr to manipulate next element in flaaTone
       cntr += 1;
     }
   }
-  FLAAWAVE = &flaaTone;
 
-  //Assign space
-  FLAAKLYPA = (smallSample*) malloc(sizeof(smallSample*));
-  FLAAKLYPA->size = memCntr;
-  FLAAKLYPA->list = (short*) calloc((short) 0, memCntr*sizeof(short)); //Total size of tune
+  //Assigning space
+  flaaklypa = (smallSample*) malloc(sizeof(smallSample*));
+  flaaklypa->size = memCntr;
+  flaaklypa->list = (short*) calloc((short) 0, memCntr*sizeof(short)); //Total size of tune
 
-  //Assign values to final list (FLAAKLYPA->list)
+  //Assign values to final list (flaaklypa->list)
   cntr = 0;
-  for(i = 0; i < flaaklypa->size; i++){
+  for(i = 0; i < flaaklyp->size; i++){
     int j;
-    for(j = 0; j < flaaklypa->list[i]->size; j++){
-      smallSample *small = flaaklypa->list[i];
-      int size = getFrequencySize(small->timeList[j], small->list[j], 2);
-      addFrequency(small->timeList[j], small->list[j], FLAAKLYPA->list, cntr);
+    for(j = 0; j < flaaklyp->list[i]->size; j++){
+      smallSample *small = flaaklyp->list[i];
+      short size = (short) getFrequencySize(small->timeList[j], small->list[j], 2);
+      addFrequency(small->timeList[j], small->list[j], flaaklypa->list, cntr);
       cntr += size;
       if(small->list[j-1] == small->list[j] ||
         j+1 == small->size){
-        addZeroes(5, FLAAKLYPA->list, cntr);
-        cntr += 5;
+        addZeroes(4, flaaklypa->list, cntr);
+        cntr += 4;
       }
     }
   }
@@ -201,10 +216,10 @@ void button_isr(void){
     *ratePtr = TRIANGLERATE;
   } else if(newButtonState == SW5){//Switch05
     playListPtr = squareWave;
-    // *ratePtr = SQUARERATE;
+    *ratePtr = SQUARERATE;
     *ratePtr = toneScale[tone_position];
   } else if(newButtonState == 0x10){//Switch04
-    playListPtr = FLAAKLYPA->list;
+    playListPtr = flaaTone->list;
   }/* else if(newButtonState == 0x8){//Switch03
 
   } else if(newButtonState == 0x4){//Switch02
@@ -218,27 +233,27 @@ void button_isr(void){
 
 void abdac_isr(void){
   short output = 0;
-  if(playListPtr == FLAAKLYPA->list){
+  if(playListPtr == flaaklypa->list){
     output = playListPtr[toneCntr];
-    ++toneCntr;
     //toneCntr iterates over the WHOLE tune
+    ++toneCntr;
+      //If value changed (aka tone changed) (zeroes are "added" to previous value, so they are ignored)
     if(playListPtr[toneCntr-1] != playListPtr[toneCntr] &&
       playListPtr[toneCntr] != 0){
-      //If value changed (aka tone changed) (zeroes are "added" to previous value, so they are ignored)
-      toneCntr2 += FLAAWAVE[tone_position]*2;
+      toneSumCntr += flaaTone[tone_position]*2;
       tone_position++;
     }
     //Below we check if the current note is halfway through its play (that's when we want to change the sign to get a squareWave)
-    if(toneCntr >= toneCntr2+FLAAWAVE[tone_position]){
+    if(toneCntr >= toneSumCntr+flaaTone[tone_position]){
       output *= -1;
       if(toneCntr == cntr){
         toneCntr = 0;
-        toneCntr2 = 0;
+        toneSumCntr = 0;
         tone_position = 0;
       }
     }
   } else if(playListPtr != NULL &&
-    playListPtr != FLAAKLYPA->list){
+    playListPtr != flaaklypa->list){
     output = playListPtr[wave_position];
     toneCntr++;
     if(toneCntr >= *ratePtr){
