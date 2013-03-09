@@ -4,11 +4,12 @@
  *
  *****************************************************************************/
 
-#include "oeving2.h"
-#include "sys/interrupts.h"
 #include <stdlib.h>
 #include <limits.h>
 #include <math.h>
+#include "sys/interrupts.h"
+#include "lots_of_lists.h"
+#include "oeving2.h"
 
 
 
@@ -50,7 +51,7 @@ int main (int argc, char *argv[]){
   flaa3->size = 8;
   flaa4->size = 15;
   //Initialize and declare variable for above allocated short-list-members
-  *(flaa1->list) = {E4,A4,B4,C5,B4,A4,G4,E4};
+  flaa1->list = FLAA1;
   *(flaa2->list) = {C4,D4,E4,F4,E4,D4,C4,D4,E4,D4,C4,B3};
   *(flaa3->list) = {C4,D4,E4,D4,C4,B3,A3,A3};
   *(flaa4->list) = {A3,A4,G4,F4,E4,C4,A3,B3,C4,D4,E4,F4,E4,D4,C4};

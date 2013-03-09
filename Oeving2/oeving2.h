@@ -58,6 +58,8 @@ typedef struct sample{
 #define B4 247
 #define C5 262
 
+/* megalists! \o/ */
+short FLAA1[] = {E4,A4,B4,C5,B4,A4,G4,E4};
 
 /* prototyper */
 int main (int argc, char *argv[]);
