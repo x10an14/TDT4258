@@ -13,9 +13,6 @@
 
 
 
-sample flaaklyp;
-smallSample flaa1, flaa2, flaa3, flaa3, flaa4;
-
 volatile avr32_pio_t *piob = &AVR32_PIOB;
 volatile avr32_pio_t *pioc = &AVR32_PIOC;
 volatile avr32_pm_t *pm = &AVR32_PM;
@@ -37,38 +34,33 @@ short triangleWave[] = {0, 0.25, 0.50, 0.75, 1, 0.75, 0.50, 0.25, 0, -0.25, -0.5
 short squareWave[SQUARESIZE] = {-1, 1};
 short toneScale[TONESIZE] = {C4,D4,E4,F4,G4,A4,B4};
 short flaaTone[102];
+
+smallSample flaa1, flaa2, flaa3, flaa3, flaa4;
+sample flaaklyp;
+
+flaa1.size = 8;
+flaa1.list[8] = {E4,A4,B4,C5,B4,A4,G4,E4};
+flaa1.timelist = {4,4,4,5,4,4,3,4};
+
+flaa2.size = 12;
+flaa2.list = {C4,D4,E4,F4,E4,D4,C4,D4,E4,D4,C4,B3};
+flaa2.timelist = {4,4,4,4,4,4,4,4,4,4,4,2};
+
+flaa3.size = 8;
+flaa3.list = {C4,D4,E4,D4,C4,B3,A3,A3};
+flaa3.timelist = {4,4,2,4,4,2,2,2};
+
+flaa4.size = 15;
+flaa4.list = {A3,A4,G4,F4,E4,C4,A3,B3,C4,D4,E4,F4,E4,D4,C4};
+flaa4.timelist = {2,2,4,4,4,4,2,4,4,2,4,4,4,4,4};
+
+flaaklyp.size = 10;
+flaaklyp.list[10] = {&flaa1, &flaa2, &flaa1, &flaa3, &flaa4, &flaa4, &flaa1, &flaa2, &flaa1, &flaa3};
+
 smallSample *flaaklypa;
 
 int main (int argc, char *argv[]){
-  //flaa1 is a smallSample that has size, timelist, and list members
-  flaa1.size = 8;
-  //Temp lists
-  short foo1[] = {E4,A4,B4,C5,B4,A4,G4,E4};
-  short foo2[] = {4,4,4,5,4,4,3,4};
-  //Putting lists onto struct
-  flaa1.list = foo1;
-  flaa1.timeList = foo2;
-
   //Repeat of above
-  flaa2.size = 12;
-  short foo3[] = {C4,D4,E4,F4,E4,D4,C4,D4,E4,D4,C4,B3};
-  short foo4[] = {4,4,4,4,4,4,4,4,4,4,4,2};
-  flaa2.list = foo3;
-  flaa2.timeList = foo4;
-
-  //Repeat of above
-  flaa3.size = 8;
-  short foo5[] = {C4,D4,E4,D4,C4,B3,A3,A3};
-  short foo6[] = {4,4,2,4,4,2,2,2};
-  flaa3.list = foo5;
-  flaa3.timeList = foo6;
-
-  //Repeat of above
-  flaa4.size = 15;
-  short foo7[] = {A3,A4,G4,F4,E4,C4,A3,B3,C4,D4,E4,F4,E4,D4,C4};
-  short foo8[] = {2,2,4,4,4,4,2,4,4,2,4,4,4,4,4};
-  flaa4.list = foo7;
-  flaa4.timeList = foo8;
 
   //Repeat of above, but here to collect them all into a sample instead of a smallSample
   flaaklyp.size = 10;
@@ -77,7 +69,7 @@ int main (int argc, char *argv[]){
   foo9[1] = &flaa2; foo9[7] = &flaa2;
   foo9[3] = &flaa3; foo9[9] = &flaa3;
   foo9[4] = &flaa4; foo9[5] = &flaa4;
-
+  flaaklyp.list = foo9;
   //Count to see how much space is needed
   //for-loop cntr
   int i;

@@ -25,7 +25,7 @@ typedef struct smallSample{
 }smallSample;
 
 typedef struct sample{
-    smallSample *list;
+    smallSample **list;
     short size;
 }sample;
 
