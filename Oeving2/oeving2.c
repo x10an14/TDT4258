@@ -71,7 +71,7 @@ int main (int argc, char *argv[]){
   flaaklyp.size = 10;
   smallSample *foo9[] = {&flaa1,&flaa2,&flaa1,&flaa3,
     &flaa4,&flaa4,&flaa1,&flaa2,&flaa1,&flaa3};
-  flaaklyp->list = foo9;
+  flaaklyp.list = foo9;
 
   //Count to see how much space is needed
   //for-loop cntr
@@ -79,19 +79,19 @@ int main (int argc, char *argv[]){
   //cntr for how much space we need
   int memCntr = 0;
   //cntr-list with how many times each tone is played
-  for(i = 0; i < flaaklyp->size; i++){
+  for(i = 0; i < flaaklyp.size; i++){
     //for-loop cntr
     int j;
-    for(j = 0; j < flaaklyp->list[i]->size; j++){
+    for(j = 0; j < flaaklyp.list[i]->size; j++){
       //temp variable with how many times each tone is played
-      short size = (short) getFrequencySize(flaaklyp->list[i]->timeList[j], flaaklyp->list[i]->list[j],2);
+      short size = (short) getFrequencySize(flaaklyp.list[i]->timeList[j], flaaklyp.list[i]->list[j],2);
       //Self-explanatory
       memCntr += size;
       //Again, self explanatory
       flaaTone[cntr] = size;
       //If tonevalue changes, or we've reached the end of a playlist(sample)
-      if(flaaklyp->list[i]->list[j-1] == flaaklyp->list[i]->list[j] ||
-        j+1 == flaaklyp->list[i]->size){
+      if(flaaklyp.list[i]->list[j-1] == flaaklyp.list[i]->list[j] ||
+        j+1 == flaaklyp.list[i]->size){
         memCntr += 4; //Silence
         flaaTone[cntr] += 4;
       }
@@ -109,10 +109,10 @@ int main (int argc, char *argv[]){
 
   //Assign values to final list (flaaklypa->list)
   cntr = 0;
-  for(i = 0; i < flaaklyp->size; i++){
+  for(i = 0; i < flaaklyp.size; i++){
     int j;
-    for(j = 0; j < flaaklyp->list[i]->size; j++){
-      smallSample *small = flaaklyp->list[i];
+    for(j = 0; j < flaaklyp.list[i]->size; j++){
+      smallSample *small = flaaklyp.list[i];
       short size = (short) getFrequencySize(small->timeList[j], small->list[j], 2);
       addFrequency(small->timeList[j], small->list[j], flaaklypa->list, cntr);
       cntr += size;
