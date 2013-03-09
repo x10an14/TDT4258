@@ -72,7 +72,7 @@ int main (int argc, char *argv[]){
   for(i = 0; i < flaaklypa->size; i++){
     int j;
     for(j = 0; j < flaaklypa->list[i]->size; j++){
-      memCntr += getFrequencySize(*(flaaklypa->list[i])->freqList[j], *(flaaklypa->list[i])->list[j],2) +2; //+2 to add when waveform shifts
+      memCntr += getFrequencySize(flaaklypa->list[i]->timeList[j], flaaklypa->list[i]->list[j],2) +2; //+2 to add when waveform shifts
       if(flaaklypa->list[i]->list[j-1] == flaaklypa->list[i]->list[j] ||
         j+1 == flaaklypa->list[i]->size){
         memCntr += 5; //Silence
@@ -83,7 +83,7 @@ int main (int argc, char *argv[]){
   //Assign space
   FLAAKLYPA = (smallSample*) malloc(sizeof(smallSample*));
   FLAAKLYPA->size = memCntr;
-  FLAAKLYPA->list = (short) calloc(memCntr*sizeof(short)); //Total size of tune
+  FLAAKLYPA->list = (short*) calloc((short) 0, memCntr*sizeof(short)); //Total size of tune
 
   //Assign values to final list (FLAAKLYPA->list)
   int cntr = 0;
