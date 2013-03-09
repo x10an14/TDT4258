@@ -44,31 +44,16 @@ int main (int argc, char *argv[]){
   flaa2 = (smallSample*) malloc(sizeof(smallSample));
   flaa3 = (smallSample*) malloc(sizeof(smallSample));
   flaa4 = (smallSample*) malloc(sizeof(smallSample));
-  //Allocate space on heap for short (size) for above pointers
-  flaa1->size = malloc(sizeof(short));
-  flaa2->size = malloc(sizeof(short));
-  flaa3->size = malloc(sizeof(short));
-  flaa4->size = malloc(sizeof(short));
   //Declare variable for above allocated short-size-members
-  *(flaa1->size) = 8;
-  *(flaa2->size) = 12;
-  *(flaa3->size) = 8;
-  *(flaa4->size) = 15;
-  //Allocate space on heap for short lists for above pointers
-  flaa1->list = (short*) malloc(*(flaa1->size)*sizeof(short));
-  flaa2->list = (short*) malloc(*(flaa2->size)*sizeof(short));
-  flaa3->list = (short*) malloc(*(flaa3->size)*sizeof(short));
-  flaa4->list = (short*) malloc(*(flaa4->size)*sizeof(short));
-  //Declare variable for above allocated short-list-members
+  flaa1->size = 8;
+  flaa2->size = 12;
+  flaa3->size = 8;
+  flaa4->size = 15;
+  //Initialize and declare variable for above allocated short-list-members
   *(flaa1->list) = {E4,A4,B4,C5,B4,A4,G4,E4};
   *(flaa2->list) = {C4,D4,E4,F4,E4,D4,C4,D4,E4,D4,C4,B3};
   *(flaa3->list) = {C4,D4,E4,D4,C4,B3,A3,A3};
   *(flaa4->list) = {A3,A4,G4,F4,E4,C4,A3,B3,C4,D4,E4,F4,E4,D4,C4};
-  //Repeat of above, but for timeList
-  flaa1->timeList = (short*) malloc(*(flaa1->size)*sizeof(short));
-  flaa2->timeList = (short*) malloc(*(flaa2->size)*sizeof(short));
-  flaa3->timeList = (short*) malloc(*(flaa3->size)*sizeof(short));
-  flaa4->timeList = (short*) malloc(*(flaa4->size)*sizeof(short));
   //Repeat of above, but for timeList
   *(flaa1->timeList) = {4,4,4,5,4,4,3,4};
   *(flaa2->timeList) = {4,4,4,4,4,4,4,4,4,4,4,2};
@@ -77,9 +62,8 @@ int main (int argc, char *argv[]){
 
   //Repeat of all above, except that pointer is a sample* pointer
   flaaklyp = (sample*) malloc(sizeof(sample));
-  flaaklyp->size = (short) malloc(sizeof(short));
   flaaklyp->list = (smallSample**) malloc(sizeof(smallSample*));
-  *(flaaklyp->size) = 10;
+  flaaklyp->size = 10;
   //The below line declares the list member of the sample pointer to be the addresses of the above smallSample pointers
   *(flaaklyp->list) = {&flaa1, &flaa2, &flaa1, &flaa3, &flaa4, &flaa4, &flaa1, &flaa2, &flaa1, &flaa3};
 
