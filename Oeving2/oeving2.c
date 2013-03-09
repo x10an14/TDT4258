@@ -40,7 +40,7 @@ int main (int argc, char *argv[]){
   smallSample *flaa2ptr = &flaa2;
   smallSample *flaa3ptr = &flaa3;
   smallSample *flaa4ptr = &flaa4;
-  flaaklypa.list = {flaa1ptr,flaa2ptr,flaa1ptr,flaa3ptr,
+  flaaklypa->list = {flaa1ptr,flaa2ptr,flaa1ptr,flaa3ptr,
     flaa4ptr,flaa4ptr,flaa1ptr,flaa2ptr,flaa1ptr,flaa3ptr};
   initHardware();
 
@@ -114,7 +114,7 @@ void button_isr(void){
     // *ratePtr = SQUARERATE;
     *ratePtr = toneScale[tone_position];
   } else if(newButtonState == 0x10){//Switch04
-    playListPtr
+    playListPtr =
   }/* else if(newButtonState == 0x8){//Switch03
 
   } else if(newButtonState == 0x4){//Switch02
