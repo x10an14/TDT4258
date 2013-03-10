@@ -17,9 +17,9 @@
 #define SW3 0x8
 
 /*Obsolete? Rates of which we will play each single element before moving on to next element (creating pitch)*/
-#define SAWRATE 20
-#define SQUARERATE 11
-#define TRIANGLERATE 18
+//#define SAWRATE 20
+//#define SQUARERATE 11
+//#define TRIANGLERATE 18
 
 
 //#define TONE#OCTAVE AmountOfRepetitionsPerSquareWaveElementPerSecondToGenerateSaidTone
@@ -48,7 +48,6 @@ short TIME4[] = {2,2,4,4,4,4,2,4,4,2,4,4,4,4,4};
 // Saw Waveform 17 steps
 short SAW[] = {-8,-7,-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6,7,8};
 // Triangle Waveform 17 steps
-short TRIANGLE[] = {0,2,4,8,4,2,0,-2,-4,-8,-4,-2};
+short TRIANGLE[] = {0,2,4,6,8,6,4,2,0,-2,-4,-6,-8,-6,-4,-2,0};
 
-short triangleWave[] = {0*SHRT_MAX, 0.25*SHRT_MAX, 0.50*SHRT_MAX, 0.75*SHRT_MAX, 1*SHRT_MAX, 0.75*SHRT_MAX, 0.50*SHRT_MAX, 0.25*SHRT_MAX, 0*SHRT_MAX, -0.25*SHRT_MAX, -0.50*SHRT_MAX, -0.75*SHRT_MAX, -1*SHRT_MAX, -0.75*SHRT_MAX, -0.50*SHRT_MAX, -0.25*SHRT_MAX, 0*SHRT_MAX};
 short toneScale[TONESIZE] = {C4,D4,E4,F4,G4,A4,B4};

@@ -29,7 +29,7 @@ short *currentSamplePtr = NULL;
 int *ratePtr = NULL;
 
 
-sample *flaaklypa, *flaa1, *flaa2, *flaa3, *flaa4, *currentSample, *saw;
+sample *flaaklypa, *flaa1, *flaa2, *flaa3, *flaa4, *currentSample, *saw, *triangle;
 sampleCollection *flaaklyp;
 
 
@@ -46,12 +46,14 @@ int main (int argc, char *argv[]){
   flaa3->size = 8;
   flaa4->size = 15;
   saw->size = 17;
+  triangle->size = 17;
   //Initialize and declare variable for above allocated short-list-members
   flaa1->list = FLAA1;
   flaa2->list = FLAA2;
   flaa3->list = FLAA3;
   flaa4->list = FLAA4;
   saw->list = SAW;
+  triangle->list = TRIANGLE;
   //Repeat of above, but for timeList
   flaa1->timeList = TIME1;
   flaa2->timeList = TIME2;
@@ -123,6 +125,11 @@ int main (int argc, char *argv[]){
   //The rate (amount of times we play each element) is already set with the function addFrequency. So no need to use it on this sample
   flaaklypa->rateMax = 0;
   flaaklypa->usingTimeList = 1;
+  saw->usingTimeList = 0;
+  saw->rateMax = SAWRATE;
+  triangle->usingTimeList = 0;
+  triangle->rateMax = TRIANGLERATE;
+  
   initHardware();
 
   while(1);
