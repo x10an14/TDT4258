@@ -18,17 +18,18 @@
 
 
 /*Structs we've made ourselves for this assignment*/
-typedef struct smallSample{
+typedef struct smpl{
     short *list;
     short *timeList;
+    short playCntr;
     //Implement counter variable for when playing a sample?
     short size;
-}smallSample;
-
-typedef struct sample{
-    smallSample **list;
-    short size;
 }sample;
+
+typedef struct smplCollectn{
+    sample **list;
+    short size;
+}sampleCollection;
 
 /* legg andre "includes" her, sammen med "defines" og prototyper */
 #define ABDAC_INT_LEVEL 1

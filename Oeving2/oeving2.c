@@ -26,21 +26,21 @@ int toneCntr = 0;
 int volatile cntr = 0;
 short *playListPtr = NULL;
 int *ratePtr = NULL;
-short sawTooth[] = {-1, -(7/8), -0.75, -(5/8), -0.50, -(3/8), -0.25, -(1/8), 0, (1/8), 0.25, (3/8), 0.50, (5/8), 0.75, (7/8), 1};
-short triangleWave[] = {0, 0.25, 0.50, 0.75, 1, 0.75, 0.50, 0.25, 0, -0.25, -0.50, -0.75, -1, -0.75, -0.50, -0.25, 0};
+float sawToothWave[] = {-1, -(7/8), -0.75, -(5/8), -0.50, -(3/8), -0.25, -(1/8), 0, (1/8), 0.25, (3/8), 0.50, (5/8), 0.75, (7/8), 1};
+float triangleWave[] = {0, 0.25, 0.50, 0.75, 1, 0.75, 0.50, 0.25, 0, -0.25, -0.50, -0.75, -1, -0.75, -0.50, -0.25, 0};
 short squareWave[SQUARESIZE] = {-1, 1};
 short toneScale[TONESIZE] = {C4,D4,E4,F4,G4,A4,B4};
 short flaaTone[102];
 
-smallSample *flaaklypa, *flaa1, *flaa2, *flaa3, *flaa4;
-sample *flaaklyp;
+sample *flaaklypa, *flaa1, *flaa2, *flaa3, *flaa4;
+sampleCollection *flaaklyp;
 
 int main (int argc, char *argv[]){
   //Allocate space on heap for pointers
-  flaa1 = (smallSample*) malloc(sizeof(smallSample));
-  flaa2 = (smallSample*) malloc(sizeof(smallSample));
-  flaa3 = (smallSample*) malloc(sizeof(smallSample));
-  flaa4 = (smallSample*) malloc(sizeof(smallSample));
+  flaa1 = (sample*) malloc(sizeof(sample));
+  flaa2 = (sample*) malloc(sizeof(sample));
+  flaa3 = (sample*) malloc(sizeof(sample));
+  flaa4 = (sample*) malloc(sizeof(sample));
   //Declare variable for above allocated short-size-members
   flaa1->size = 8;
   flaa2->size = 12;
@@ -57,11 +57,11 @@ int main (int argc, char *argv[]){
   flaa3->timeList = TIME3;
   flaa4->timeList = TIME4;
 
-  //Repeat of all above, except that pointer is a sample* pointer
-  flaaklyp = (sample*) malloc(sizeof(sample));
+  //Repeat of all above, except that pointer is a sampleCollection* pointer
+  flaaklyp = (sampleCollection*) malloc(sizeof(sampleCollection));
   flaaklyp->size = 10;
-  flaaklyp->list = (smallSample**) malloc(flaaklyp->size*sizeof(smallSample*));
-  //The below line declares the list member of the sample pointer to be the addresses of the above smallSample pointers
+  flaaklyp->list = (sample**) malloc(flaaklyp->size*sizeof(sample*));
+  //The below line declares the list member of the sampleCollection pointer to be the addresses of the above sample pointers
   //for-loop cntr
   int i;
   for (i = 0; i < 10; i++){
@@ -104,14 +104,14 @@ int main (int argc, char *argv[]){
   }
 
   //Assigning space
-  flaaklypa = (smallSample*) malloc(sizeof(smallSample*));
+  flaaklypa = (sample*) malloc(sizeof(sample*));
   flaaklypa->size = memCntr;
   flaaklypa->list = (short*) calloc((short) 0, memCntr*sizeof(short)); //Total size of tune
 
   //Assign values to final list (flaaklypa->list)
   cntr = 0;
   for(i = 0; i < flaaklyp->size; i++){
-    smallSample *small = flaaklyp->list[i];
+    sample *small = flaaklyp->list[i];
     int j;
     for(j = 0; j < small->size; j++){
       short size = (short) getFrequencySize(small->timeList[j], small->list[j], 2);
@@ -212,7 +212,7 @@ void button_isr(void){
   pioc->sodr = newButtonState; //Turn on the light corresponding to the button pushed
 
   if(newButtonState == SW7){//Switch07
-    playListPtr = sawTooth;
+    playListPtr = sawToothWave;
     *ratePtr = SAWRATE;
   } else if(newButtonState == SW6){//Switch06
     playListPtr = triangleWave;
