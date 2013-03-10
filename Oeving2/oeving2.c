@@ -101,11 +101,11 @@ int main (int argc, char *argv[]){
     int j, size;
     for(j = 0; j < small->size; j++){
       //temp variable with how many times each tone is played
-      size = getPeriodAmount(small->timeList[j], small->list[j],2)*2;
+      size = (int) getAmountOfPeriods(small->timeList[j], small->list[j])*(ABDAC_SAMPLERATE/small->list[j]);
       //Self-explanatory
       memCntr += size;
       //If tonevalue changes, or we've reached the end of a playlist(sample)
-      if(small->list[j-1] != small->list[j] ||
+      if(small->list[j-1] == small->list[j] ||
         j+1 == small->size){
         memCntr += 4; //Silence
       }
@@ -123,10 +123,10 @@ int main (int argc, char *argv[]){
     sample *small = flaaklyp->list[i];
     int j, size;
     for(j = 0; j < small->size; j++){
-      size = getPeriodAmount(small->timeList[j], small->list[j], 2)*2;
+      size = getAmountOfPeriods(small->timeList[j], small->list[j], 2)*2;
       addFrequency(small->timeList[j], small->list[j], flaaklypa->list, cntr);
       cntr += size;
-      if(small->list[j-1] != small->list[j] ||
+      if(small->list[j-1] == small->list[j] ||
         j+1 == small->size){
         addZeroes(4, flaaklypa->list, cntr);
         cntr += 4;
@@ -142,7 +142,7 @@ int main (int argc, char *argv[]){
   int size;
   for(i = 0; i < scale->size; i++){
     //temp variable with how many times each tone is played
-    size = getPeriodAmount(SCALETIME[i], SCALETIME[i],2)*2;
+    size = getAmountOfPeriods(SCALETIME[i], SCALETIME[i],2)*2;
     //Self-explanatory
     memCntr += size;
     //If tonevalue changes, or we've reached the end of a playlist(sample)
@@ -157,7 +157,7 @@ int main (int argc, char *argv[]){
   //Assigning(/Combining) values to final list (flaaklypa->list)
   cntr = 0;
   for(i = 0; i < scale->size; i++){
-    size = getPeriodAmount(SCALETIME[i], SCALE[i], 2)*2;
+    size = getAmountOfPeriods(SCALETIME[i], SCALE[i], 2)*2;
     addFrequency(SCALETIME[i], SCALE[i], scale->list, cntr);
     cntr += size;
     addZeroes(4, scale->list, cntr);
@@ -189,19 +189,26 @@ int main (int argc, char *argv[]){
 }
 
 //Fun
-int getPeriodAmount(short timeDiv, short tone, int waveFormSize){
-  return (49152/(timeDiv*waveFormSize*tone));
+int getAmountOfPeriods(short stroke, short tone){
+  return (tone/stroke);
   // return (486875/(timeDiv*waveFormSize*tone));
 }
 
 /*Function to add the time a tone will be played to a list, given a tone, length (div), and list*/
-void addFrequency(int timeDiv, short tone, short *list, int start){
+void addFrequency(int stroke, short tone, short *list, int start){
   //First get the amount of periods each tone has to be played to get the correct pitch, but multiply result with 2 so that below for-loop will set amplitude values correctly
-  int periods = getPeriodAmount(timeDiv, tone, 2)*2;
+  int periods = getAmountOfPeriods(stroke, tone, 2)*2;
+  int periodSize = ABDAC_SAMPLERATE/tone;
+  int halfPeriod = periodSize/2;
   int i;
-  for(i = start; i < periods + start; i += 2){
-    list[i] = -SHRT_MAX;
-    list[++i] = SHRT_MAX;
+  for(i = start; i < periods + start; i++){
+    int j;
+    for (j = 0; j < halfPeriod; j++){
+      list[i] = -SHRT_MAX;
+    }
+    for (j = halfPeriod; j < periodSize; j++){
+      list[++i] = SHRT_MAX;
+    }
   }
 }
 
