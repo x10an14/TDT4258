@@ -16,6 +16,9 @@ volatile avr32_pio_t *pioc = &AVR32_PIOC;
 volatile avr32_pm_t *pm = &AVR32_PM;
 volatile avr32_abdac_t *abdac = &AVR32_ABDAC;
 
+//sinus table
+short sineTable[100];
+
 //buttonState variable
 short static volatile newButtonState;
 
@@ -28,9 +31,12 @@ sampleCollection *flaaklyp;
 
 
 int main (int argc, char *argv[]){
-  // Creating of sinus wave list  
-//  for (i=0; i < 100; i++){
-  //}
+//for-loop cntr
+  int i;
+  // Creating of sinus wave list 100 steps 
+  for (i=0; i < 100; i++){
+  sineList[i] = sin(M_PI/100*i)*SHRT_MAX;
+  }
   //Allocate space on heap for pointers
   flaa1 = (sample*) malloc(sizeof(sample));
   flaa2 = (sample*) malloc(sizeof(sample));
@@ -69,8 +75,6 @@ int main (int argc, char *argv[]){
   flaaklyp->size = 10;
   flaaklyp->list = (sample**) malloc(flaaklyp->size*sizeof(sample*));
   //The below line declares the list member of the sampleCollection pointer to be the addresses of the above sample pointers
-  //for-loop cntr
-  int i;
   for (i = 0; i < 10; i++){
     if(i == 0 || i == 2 || i == 8 || i == 6){
       flaaklyp->list[i] = flaa1;
