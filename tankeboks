@@ -1,0 +1,62 @@
+
+//length of period = 1/freq    // in seconds
+
+
+
+
+/////////////////////////////////////////////////////
+
+
+samplerate = Fs    // for simplisity
+
+freq = 440  // 440 Hz
+stroke = 4    // 4 = 1/4 dels takt (bpm = 120)
+
+
+(length of) Period = Fs/freq   // in samples
+
+No of Periods = Fs/(period(in samples)*stroke) 
+
+
+//skrive om til en firkantbølge liste (low, high)
+for loop repeated 'No of Periods' times
+
+  for loop (i = 0; i < Period/2 (in samples); i++) 
+    //hold HIGH time (in samples)
+    write HIGH to list ((Fs/freq)/2) times
+
+  for loop (i = 0; i < Period/2 (in samples); i++) 
+    //hold LOW time (in sample)
+    write LOW to list ((Fs/freq)/2) times
+
+########################################################
+#            TANKEGANG
+########################################################
+
+samplerate = Fs    // for simplisity
+
+freq = 440        // 440 Hz
+stroke = 4        // 4 = 1/4 dels takt (bpm = 120)
+
+
+Period = Fs/freq   // Period in samples
+
+# of Periods = freq/stroke 
+
+Period * # of Periods = samplerate/stroke
+
+
+//skrive om til en firkantbølge liste (low, high)
+for (repeated 'No of Periods' times){
+
+  for (i = 0; i < Period/2; i++){ 
+    //write HIGH to list 'Period/2' times
+    write HIGH to list ((Fs/freq)/2) times
+  }
+  for (i = 0; i < Period/2; i++){ 
+    //write LOW to list 'Period/2' times 
+    write LOW to list ((Fs/freq)/2) times
+  }
+}
+
+
