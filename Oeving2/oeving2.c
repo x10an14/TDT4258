@@ -108,7 +108,7 @@ int main (int argc, char *argv[]){
   flaaklypa->list = (short*) calloc((short) 0, memCntr*sizeof(short)); //Total size of tune
 
   //Assigning(/Combining) values to final list (flaaklypa->list)
-  cntr = 0;
+  int cntr = 0;
   for(i = 0; i < flaaklyp->size; i++){
     sample *small = flaaklyp->list[i];
     int j;
