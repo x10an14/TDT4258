@@ -162,7 +162,7 @@ void initIntc(void){
 void initButtons(void){
   register_interrupt(button_isr, AVR32_PIOB_IRQ/32, AVR32_PIOB_IRQ % 32, BUTTONS_INT_LEVEL);
   //Setting the below switch-values to variable active
-  short act.ive = SW7+SW6+SW5+SW4+SW3;
+  short active = SW7+SW6+SW5+SW4+SW3;
   piob->per = active; //Activating switches in variable active
   piob->puer = active; //Activating switches in variable active
   piob->ier = active; //Activating interrupt for switches in variable active
