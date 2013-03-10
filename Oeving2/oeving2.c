@@ -63,15 +63,24 @@ int main (int argc, char *argv[]){
 
   //Repeat of all above, except that pointer is a sample* pointer
   flaaklyp = (sample*) malloc(sizeof(sample));
-  flaaklyp->list = (smallSample**) malloc(sizeof(smallSample*));
   flaaklyp->size = 10;
+  flaaklyp->list = (smallSample**) malloc(flaaklyp->size*sizeof(smallSample*));
   //The below line declares the list member of the sample pointer to be the addresses of the above smallSample pointers
-  *(flaaklyp->list) = {&flaa1, &flaa2, &flaa1, &flaa3, &flaa4,
-    &flaa4, &flaa1, &flaa2, &flaa1, &flaa3};
-
-  //Count to see how much space is needed
   //for-loop cntr
   int i;
+  for (int i = 0; i < 10; i++){
+    if(i == 0 || i == 2 || i == 8 || i == 6){
+      flaaklyp->list[i] = &flaa1;
+    } else if(i == 1 || i == 7){
+      flaaklyp->list[i] = &flaa2;
+    } else if(i == 3 || i == 9){
+      flaaklyp->list[i] = &flaa3;
+    } else{
+      flaaklyp->list[i] = &flaa4;
+    }
+  }
+
+  //Count to see how much space is needed
   //cntr for how much space we need
   int memCntr = 0;
   //cntr-list with how many times each tone is played

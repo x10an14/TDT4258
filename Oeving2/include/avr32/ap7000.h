@@ -16,7 +16,7 @@
 #define AVR32_AC97C_NUM                    1
 #define AVR32_DMACA_NUM                    1
 #define AVR32_EBI_NUM                      1
-#define AVR32_ECC_NUM                      1999
+#define AVR32_ECC_NUM                      1
 #define AVR32_EIC_NUM                      1
 #define AVR32_HMATRIX_NUM                  1
 #define AVR32_ISI_NUM                      1
