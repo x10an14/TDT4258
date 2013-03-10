@@ -129,7 +129,7 @@ int main (int argc, char *argv[]){
   saw->rateMax = SAWRATE;
   triangle->usingTimeList = 0;
   triangle->rateMax = TRIANGLERATE;
-  
+
   initHardware();
 
   while(1);
@@ -218,14 +218,11 @@ void button_isr(void){
   pioc->sodr = newButtonState; //Turn on the light corresponding to the button pushed
 
   if(newButtonState == SW7){//Switch07
-    playListPtr = sawToothWave;
-    *ratePtr = SAWRATE;
+    currentSample = saw;
   } else if(newButtonState == SW6){//Switch06
-    playListPtr = triangleWave;
-    *ratePtr = TRIANGLERATE;
+    currentSample = triangle;
   } else if(newButtonState == SW5){//Switch05
-    playListPtr = squareWave;
-    *ratePtr = SQUARERATE;
+    currentSample = square;
   } else if(newButtonState == 0x10){//Switch04
     currentSample = flaaklypa;
   } else if(newButtonState == 0x8){//Switch03
