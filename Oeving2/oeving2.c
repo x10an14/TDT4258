@@ -9,7 +9,6 @@
 #include <math.h>
 #include "sys/interrupts.h"
 #include "oeving2.h"
-
 #include "listsAndConstants.h"
 
 volatile avr32_pio_t *piob = &AVR32_PIOB;
@@ -20,17 +19,11 @@ volatile avr32_abdac_t *abdac = &AVR32_ABDAC;
 //buttonState variable
 short static volatile newButtonState;
 
-//All below are global, CAPS are
-int current_repetition = 0;
-int tone_position = 0;
-int wave_position = 0;
-int toneCntr = 0;
-int volatile cntr = 0;
+//All below are global
 short *currentSamplePtr = NULL;
 int *ratePtr = NULL;
-
-
-sample *flaaklypa, *flaa1, *flaa2, *flaa3, *flaa4, *currentSample, *saw, *triangle, *scale, *square;
+sample *flaaklypa, *flaa1, *flaa2, *flaa3, *flaa4,
+       *square, *saw, *triangle, *scale, *currentSample;
 sampleCollection *flaaklyp;
 
 
