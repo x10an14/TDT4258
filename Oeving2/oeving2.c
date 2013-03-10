@@ -134,7 +134,7 @@ void addFrequency(int timeDiv, short tone, short *list, int start){
   int periods = getPeriodAmount(timeDiv, tone, 2)*2;
   int i;
   for(i = start; i < periods + start; i += 2){
-    list[j] = -1;
+    list[i] = -1;
     list[++i] = 1;
   }
 }

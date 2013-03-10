@@ -50,7 +50,7 @@ static void initHardware (void);
 static void button_isr(void);
 static void abdac_isr(void);
 void addFrequency(int timeDiv, short tone, short *list, int start);
-int getFrequencySize(int timeDiv, short tone, int waveFormSize);
+int getPeriodAmount(int timeDiv, short tone, int waveFormSize);
 void addZeroes(int amount, short *list, int start);
 
 #endif
