@@ -18,6 +18,7 @@
 
 
 /*Structs we've made ourselves for this assignment*/
+
 typedef struct sample{
     //List of short-values (amplitude values) for tune that this struct holds
     short *list;
@@ -36,44 +37,6 @@ typedef struct sampleCollection{
     short size;
 }sampleCollection;
 
-/* legg andre "includes" her, sammen med "defines" og prototyper */
-#define ABDAC_INT_LEVEL 1
-#define BUTTONS_INT_LEVEL 0
-
-#define ARRAYSIZE 17
-#define SQUARESIZE 2
-#define TONESIZE 8
-#define SW7 0x80
-#define SW6 0x40
-#define SW5 0x20
-#define SW4 0x10
-#define SW3 0x8
-
-#define SAWRATE 20
-#define SQUARERATE 11
-#define TRIANGLERATE 18
-
-//#define TONE#OCTAVE AmountOfRepetitionsPerSquareWaveElementPerSecondToGenerateSaidTone
-#define A3 110
-#define B3 123
-#define C4 131
-#define D4 147
-#define E4 167
-#define F4 175
-#define G4 196
-#define A4 220
-#define B4 247
-#define C5 262
-
-/* megalists! \o/ */
-short FLAA1[] = {E4,A4,B4,C5,B4,A4,G4,E4};
-short FLAA2[] = {C4,D4,E4,F4,E4,D4,C4,D4,E4,D4,C4,B3};
-short FLAA3[] = {C4,D4,E4,D4,C4,B3,A3,A3};
-short FLAA4[] = {A3,A4,G4,F4,E4,C4,A3,B3,C4,D4,E4,F4,E4,D4,C4};
-short TIME1[] = {4,4,4,5,4,4,3,4};
-short TIME2[] = {4,4,4,4,4,4,4,4,4,4,4,2};
-short TIME3[] = {4,4,2,4,4,2,2,2};
-short TIME4[] = {2,2,4,4,4,4,2,4,4,2,4,4,4,4,4};
 
 
 /* prototyper */

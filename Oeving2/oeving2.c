@@ -9,6 +9,7 @@
 #include <math.h>
 #include "sys/interrupts.h"
 #include "oeving2.h"
+#include "listsAndConstants.h"
 
 volatile avr32_pio_t *piob = &AVR32_PIOB;
 volatile avr32_pio_t *pioc = &AVR32_PIOC;
@@ -148,6 +149,7 @@ void addFrequency(int timeDiv, short tone, short *list, int start){
   }
 }
 
+/*Function to add 0 an amount of times to a list*/
 void addZeroes(int amount, short *list, int start){
   int i;
   for(i = start; i < amount + start; i++){
