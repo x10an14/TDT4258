@@ -45,8 +45,8 @@ short TIME2[] = {4,4,4,4,4,4,4,4,4,4,4,2};
 short TIME3[] = {4,4,2,4,4,2,2,2};
 short TIME4[] = {2,2,4,4,4,4,2,4,4,2,4,4,4,4,4};
 
-// Saw Waveform 9 steps
-short SAW[] = {-4, -3, -2, -1, 0, 1, 2, 3, 4};
+// Saw Waveform 17 steps
+short SAW[] = {-8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8};
 
 // short sawToothWave[] = {-1*SHRT_MAX, -(7/8)*SHRT_MAX, -0.75*SHRT_MAX, -(5/8)*SHRT_MAX, -0.50*SHRT_MAX, -(3/8)*SHRT_MAX, -0.25*SHRT_MAX, -(1/8)*SHRT_MAX, 0*SHRT_MAX, (1/8)*SHRT_MAX, 0.25*SHRT_MAX, (3/8)*SHRT_MAX, 0.50*SHRT_MAX, (5/8)*SHRT_MAX, 0.75*SHRT_MAX, (7/8)*SHRT_MAX, 1*SHRT_MAX};
 short triangleWave[] = {0*SHRT_MAX, 0.25*SHRT_MAX, 0.50*SHRT_MAX, 0.75*SHRT_MAX, 1*SHRT_MAX, 0.75*SHRT_MAX, 0.50*SHRT_MAX, 0.25*SHRT_MAX, 0*SHRT_MAX, -0.25*SHRT_MAX, -0.50*SHRT_MAX, -0.75*SHRT_MAX, -1*SHRT_MAX, -0.75*SHRT_MAX, -0.50*SHRT_MAX, -0.25*SHRT_MAX, 0*SHRT_MAX};
