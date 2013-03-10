@@ -34,6 +34,9 @@ sampleCollection *flaaklyp;
 
 
 int main (int argc, char *argv[]){
+  // Creating of sinus wave list  
+//  for (i=0; i < 100; i++){
+  //}
   //Allocate space on heap for pointers
   flaa1 = (sample*) malloc(sizeof(sample));
   flaa2 = (sample*) malloc(sizeof(sample));
