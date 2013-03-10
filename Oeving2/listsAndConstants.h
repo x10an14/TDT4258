@@ -20,7 +20,6 @@
 #define SQUARERATE 11
 #define TRIANGLERATE 18
 
-
 //#define TONE#OCTAVE AmountOfRepetitionsPerSquareWaveElementPerSecondToGenerateSaidTone
 #define A3 110
 #define B3 123
@@ -53,4 +52,4 @@ short SAW[] = {-SHRT_MAX*(8/8),-SHRT_MAX*(7/8),-SHRT_MAX*(6/8),-SHRT_MAX*(5/8),-
 // Triangle Waveform 17 steps
 short TRIANGLE[] = {0,SHRT_MAX*(2/8),SHRT_MAX*(4/8),SHRT_MAX*(6/8),SHRT_MAX*(8/8),SHRT_MAX*(6/8),SHRT_MAX*(4/8),SHRT_MAX*(2/8),SHRT_MAX*(0/8),-SHRT_MAX*(2/8),-SHRT_MAX*(4/8),-SHRT_MAX*(6/8),-SHRT_MAX*(8/8),-SHRT_MAX*(6/8),-SHRT_MAX*(4/8),-SHRT_MAX*(2/8),0};
 // Square Waveform 17 steps
-short SQUARE[] = {-8,-8,-8,-8,-8,-8,-8,-8,8,8,8,8,8,8,8,8,8};
+short SQUARE[] = {-SHRT_MAX,-SHRT_MAX,-SHRT_MAX,-SHRT_MAX,-SHRT_MAX,-SHRT_MAX,-SHRT_MAX,-SHRT_MAX,SHRT_MAX,SHRT_MAX,SHRT_MAX,SHRT_MAX,SHRT_MAX,SHRT_MAX,SHRT_MAX,SHRT_MAX,SHRT_MAX};
