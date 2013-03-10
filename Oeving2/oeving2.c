@@ -240,8 +240,8 @@ void button_isr(void){
   } else if(newButtonState == SW4){//Switch04
     currentSample = flaaklypa;
   } else if(newButtonState == SW3){//Switch03
-    //Play toneScale
-  } /*else if(newButtonState == 0x4){//Switch02
+    currentSample = scale;
+  } /*else if(newButtonState == SW2){//Switch02
 
   } else if(newButtonState == 0x2){//Switch01
 
