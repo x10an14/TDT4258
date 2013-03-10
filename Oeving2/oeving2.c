@@ -28,7 +28,7 @@ sampleCollection *flaaklyp;
 
 int main (int argc, char *argv[]){
   // Creating of sinus wave list 102 steps
-  short sineSampleList[] = (short*) malloc(102*sizeof(short));;
+  short *sineSampleList = (short*) malloc(102*sizeof(short));;
   //for-loop cntr
   int i;
   for (i=0; i < 102; i++){
