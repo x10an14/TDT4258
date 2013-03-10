@@ -29,7 +29,7 @@ short *currentSamplePtr = NULL;
 int *ratePtr = NULL;
 
 
-sample *flaaklypa, *flaa1, *flaa2, *flaa3, *flaa4, *currentSample, *saw, *triangle, scale;
+sample *flaaklypa, *flaa1, *flaa2, *flaa3, *flaa4, *currentSample, *saw, *triangle, *scale, *square;
 sampleCollection *flaaklyp;
 
 
@@ -134,7 +134,7 @@ int main (int argc, char *argv[]){
   flaaklypa->rateMax = 0;
   flaaklypa->usingTimeList = 1;
   scale->rateMax = 0;
-  scale->usingTimeList = 1;  
+  scale->usingTimeList = 1;
 
   saw->usingTimeList = 0;
   saw->rateMax = SAWRATE;
