@@ -228,24 +228,24 @@ void button_isr(void){
   }*/
 }
 
-//This function needs to be rewritten so that all it takes is a sample, checks whether it should use rateCntr, or if function addFrequency has been used, and then plays the sample with the use of the cntrs in the struct alone (to get rid of all these global variables.)
+//This function should play the next element in a pre-computed list
 void abdac_isr(void){
   short output = 0;
   /*General sample-list play without rate*/
-  if(currentSample != NULL){
-    if(currentSample->usingTimeList){
+  if(currentSample != NULL){ /*Check to see if the pointer is actually pointing at a struct*/
+    if(currentSample->usingTimeList){ /*Check to see if we've already calculated how long to 'dwell' on each element in member list*/
       output = currentSample->list[currentSample->playCntr];
       currentSample->playCntr++;
-      if (currentSample->playCntr >= currentSample->size){
+      if (currentSample->playCntr >= currentSample->size){ /*If we've reached the end of the list, reset playCntr to 0*/
         currentSample->playCntr = 0;
       }
-    } else{
+    } else{ /*If we are NOT using timelist, and we're using rateCntr to 'dwell' on each element a rateMax amount of times*/
       output = currentSample->list[currentSample->playCntr];
       currentSample->rateCntr++;
-      if (currentSample->rateCntr >= currentSample->rateMax){
+      if (currentSample->rateCntr >= currentSample->rateMax){ /*If we've dwelled the given amount of times, reset counter and start playing next tone*/
         currentSample->playCntr++;
         currentSample->rateCntr = 0;
-        if (currentSample->playCntr >= currentSample->size){
+        if (currentSample->playCntr >= currentSample->size){ /*If we've played through the whole list/tune, reset counter to start again*/
           currentSample->playCntr = 0;
         }
       }
@@ -253,41 +253,4 @@ void abdac_isr(void){
   }
   abdac->SDR.channel0 = output*SHRT_MAX*0.4;
   abdac->SDR.channel1 = output*SHRT_MAX*0.4;
-  //test
-
-/*  if(playListPtr == flaaklypa->list){
-    output = playListPtr[toneCntr];
-    //toneCntr iterates over the WHOLE tune
-    ++toneCntr;
-    //Below I check to see if we're at the end of the file
-    if(toneCntr == cntr){
-      toneCntr = 0;
-      tone_position = 0;
-    }
-  } else if(playListPtr != NULL &&
-    playListPtr != flaaklypa->list){
-    output = playListPtr[wave_position];
-    toneCntr++;
-    if(toneCntr >= *ratePtr){
-      toneCntr = 0;
-      ++wave_position;
-      *ratePtr = toneScale[tone_position];
-      if(wave_position >= 9){
-        ++tone_position;
-        wave_position = 0;
-        if(tone_position >= 7){
-          tone_position = 0;
-        }
-      }
-      current_repetition++;
-      if (current_repetition >= *ratePtr) {
-        wave_position++;
-        current_repetition = 0;
-        if (wave_position >= ARRAYSIZE) {
-          wave_position = 0;
-          //playListPtr = NULL; //Uncomment this to make it stop endless repeat
-        }
-      }
-    }
-  }*/
 }
