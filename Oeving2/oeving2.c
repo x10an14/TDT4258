@@ -17,7 +17,7 @@ volatile avr32_pm_t *pm = &AVR32_PM;
 volatile avr32_abdac_t *abdac = &AVR32_ABDAC;
 
 //sinus table
-short sineList[100];
+short sineSampleList[102];
 
 //buttonState variable
 short static volatile newButtonState;
@@ -25,59 +25,67 @@ short static volatile newButtonState;
 //All below are global
 short *currentSamplePtr = NULL;
 int *ratePtr = NULL;
-sample *flaaklypa, *flaa1, *flaa2, *flaa3, *flaa4,
-       *square, *saw, *triangle, *scale, *sine, *currentSample;
+sample *flaaklypaSample, *flaa1, *flaa2, *flaa3, *flaa4,
+       *squareSample, *sawSample, *triangleSample, *scaleSample, *sineSample, *currentSample;
 sampleCollection *flaaklyp;
 
 
 int main (int argc, char *argv[]){
 //for-loop cntr
-  int i;
   // Creating of sinus wave list 100 steps
+  sineSampleList = (short*) malloc(102*sizeof(short));
+  int i;
   for (i=0; i < 102; i++){
-  sineList[i] = sin(M_PI/102*i)*SHRT_MAX;
+    sineSampleList[i] = sin(M_PI/102*i)*SHRT_MAX;
   }
+
   //Allocate space on heap for pointers
   flaa1 = (sample*) malloc(sizeof(sample));
   flaa2 = (sample*) malloc(sizeof(sample));
   flaa3 = (sample*) malloc(sizeof(sample));
   flaa4 = (sample*) malloc(sizeof(sample));
-  saw = (sample*) malloc(sizeof(sample));
-  triangle = (sample*) malloc(sizeof(sample));
-  square = (sample*) malloc(sizeof(sample));
-  scale = (sample*) malloc(sizeof(sample));
-  sine = (sample*) malloc(sizeof(sample));
+  sawSample = (sample*) malloc(sizeof(sample));
+  sineSample = (sample*) malloc(sizeof(sample));
+  scaleSample = (sample*) malloc(sizeof(sample));
+  squareSample = (sample*) malloc(sizeof(sample));
+  triangleSample = (sample*) malloc(sizeof(sample));
+
   //Declare variable for above allocated short-size-members
   flaa1->size = 8;
   flaa2->size = 12;
   flaa3->size = 8;
   flaa4->size = 15;
-  saw->size = 17;
-  triangle->size = 17;
-  square->size = 17;
-  sine->size = 102;  // 17 * 6 = 102
-  scale->size = 8;
+  sawSample->size = 17;
+  sineSample->size = 102;  // 17 * 6 = 102
+  scaleSample->size = 8;
+  squareSample->size = 17;
+  triangleSample->size = 17;
+
   //Initialize and declare variable for above allocated short-list-members
   flaa1->list = FLAA1;
   flaa2->list = FLAA2;
   flaa3->list = FLAA3;
   flaa4->list = FLAA4;
-  saw->list = SAW;
-  triangle->list = TRIANGLE;
-  square->list = SQUARE;
-  sine->list = sineList;
-  scale->list = SCALE;
+  sawSample->list = SAW;
+  sineSample->list = sineSampleList;
+  scaleSample->list = SCALE;
+  squareSample->list = SQUARE;
+  triangleSample->list = TRIANGLE;
+
   //Repeat of above, but for strokeList
   flaa1->strokeList = FLAASTROKE1;
   flaa2->strokeList = FLAASTROKE2;
   flaa3->strokeList = FLAASTROKE3;
   flaa4->strokeList = FLAASTROKE4;
-  scale->strokeList = SCALESTROKE;
+  scaleSample->strokeList = SCALESTROKE;
+
   //Repeat of all above, except that pointer is a sampleCollection* pointer
   flaaklyp = (sampleCollection*) malloc(sizeof(sampleCollection));
   flaaklyp->size = 10;
   flaaklyp->list = (sample**) malloc(flaaklyp->size*sizeof(sample*));
-  //The below line declares the list member of the sampleCollection pointer to be the addresses of the above sample pointers
+
+  /*The below for-loop declares the list member of the sampleCollection pointer to be the addresses of the above sample pointers
+  (Flaaklypa variants only!)*/
   for (i = 0; i < 10; i++){
     if(i == 0 || i == 2 || i == 8 || i == 6){
       flaaklyp->list[i] = flaa1;
@@ -90,21 +98,20 @@ int main (int argc, char *argv[]){
     }
   }
 
-  //Count to see how much space is needed
-  //cntr for how much space we need
+  //Count to see how much space is needed for flaaklypaSample->list/size
+  //cntr for how much space needed
   int memCntr = 0;
-  //cntr-list with how many times each tone is played
   for(i = 0; i < flaaklyp->size; i++){
     //Temporary variable for readability
     sample *small = flaaklyp->list[i];
-    //for-loop cntr
+    //Inner for-loop cntr
     int j, size;
     for(j = 0; j < small->size; j++){
-      //temp variable with how many times each tone is played
+      /*size == temp variable with how much space is needed for each tone in the final list*/
       size = (int) (ABDAC_SAMPLERATE/small->list[j]);
-      //Self-explanatory
+      //Self-explanatory (if you've read the above comments)
       memCntr += size;
-      //If tonevalue changes, or we've reached the end of a playlist(sample)
+      /*If tonevalue stays the same, or we've reached the end of a playlist(sample), we might want just a small, teeny-tiny break so that those with the most sensitive ears can differ.*/
       if(small->list[j-1] == small->list[j] ||
         j+1 == small->size){
         memCntr += 4; //Silence
@@ -113,22 +120,22 @@ int main (int argc, char *argv[]){
   }
 
   //Assigning space
-  flaaklypa = (sample*) malloc(sizeof(sample*));
-  flaaklypa->size = memCntr;
-  flaaklypa->list = (short*) calloc((short) 0, memCntr*sizeof(short)); //Total size of tune
+  flaaklypaSample = (sample*) malloc(sizeof(sample*));
+  flaaklypaSample->size = memCntr;
+  flaaklypaSample->list = (short*) calloc((short) 0, memCntr*sizeof(short));
 
-  //Assigning(/Combining) values to final list (flaaklypa->list)
+  //Assigning(/Combining) values to final list (flaaklypaSample->list)
   int cntr = 0;
   for(i = 0; i < flaaklyp->size; i++){
     sample *small = flaaklyp->list[i];
     int j, size;
     for(j = 0; j < small->size; j++){
       size = (int)(ABDAC_SAMPLERATE/small->list[j]);
-      addFrequency(small->strokeList[j], small->list[j], flaaklypa->list, cntr);
+      addFrequency(small->strokeList[j], small->list[j], flaaklypaSample->list, cntr);
       cntr += size;
       if(small->list[j-1] == small->list[j] ||
         j+1 == small->size){
-        addZeroes(4, flaaklypa->list, cntr);
+        addZeroes(4, flaaklypaSample->list, cntr);
         cntr += 4;
       }
     }
@@ -140,51 +147,51 @@ int main (int argc, char *argv[]){
   //cntr-list with how many times each tone is played
   memCntr = 0;
   int size;
-  for(i = 0; i < scale->size; i++){
+  for(i = 0; i < scaleSample->size; i++){
     //temp variable with how many times each tone is played
     size = (int) (ABDAC_SAMPLERATE/SCALESTROKE[i]);
     //Self-explanatory
     memCntr += size;
     //If tonevalue changes, or we've reached the end of a playlist(sample)
-    if(i+1 == scale->size){
+    if(i+1 == scaleSample->size){
       memCntr += 4; //Silence
     }
   }
 
   //Assigning space
-  scale = (sample*) malloc(sizeof(sample*));
-  scale->size = memCntr;
-  scale->list = (short*) calloc((short) 0, memCntr*sizeof(short)); //Total size of tune
+  scaleSample = (sample*) malloc(sizeof(sample*));
+  scaleSample->size = memCntr;
+  scaleSample->list = (short*) calloc((short) 0, memCntr*sizeof(short)); //Total size of tune
 
-  //Assigning(/Combining) values to final list (flaaklypa->list)
+  //Assigning(/Combining) values to final list (flaaklypaSample->list)
   cntr = 0;
-  for(i = 0; i < scale->size; i++){
+  for(i = 0; i < scaleSample->size; i++){
     size = (int) (ABDAC_SAMPLERATE/SCALESTROKE[i]);
-    addFrequency(SCALESTROKE[i], SCALE[i], scale->list, cntr);
+    addFrequency(SCALESTROKE[i], SCALE[i], scaleSample->list, cntr);
     cntr += size;
-    if (i+1 == scale->size){
-      addZeroes(4, scale->list, cntr);
+    if (i+1 == scaleSample->size){
+      addZeroes(4, scaleSample->list, cntr);
       cntr += 4;
     }
   }
   //The rate (amount of times we play each element) is already set with the function addFrequency. So no need to use it on this sample
-  flaaklypa->rateMax = 0;
-  flaaklypa->usingStrokeList = 1;
-  scale->rateMax = 0;
-  scale->usingStrokeList = 1;
+  flaaklypaSample->usingStrokeList = 1;
+  scaleSample->usingStrokeList = 1;
 
-  saw->usingStrokeList = 0;
-  saw->rateMax = SAWRATE;
-  saw->rateCntr = 0;
-  triangle->usingStrokeList = 0;
-  triangle->rateMax = TRIANGLERATE;
-  triangle->rateCntr = 0;
-  square->usingStrokeList = 0;
-  square->rateMax = SQUARERATE;
-  square->rateCntr = 0;
-  sine->usingStrokeList = 0;
-  sine->rateMax = SINERATE;
-  sine->rateCntr = 0;
+  sawSample->usingStrokeList = 0;
+  sineSample->usingStrokeList = 0;
+  squareSample->usingStrokeList = 0;
+  triangleSample->usingStrokeList = 0;
+
+  sawSample->rateMax = SAWRATE;
+  sineSample->rateMax = SINERATE;
+  squareSample->rateMax = SQUARERATE;
+  triangleSample->rateMax = TRIANGLERATE;
+
+  sawSample->rateCntr = 0;
+  sineSample->rateCntr = 0;
+  squareSample->rateCntr = 0;
+  triangleSample->rateCntr = 0;
 
   initHardware();
 
@@ -192,9 +199,8 @@ int main (int argc, char *argv[]){
   return 0;
 }
 
-/*Function to add the time a tone will be played to a list, given a tone, length (div), and list*/
+/*Function to add the time a tone will be played to a list, given a tone, length (stroke), and list*/
 void addFrequency(int stroke, short tone, short *list, int start){
-  //First get the amount of periods each tone has to be played to get the correct pitch, but multiply result with 2 so that below for-loop will set amplitude values correctly
   int periods = (int) (tone/stroke);
   int periodSize = ABDAC_SAMPLERATE/tone;
   int halfPeriod = periodSize/2;
@@ -234,7 +240,7 @@ void initIntc(void){
 void initButtons(void){
   register_interrupt(button_isr, AVR32_PIOB_IRQ/32, AVR32_PIOB_IRQ % 32, BUTTONS_INT_LEVEL);
   //Setting the below switch-values to variable active
-  short active = SW7+SW6+SW5+SW4+SW3;
+  short active = SW7+SW6+SW5+SW4+SW3+SW2+SW0;
   piob->per = active; //Activating switches in variable active
   piob->puer = active; //Activating switches in variable active
   piob->ier = active; //Activating interrupt for switches in variable active
@@ -244,8 +250,8 @@ void initButtons(void){
 
 void initLeds(void){
   //Enable all LEDs on PIOB
-  pioc->per = 0xff; //0xff == all LEDs
-  pioc->oer = 0xff;
+  pioc->per = 0xff-SW1; //0xff == all LEDs
+  pioc->oer = 0xff-SW1;
 }
 
 void initAudio(void){
@@ -274,17 +280,17 @@ void button_isr(void){
   pioc->sodr = newButtonState; //Turn on the light corresponding to the button pushed
 
   if(newButtonState == SW7){//Switch07
-    currentSample = saw;
+    currentSample = sawSample;
   } else if(newButtonState == SW6){//Switch06
-    currentSample = triangle;
+    currentSample = triangleSample;
   } else if(newButtonState == SW5){//Switch05
-    currentSample = square;
+    currentSample = squareSample;
   } else if(newButtonState == SW4){//Switch04
-    currentSample = flaaklypa;
+    currentSample = flaaklypaSample;
   } else if(newButtonState == SW3){//Switch03
-    currentSample = scale;
+    currentSample = scaleSample;
   } else if(newButtonState == SW2){//Switch02
-    currentSample = sine;
+    currentSample = sineSample;
   }/* else if(newButtonState == SW1){//Switch01
 
   }*/ else if(newButtonState == SW0){//Switch0
@@ -297,20 +303,24 @@ void button_isr(void){
 //This function should play the next element in a pre-computed list
 void abdac_isr(void){
   short output = 0;
-  /*General sample-list play without rate*/
-  if(currentSample != NULL){ /*Check to see if the pointer is actually pointing at a struct*/
+
+  if(currentSample != NULL){ /*Check to see if the pointer is actually pointing at a struct (General sample-list play without rate)*/
+
     if(currentSample->usingStrokeList){ /*Check to see if we've already calculated how long to 'dwell' on each element in member list*/
       output = currentSample->list[currentSample->playCntr];
       currentSample->playCntr++;
+
       if (currentSample->playCntr >= currentSample->size){ /*If we've reached the end of the list, reset playCntr to 0*/
         currentSample->playCntr = 0;
       }
     } else{ /*If we are NOT using timelist, and we're using rateCntr to 'dwell' on each element a rateMax amount of times*/
       output = currentSample->list[currentSample->playCntr];
       currentSample->rateCntr++;
+
       if (currentSample->rateCntr >= currentSample->rateMax){ /*If we've dwelled the given amount of times, reset counter and start playing next tone*/
         currentSample->playCntr++;
         currentSample->rateCntr = 0;
+
         if (currentSample->playCntr >= currentSample->size){ /*If we've played through the whole list/tune, reset counter to start again*/
           currentSample->playCntr = 0;
         }
