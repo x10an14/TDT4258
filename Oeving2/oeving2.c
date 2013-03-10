@@ -9,9 +9,10 @@
 #include <math.h>
 #include "sys/interrupts.h"
 #include "oeving2.h"
+
 #include "listsAndConstants.h"
 
-volatile avr32_pio_t *piob = &AVR32_PIOB;;
+volatile avr32_pio_t *piob = &AVR32_PIOB;
 volatile avr32_pio_t *pioc = &AVR32_PIOC;
 volatile avr32_pm_t *pm = &AVR32_PM;
 volatile avr32_abdac_t *abdac = &AVR32_ABDAC;
@@ -236,9 +237,9 @@ void button_isr(void){
     currentSample = triangle;
   } else if(newButtonState == SW5){//Switch05
     currentSample = square;
-  } else if(newButtonState == 0x10){//Switch04
+  } else if(newButtonState == SW4){//Switch04
     currentSample = flaaklypa;
-  } else if(newButtonState == 0x8){//Switch03
+  } else if(newButtonState == SW3){//Switch03
     //Play toneScale
   } /*else if(newButtonState == 0x4){//Switch02
 
