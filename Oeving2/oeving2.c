@@ -81,7 +81,7 @@ int main (int argc, char *argv[]){
     int j;
     for(j = 0; j < flaaklyp->list[i]->size; j++){
       //temp variable with how many times each tone is played
-      short size = (short) getFrequencySize(flaaklyp->list[i]->timeList[j], flaaklyp->list[i]->list[j],2);
+      short size = (short) getPeriodAmount(flaaklyp->list[i]->timeList[j], flaaklyp->list[i]->list[j],2);
       //Self-explanatory
       memCntr += size;
       //If tonevalue changes, or we've reached the end of a playlist(sample)
@@ -103,7 +103,7 @@ int main (int argc, char *argv[]){
     sample *small = flaaklyp->list[i];
     int j;
     for(j = 0; j < small->size; j++){
-      short size = (short) getFrequencySize(small->timeList[j], small->list[j], 2);
+      short size = (short) getPeriodAmount(small->timeList[j], small->list[j], 2);
       addFrequency(small->timeList[j], small->list[j], flaaklypa->list, cntr);
       cntr += size;
       if(small->list[j-1] == small->list[j] ||
@@ -121,20 +121,19 @@ int main (int argc, char *argv[]){
 }
 
 //Fun
-int getFrequencySize(int timeDiv, short tone, int waveFormSize){
+int getPeriodAmount(int timeDiv, short tone, int waveFormSize){
   return (int) (49152*(1/(timeDiv*waveFormSize*tone)));
   // return (int) (486875*(1/(timeDiv*waveFormSize*tone)));
 }
 
 /*Function to add the time a tone will be played to a list, given a tone, length (div), and list*/
 void addFrequency(int timeDiv, short tone, short *list, int start){
-  int freqCntr = getFrequencySize(timeDiv, tone, 2);
+  //First get the amount of periods each tone has to be played to get the correct pitch, but multiply result with 2 so that below for-loop will set amplitude values correctly
+  int periods = getPeriodAmount(timeDiv, tone, 2)*2;
   int i;
-  for(i = start; i < freqCntr + start; i++){
-    if(i < freqCntr/2){
-      list[i] = -tone;
-    }
-    list[i] = tone;
+  for(i = start; i < periods + start; i += 2){
+    list[j] = -1;
+    list[++i] = 1;
   }
 }
 
