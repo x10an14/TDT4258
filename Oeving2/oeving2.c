@@ -108,7 +108,7 @@ int main (int argc, char *argv[]){
   flaaklypa->size = memCntr;
   flaaklypa->list = (short*) calloc((short) 0, memCntr*sizeof(short)); //Total size of tune
 
-  //Assign values to final list (flaaklypa->list)
+  //Assigning(/Combining) values to final list (flaaklypa->list)
   cntr = 0;
   for(i = 0; i < flaaklyp->size; i++){
     sample *small = flaaklyp->list[i];
@@ -233,6 +233,7 @@ void button_isr(void){
   }*/
 }
 
+//This function needs to be rewritten so that all it takes is a sample, checks whether it should use rateCntr, or if function addFrequency has been used, and then plays the sample with the use of the cntrs in the struct alone (to get rid of all these global variables.)
 void abdac_isr(void){
   short output = 0;
   if(playListPtr == flaaklypa->list){

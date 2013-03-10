@@ -18,16 +18,21 @@
 
 
 /*Structs we've made ourselves for this assignment*/
-typedef struct smpl{
+typedef struct sample{
+    //List of short-values (amplitude values) for tune that this struct holds
     short *list;
+    //A list of short values carrying the X in Y/X where Y always equals 1. (To get tones of different time length)
     short *timeList;
-    short playCntr;
-    //Implement counter variable for when playing a sample?
-    short size;
+    //Counter and size for both abovementioned lists
+    short playCntr, size;
+    //Counter and maxvalue for rate of playing (If timelist is not used, these two are meant to be used instead)
+    short rateCntr, rateMax;
 }sample;
 
-typedef struct smplCollectn{
+typedef struct sampleCollection{
+    //List to pointers which point a sample struct each
     sample **list;
+    //Size of abovementioned list
     short size;
 }sampleCollection;
 
