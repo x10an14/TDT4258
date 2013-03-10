@@ -122,7 +122,7 @@ int main (int argc, char *argv[]){
 
 //Fun
 int getFrequencySize(int timeDiv, short tone, int waveFormSize){
-  return (int) (468750000*(1/(timeDiv*waveFormSize*tone)));
+  return (int) (468.75*(1/(timeDiv*waveFormSize*tone)));
 }
 
 /*Function to add the time a tone will be played to a list, given a tone, length (div), and list*/
