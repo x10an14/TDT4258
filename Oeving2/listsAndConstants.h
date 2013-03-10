@@ -14,6 +14,9 @@
 #define SW5 0x20
 #define SW4 0x10
 #define SW3 0x8
+#define SW2 0x4
+#define SW1 0x2
+#define SW0 0x1
 
 /*Obsolete? Rates of which we will play each single element before moving on to next element (creating pitch)*/
 #define SAWRATE 20
