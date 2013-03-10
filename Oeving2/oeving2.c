@@ -17,7 +17,7 @@ volatile avr32_pm_t *pm = &AVR32_PM;
 volatile avr32_abdac_t *abdac = &AVR32_ABDAC;
 
 //sinus table
-short sineTable[100];
+short sineList[100];
 
 //buttonState variable
 short static volatile newButtonState;
