@@ -7,7 +7,7 @@
 
 /*Array sizes.*/
 #define ARRAYSIZE 17
-#define TONESIZE 8
+//#define TONESIZE 8
 
 /*Button values in hex*/
 #define SW7 0x80
@@ -45,9 +45,15 @@ short TIME2[] = {4,4,4,4,4,4,4,4,4,4,4,2};
 short TIME3[] = {4,4,2,4,4,2,2,2};
 short TIME4[] = {2,2,4,4,4,4,2,4,4,2,4,4,4,4,4};
 
+// Scale roll 8 steps
+short SCALE[] = {C4,D4,E4,F4,G4,A4,B4,C5};
+//short toneScale[TONESIZE] = {C4,D4,E4,F4,G4,A4,B4};
+short SCALETIME[] = {2,2,2,2,2,2,2,2};
+
 // Saw Waveform 17 steps
 short SAW[] = {-8,-7,-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6,7,8};
 // Triangle Waveform 17 steps
 short TRIANGLE[] = {0,2,4,6,8,6,4,2,0,-2,-4,-6,-8,-6,-4,-2,0};
+// Square Waveform 17 steps 
+short SQUARE[] = {-8,-8,-8,-8,-8,-8,-8,-8,8,8,8,8,8,8,8,8,8}
 
-short toneScale[TONESIZE] = {C4,D4,E4,F4,G4,A4,B4};

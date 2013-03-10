@@ -29,7 +29,7 @@ short *currentSamplePtr = NULL;
 int *ratePtr = NULL;
 
 
-sample *flaaklypa, *flaa1, *flaa2, *flaa3, *flaa4, *currentSample, *saw, *triangle;
+sample *flaaklypa, *flaa1, *flaa2, *flaa3, *flaa4, *currentSample, *saw, *triangle, scale;
 sampleCollection *flaaklyp;
 
 
@@ -40,6 +40,9 @@ int main (int argc, char *argv[]){
   flaa3 = (sample*) malloc(sizeof(sample));
   flaa4 = (sample*) malloc(sizeof(sample));
   saw = (sample*) malloc(sizeof(sample));
+  triangle = (sample*) malloc(sizeof(sample));
+  square = (sample*) malloc(sizeof(sample));
+  scale = (sample*) malloc(sizeof(sample));
   //Declare variable for above allocated short-size-members
   flaa1->size = 8;
   flaa2->size = 12;
@@ -47,6 +50,8 @@ int main (int argc, char *argv[]){
   flaa4->size = 15;
   saw->size = 17;
   triangle->size = 17;
+  square->size = 17;
+  scale->size = 8;
   //Initialize and declare variable for above allocated short-list-members
   flaa1->list = FLAA1;
   flaa2->list = FLAA2;
@@ -54,11 +59,14 @@ int main (int argc, char *argv[]){
   flaa4->list = FLAA4;
   saw->list = SAW;
   triangle->list = TRIANGLE;
+  square->list = SQUARE;
+  scale->list = SCALE;
   //Repeat of above, but for timeList
   flaa1->timeList = TIME1;
   flaa2->timeList = TIME2;
   flaa3->timeList = TIME3;
   flaa4->timeList = TIME4;
+  scale->timeList = SCALETIME;
   //Repeat of all above, except that pointer is a sampleCollection* pointer
   flaaklyp = (sampleCollection*) malloc(sizeof(sampleCollection));
   flaaklyp->size = 10;
@@ -125,10 +133,15 @@ int main (int argc, char *argv[]){
   //The rate (amount of times we play each element) is already set with the function addFrequency. So no need to use it on this sample
   flaaklypa->rateMax = 0;
   flaaklypa->usingTimeList = 1;
+  scale->rateMax = 0;
+  scale->usingTimeList = 1;  
+
   saw->usingTimeList = 0;
   saw->rateMax = SAWRATE;
   triangle->usingTimeList = 0;
   triangle->rateMax = TRIANGLERATE;
+  square->usingTimeList = 0;
+  square->rateMax = SQUARERATE;
 
   initHardware();
 
