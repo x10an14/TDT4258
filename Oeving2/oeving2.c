@@ -142,13 +142,17 @@ int main (int argc, char *argv[]){
 
   saw->usingTimeList = 0;
   saw->rateMax = SAWRATE;
+  saw->rateCntr = 0;
   triangle->usingTimeList = 0;
   triangle->rateMax = TRIANGLERATE;
+  triangle->rateCntr = 0;
   square->usingTimeList = 0;
   square->rateMax = SQUARERATE;
+  square->rateCntr = 0;
   sine->usingTimeList = 0;
   sine->rateMax = SINERATE;
-
+  sine->rateCntr = 0;
+  
   initHardware();
 
   while(1);
