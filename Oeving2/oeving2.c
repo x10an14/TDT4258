@@ -234,13 +234,15 @@ void button_isr(void){
     currentSample = flaaklypa;
   } else if(newButtonState == SW3){//Switch03
     //Play toneScale
-  } /*else if(newButtonState == 0x4){//Switch02
+  } /*else if(newButtonState == SW2){//Switch02
 
-  } else if(newButtonState == 0x2){//Switch01
+  } else if(newButtonState == SW1){//Switch01
 
-  } else if(newButtonState == 0x1){//Switch0
-
-  }*/
+  }*/ else if(newButtonState == SW0){//Switch0
+    /*SILENCE WILL FALL...*/
+    currentSample = NULL;
+    pioc->codr = 0xff;
+  }
 }
 
 //This function should play the next element in a pre-computed list
