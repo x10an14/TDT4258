@@ -46,8 +46,9 @@ short TIME3[] = {4,4,2,4,4,2,2,2};
 short TIME4[] = {2,2,4,4,4,4,2,4,4,2,4,4,4,4,4};
 
 // Saw Waveform 17 steps
-short SAW[] = {-8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8};
+short SAW[] = {-8,-7,-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6,7,8};
+// Triangle Waveform 17 steps
+short TRIANGLE[] = {0,2,4,8,4,2,0,-2,-4,-8,-4,-2};
 
-// short sawToothWave[] = {-1*SHRT_MAX, -(7/8)*SHRT_MAX, -0.75*SHRT_MAX, -(5/8)*SHRT_MAX, -0.50*SHRT_MAX, -(3/8)*SHRT_MAX, -0.25*SHRT_MAX, -(1/8)*SHRT_MAX, 0*SHRT_MAX, (1/8)*SHRT_MAX, 0.25*SHRT_MAX, (3/8)*SHRT_MAX, 0.50*SHRT_MAX, (5/8)*SHRT_MAX, 0.75*SHRT_MAX, (7/8)*SHRT_MAX, 1*SHRT_MAX};
 short triangleWave[] = {0*SHRT_MAX, 0.25*SHRT_MAX, 0.50*SHRT_MAX, 0.75*SHRT_MAX, 1*SHRT_MAX, 0.75*SHRT_MAX, 0.50*SHRT_MAX, 0.25*SHRT_MAX, 0*SHRT_MAX, -0.25*SHRT_MAX, -0.50*SHRT_MAX, -0.75*SHRT_MAX, -1*SHRT_MAX, -0.75*SHRT_MAX, -0.50*SHRT_MAX, -0.25*SHRT_MAX, 0*SHRT_MAX};
 short toneScale[TONESIZE] = {C4,D4,E4,F4,G4,A4,B4};
