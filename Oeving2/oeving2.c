@@ -133,7 +133,35 @@ int main (int argc, char *argv[]){
       }
     }
   }
+  
+  // SAME METHOD BUT FOR SCALE 
+  //Count to see how much space is needed
+  //cntr for how much space we need
+  //cntr-list with how many times each tone is played
+  memCntr = 0;
+  for(i = 0; i < scale->size; i++){
+    //temp variable with how many times each tone is played
+    short size = (short) getPeriodAmount(SCALETIME[i], SCALETIME[i],2)*2;
+    //Self-explanatory
+    memCntr += size;
+    //If tonevalue changes, or we've reached the end of a playlist(sample)
+    memCntr += 4; //Silence
+  }
 
+  //Assigning space
+  scale = (sample*) malloc(sizeof(sample*));
+  scale->size = memCntr;
+  scale->list = (short*) calloc((short) 0, memCntr*sizeof(short)); //Total size of tune
+
+  //Assigning(/Combining) values to final list (flaaklypa->list)
+  cntr = 0;
+  for(i = 0; i < scale->size; i++){
+    short size = (short) getPeriodAmount(SCALETIME[i], SCALE[i], 2)*2;
+    addFrequency(SCALETIME[i], SCALE[i], scale->list, cntr);
+    cntr += size;
+    addZeroes(4, scale->list, cntr);
+    cntr += 4;
+  }
   //The rate (amount of times we play each element) is already set with the function addFrequency. So no need to use it on this sample
   flaaklypa->rateMax = 0;
   flaaklypa->usingTimeList = 1;
