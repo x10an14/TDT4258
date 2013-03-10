@@ -11,7 +11,7 @@
 #include "oeving2.h"
 #include "listsAndConstants.h"
 
-volatile avr32_pio_t *piob = &AVR32_PIOB;;
+volatile avr32_pio_t *piob = &AVR32_PIOB;
 volatile avr32_pio_t *pioc = &AVR32_PIOC;
 volatile avr32_pm_t *pm = &AVR32_PM;
 volatile avr32_abdac_t *abdac = &AVR32_ABDAC;
@@ -19,17 +19,11 @@ volatile avr32_abdac_t *abdac = &AVR32_ABDAC;
 //buttonState variable
 short static volatile newButtonState;
 
-//All below are global, CAPS are
-int current_repetition = 0;
-int tone_position = 0;
-int wave_position = 0;
-int toneCntr = 0;
-int volatile cntr = 0;
+//All below are global
 short *currentSamplePtr = NULL;
 int *ratePtr = NULL;
-
-
-sample *flaaklypa, *flaa1, *flaa2, *flaa3, *flaa4, *currentSample, *saw, *triangle, *scale, *square;
+sample *flaaklypa, *flaa1, *flaa2, *flaa3, *flaa4,
+       *square, *saw, *triangle, *scale, *currentSample;
 sampleCollection *flaaklyp;
 
 
@@ -239,9 +233,9 @@ void button_isr(void){
     currentSample = triangle;
   } else if(newButtonState == SW5){//Switch05
     currentSample = square;
-  } else if(newButtonState == 0x10){//Switch04
+  } else if(newButtonState == SW4){//Switch04
     currentSample = flaaklypa;
-  } else if(newButtonState == 0x8){//Switch03
+  } else if(newButtonState == SW3){//Switch03
     //Play toneScale
   } /*else if(newButtonState == 0x4){//Switch02
 
