@@ -16,9 +16,6 @@ volatile avr32_pio_t *pioc = &AVR32_PIOC;
 volatile avr32_pm_t *pm = &AVR32_PM;
 volatile avr32_abdac_t *abdac = &AVR32_ABDAC;
 
-//sinus table
-short sineSampleList[102];
-
 //buttonState variable
 short static volatile newButtonState;
 
@@ -29,11 +26,10 @@ sample *flaaklypaSample, *flaa1, *flaa2, *flaa3, *flaa4,
        *squareSample, *sawSample, *triangleSample, *scaleSample, *sineSample, *currentSample;
 sampleCollection *flaaklyp;
 
-
 int main (int argc, char *argv[]){
-//for-loop cntr
-  // Creating of sinus wave list 100 steps
-  sineSampleList = (short*) malloc(102*sizeof(short));
+  // Creating of sinus wave list 102 steps
+  short sineSampleList[] = (short*) malloc(102*sizeof(short));;
+  //for-loop cntr
   int i;
   for (i=0; i < 102; i++){
     sineSampleList[i] = sin(M_PI/102*i)*SHRT_MAX;
