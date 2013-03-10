@@ -8,11 +8,7 @@
 #include <limits.h>
 #include <math.h>
 #include "sys/interrupts.h"
-#include "lots_of_lists.h"
 #include "oeving2.h"
-
-
-
 
 volatile avr32_pio_t *piob = &AVR32_PIOB;
 volatile avr32_pio_t *pioc = &AVR32_PIOC;
