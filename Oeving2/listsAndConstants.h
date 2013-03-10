@@ -17,9 +17,9 @@
 #define SW3 0x8
 
 /*Obsolete? Rates of which we will play each single element before moving on to next element (creating pitch)*/
-//#define SAWRATE 20
-//#define SQUARERATE 11
-//#define TRIANGLERATE 18
+#define SAWRATE 20
+#define SQUARERATE 11
+#define TRIANGLERATE 18
 
 
 //#define TONE#OCTAVE AmountOfRepetitionsPerSquareWaveElementPerSecondToGenerateSaidTone
