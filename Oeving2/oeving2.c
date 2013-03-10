@@ -25,10 +25,11 @@ int tone_position = 0;
 int wave_position = 0;
 int toneCntr = 0;
 int volatile cntr = 0;
-short *playListPtr = NULL;
+short *currentSamplePtr = NULL;
 int *ratePtr = NULL;
 
-sample *flaaklypa, *flaa1, *flaa2, *flaa3, *flaa4, *playList, *saw;
+
+sample *flaaklypa, *flaa1, *flaa2, *flaa3, *flaa4, *currentSample, *saw;
 sampleCollection *flaaklyp;
 
 
@@ -121,7 +122,7 @@ int main (int argc, char *argv[]){
 
   //The rate (amount of times we play each element) is already set with the function addFrequency. So no need to use it on this sample
   flaaklypa->rateMax = 0;
-
+  flaaklypa->usingTimeList = 1;
   initHardware();
 
   while(1);
@@ -219,7 +220,7 @@ void button_isr(void){
     playListPtr = squareWave;
     *ratePtr = SQUARERATE;
   } else if(newButtonState == 0x10){//Switch04
-    playList = flaaklypa;
+    currentSample = flaaklypa;
   } else if(newButtonState == 0x8){//Switch03
     //Play toneScale
   } /*else if(newButtonState == 0x4){//Switch02
@@ -235,11 +236,30 @@ void button_isr(void){
 void abdac_isr(void){
   short output = 0;
   /*General sample-list play without rate*/
-  if(playList->rateMax == 0){
-    /* code */
+  if(currentSample != NULL){
+    if(currentSample->usingTimeList){
+      output = currentSample->list[currentSample->playCntr];
+      currentSample->playCntr++;
+      if (currentSample->playCntr >= currentSample->size){
+        currentSample->playCntr = 0;
+      }
+    } else{
+      output = currentSample->list[currentSample->playCntr];
+      currentSample->rateCntr++;
+      if (currentSample->rateCntr >= currentSample->rateMax){
+        currentSample->playCntr++;
+        currentSample->rateCntr = 0;
+        if (currentSample->playCntr >= currentSample->size){
+          currentSample->playCntr = 0;
+        }
+      }
+    }
   }
+  abdac->SDR.channel0 = output*SHRT_MAX*0.4;
+  abdac->SDR.channel1 = output*SHRT_MAX*0.4;
+  //test
 
-  if(playListPtr == flaaklypa->list){
+/*  if(playListPtr == flaaklypa->list){
     output = playListPtr[toneCntr];
     //toneCntr iterates over the WHOLE tune
     ++toneCntr;
@@ -263,7 +283,7 @@ void abdac_isr(void){
           tone_position = 0;
         }
       }
-     /* current_repetition++;
+      current_repetition++;
       if (current_repetition >= *ratePtr) {
         wave_position++;
         current_repetition = 0;
@@ -271,9 +291,7 @@ void abdac_isr(void){
           wave_position = 0;
           //playListPtr = NULL; //Uncomment this to make it stop endless repeat
         }
-      }*/
+      }
     }
-  }
-  abdac->SDR.channel0 = output*SHRT_MAX*0.4;
-  abdac->SDR.channel1 = output*SHRT_MAX*0.4;
+  }*/
 }
