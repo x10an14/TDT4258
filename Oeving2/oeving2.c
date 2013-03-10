@@ -27,13 +27,8 @@ int toneCntr = 0;
 int volatile cntr = 0;
 short *playListPtr = NULL;
 int *ratePtr = NULL;
-short sawToothWave[] = {-1*SHRT_MAX, -(7/8)*SHRT_MAX, -0.75*SHRT_MAX, -(5/8)*SHRT_MAX, -0.50*SHRT_MAX, -(3/8)*SHRT_MAX, -0.25*SHRT_MAX, -(1/8)*SHRT_MAX, 0*SHRT_MAX, (1/8)*SHRT_MAX, 0.25*SHRT_MAX, (3/8)*SHRT_MAX, 0.50*SHRT_MAX, (5/8)*SHRT_MAX, 0.75*SHRT_MAX, (7/8)*SHRT_MAX, 1*SHRT_MAX};
-short triangleWave[] = {0*SHRT_MAX, 0.25*SHRT_MAX, 0.50*SHRT_MAX, 0.75*SHRT_MAX, 1*SHRT_MAX, 0.75*SHRT_MAX, 0.50*SHRT_MAX, 0.25*SHRT_MAX, 0*SHRT_MAX, -0.25*SHRT_MAX, -0.50*SHRT_MAX, -0.75*SHRT_MAX, -1*SHRT_MAX, -0.75*SHRT_MAX, -0.50*SHRT_MAX, -0.25*SHRT_MAX, 0*SHRT_MAX};
-short squareWave[SQUARESIZE] = {-1, 1};
-short toneScale[TONESIZE] = {C4,D4,E4,F4,G4,A4,B4};
-short flaaTone[102];
 
-sample *flaaklypa, *flaa1, *flaa2, *flaa3, *flaa4;
+sample *flaaklypa, *flaa1, *flaa2, *flaa3, *flaa4, *playList;
 sampleCollection *flaaklyp;
 
 int main (int argc, char *argv[]){
@@ -89,18 +84,11 @@ int main (int argc, char *argv[]){
       short size = (short) getFrequencySize(flaaklyp->list[i]->timeList[j], flaaklyp->list[i]->list[j],2);
       //Self-explanatory
       memCntr += size;
-      //Again, self explanatory
-      flaaTone[cntr] = size;
       //If tonevalue changes, or we've reached the end of a playlist(sample)
       if(flaaklyp->list[i]->list[j-1] == flaaklyp->list[i]->list[j] ||
         j+1 == flaaklyp->list[i]->size){
         memCntr += 4; //Silence
-        flaaTone[cntr] += 4;
       }
-      //Dividing by 2 so that audio_isr cntrs to work in audio_isr
-      flaaTone[cntr] /= 2;
-      //increasing cntr to manipulate next element in flaaTone
-      cntr += 1;
     }
   }
 
@@ -134,7 +122,7 @@ int main (int argc, char *argv[]){
 
 //Fun
 int getFrequencySize(int timeDiv, short tone, int waveFormSize){
-  return (int) (468750*(1/(timeDiv*waveFormSize*tone)));
+  return (int) (468750000*(1/(timeDiv*waveFormSize*tone)));
 }
 
 /*Function to add the time a tone will be played to a list, given a tone, length (div), and list*/
@@ -174,7 +162,7 @@ void initIntc(void){
 void initButtons(void){
   register_interrupt(button_isr, AVR32_PIOB_IRQ/32, AVR32_PIOB_IRQ % 32, BUTTONS_INT_LEVEL);
   //Setting the below switch-values to variable active
-  short active = SW7+SW6+SW5+SW4;
+  short act.ive = SW7+SW6+SW5+SW4+SW3;
   piob->per = active; //Activating switches in variable active
   piob->puer = active; //Activating switches in variable active
   piob->ier = active; //Activating interrupt for switches in variable active
@@ -223,10 +211,10 @@ void button_isr(void){
     playListPtr = squareWave;
     *ratePtr = SQUARERATE;
   } else if(newButtonState == 0x10){//Switch04
-    playListPtr = flaaklypa->list;
-  }/* else if(newButtonState == 0x8){//Switch03
-
-  } else if(newButtonState == 0x4){//Switch02
+    playList = flaaklypa;
+  } else if(newButtonState == 0x8){//Switch03
+    //Play toneScale
+  } /*else if(newButtonState == 0x4){//Switch02
 
   } else if(newButtonState == 0x2){//Switch01
 
@@ -238,6 +226,11 @@ void button_isr(void){
 //This function needs to be rewritten so that all it takes is a sample, checks whether it should use rateCntr, or if function addFrequency has been used, and then plays the sample with the use of the cntrs in the struct alone (to get rid of all these global variables.)
 void abdac_isr(void){
   short output = 0;
+  /*General sample-list play without rate*/
+  if(playList->rateMax == 0){
+    /* code */
+  }
+
   if(playListPtr == flaaklypa->list){
     output = playListPtr[toneCntr];
     //toneCntr iterates over the WHOLE tune

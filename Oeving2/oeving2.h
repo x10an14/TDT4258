@@ -27,7 +27,8 @@ typedef struct sample{
     //Counter and size for both abovementioned lists
     short playCntr, size;
     //Counter and maxvalue for rate of playing (If timelist is not used, these two are meant to be used instead)
-    short rateCntr, rateMax;
+    short rateCntr = 0;
+    short rateMax  = 0;
 }sample;
 
 typedef struct sampleCollection{
