@@ -68,15 +68,15 @@ int main (int argc, char *argv[]){
   //The below line declares the list member of the sample pointer to be the addresses of the above smallSample pointers
   //for-loop cntr
   int i;
-  for (int i = 0; i < 10; i++){
+  for (i = 0; i < 10; i++){
     if(i == 0 || i == 2 || i == 8 || i == 6){
-      flaaklyp->list[i] = &flaa1;
+      flaaklyp->list[i] = flaa1;
     } else if(i == 1 || i == 7){
-      flaaklyp->list[i] = &flaa2;
+      flaaklyp->list[i] = flaa2;
     } else if(i == 3 || i == 9){
-      flaaklyp->list[i] = &flaa3;
+      flaaklyp->list[i] = flaa3;
     } else{
-      flaaklyp->list[i] = &flaa4;
+      flaaklyp->list[i] = flaa4;
     }
   }
 
