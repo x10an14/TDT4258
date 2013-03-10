@@ -26,7 +26,7 @@ short static volatile newButtonState;
 short *currentSamplePtr = NULL;
 int *ratePtr = NULL;
 sample *flaaklypa, *flaa1, *flaa2, *flaa3, *flaa4,
-       *square, *saw, *triangle, *scale, *currentSample;
+       *square, *saw, *triangle, *scale, *sine, *currentSample;
 sampleCollection *flaaklyp;
 
 
@@ -34,8 +34,8 @@ int main (int argc, char *argv[]){
 //for-loop cntr
   int i;
   // Creating of sinus wave list 100 steps 
-  for (i=0; i < 100; i++){
-  sineList[i] = sin(M_PI/100*i)*SHRT_MAX;
+  for (i=0; i < 102; i++){
+  sineList[i] = sin(M_PI/102*i)*SHRT_MAX;
   }
   //Allocate space on heap for pointers
   flaa1 = (sample*) malloc(sizeof(sample));
@@ -46,6 +46,7 @@ int main (int argc, char *argv[]){
   triangle = (sample*) malloc(sizeof(sample));
   square = (sample*) malloc(sizeof(sample));
   scale = (sample*) malloc(sizeof(sample));
+  sine = (sample*) malloc(sizeof(sample));
   //Declare variable for above allocated short-size-members
   flaa1->size = 8;
   flaa2->size = 12;
@@ -54,6 +55,7 @@ int main (int argc, char *argv[]){
   saw->size = 17;
   triangle->size = 17;
   square->size = 17;
+  sine->size = 102;  // 17 * 6 = 102 
   scale->size = 8;
   //Initialize and declare variable for above allocated short-list-members
   flaa1->list = FLAA1;
@@ -63,6 +65,7 @@ int main (int argc, char *argv[]){
   saw->list = SAW;
   triangle->list = TRIANGLE;
   square->list = SQUARE;
+  sine->list = sineList;
   scale->list = SCALE;
   //Repeat of above, but for timeList
   flaa1->timeList = FLAATIME1;
@@ -143,6 +146,8 @@ int main (int argc, char *argv[]){
   triangle->rateMax = TRIANGLERATE;
   square->usingTimeList = 0;
   square->rateMax = SQUARERATE;
+  sine->usingTimeList = 0;
+  sine->rateMax = SINERATE;
 
   initHardware();
 
@@ -241,9 +246,9 @@ void button_isr(void){
     currentSample = flaaklypa;
   } else if(newButtonState == SW3){//Switch03
     currentSample = scale;
-  } /*else if(newButtonState == SW2){//Switch02
-
-  } else if(newButtonState == 0x2){//Switch01
+  } else if(newButtonState == SW2){//Switch02
+    currentSample = sine;
+  } /*else if(newButtonState == 0x2){//Switch01
 
   } else if(newButtonState == 0x1){//Switch0
 
