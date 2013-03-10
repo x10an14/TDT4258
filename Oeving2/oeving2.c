@@ -52,14 +52,14 @@ int main (int argc, char *argv[]){
   flaa4->size = 15;
   //Initialize and declare variable for above allocated short-list-members
   flaa1->list = FLAA1;
-  *(flaa2->list) = {C4,D4,E4,F4,E4,D4,C4,D4,E4,D4,C4,B3};
-  *(flaa3->list) = {C4,D4,E4,D4,C4,B3,A3,A3};
-  *(flaa4->list) = {A3,A4,G4,F4,E4,C4,A3,B3,C4,D4,E4,F4,E4,D4,C4};
+  flaa2->list = FLAA2;
+  flaa3->list = FLAA3;
+  flaa4->list = FLAA4;
   //Repeat of above, but for timeList
-  *(flaa1->timeList) = {4,4,4,5,4,4,3,4};
-  *(flaa2->timeList) = {4,4,4,4,4,4,4,4,4,4,4,2};
-  *(flaa3->timeList) = {4,4,2,4,4,2,2,2};
-  *(flaa4->timeList) = {2,2,4,4,4,4,2,4,4,2,4,4,4,4,4};
+  flaa1->timeList = TIME1;
+  flaa2->timeList = TIME2;
+  flaa3->timeList = TIME3;
+  flaa4->timeList = TIME4;
 
   //Repeat of all above, except that pointer is a sample* pointer
   flaaklyp = (sample*) malloc(sizeof(sample));
