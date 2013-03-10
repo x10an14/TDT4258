@@ -33,7 +33,7 @@ sampleCollection *flaaklyp;
 int main (int argc, char *argv[]){
 //for-loop cntr
   int i;
-  // Creating of sinus wave list 100 steps 
+  // Creating of sinus wave list 100 steps
   for (i=0; i < 102; i++){
   sineList[i] = sin(M_PI/102*i)*SHRT_MAX;
   }
@@ -55,7 +55,7 @@ int main (int argc, char *argv[]){
   saw->size = 17;
   triangle->size = 17;
   square->size = 17;
-  sine->size = 102;  // 17 * 6 = 102 
+  sine->size = 102;  // 17 * 6 = 102
   scale->size = 8;
   //Initialize and declare variable for above allocated short-list-members
   flaa1->list = FLAA1;
@@ -98,10 +98,10 @@ int main (int argc, char *argv[]){
     //Temporary variable for readability
     sample *small = flaaklyp->list[i];
     //for-loop cntr
-    int j;
+    int j, size;
     for(j = 0; j < small->size; j++){
       //temp variable with how many times each tone is played
-      short size = (short) getPeriodAmount(small->timeList[j], small->list[j],2)*2;
+      size = getPeriodAmount(small->timeList[j], small->list[j],2)*2;
       //Self-explanatory
       memCntr += size;
       //If tonevalue changes, or we've reached the end of a playlist(sample)
@@ -121,9 +121,9 @@ int main (int argc, char *argv[]){
   int cntr = 0;
   for(i = 0; i < flaaklyp->size; i++){
     sample *small = flaaklyp->list[i];
-    int j;
+    int j, size;
     for(j = 0; j < small->size; j++){
-      short size = (short) getPeriodAmount(small->timeList[j], small->list[j], 2)*2;
+      size = getPeriodAmount(small->timeList[j], small->list[j], 2)*2;
       addFrequency(small->timeList[j], small->list[j], flaaklypa->list, cntr);
       cntr += size;
       if(small->list[j-1] != small->list[j] ||
@@ -133,15 +133,16 @@ int main (int argc, char *argv[]){
       }
     }
   }
-  
-  // SAME METHOD BUT FOR SCALE 
+
+  // SAME METHOD BUT FOR SCALE
   //Count to see how much space is needed
   //cntr for how much space we need
   //cntr-list with how many times each tone is played
   memCntr = 0;
+  int size;
   for(i = 0; i < scale->size; i++){
     //temp variable with how many times each tone is played
-    short size = (short) getPeriodAmount(SCALETIME[i], SCALETIME[i],2)*2;
+    size = getPeriodAmount(SCALETIME[i], SCALETIME[i],2)*2;
     //Self-explanatory
     memCntr += size;
     //If tonevalue changes, or we've reached the end of a playlist(sample)
@@ -156,7 +157,7 @@ int main (int argc, char *argv[]){
   //Assigning(/Combining) values to final list (flaaklypa->list)
   cntr = 0;
   for(i = 0; i < scale->size; i++){
-    short size = (short) getPeriodAmount(SCALETIME[i], SCALE[i], 2)*2;
+    size = getPeriodAmount(SCALETIME[i], SCALE[i], 2)*2;
     addFrequency(SCALETIME[i], SCALE[i], scale->list, cntr);
     cntr += size;
     addZeroes(4, scale->list, cntr);
@@ -180,7 +181,7 @@ int main (int argc, char *argv[]){
   sine->usingTimeList = 0;
   sine->rateMax = SINERATE;
   sine->rateCntr = 0;
-  
+
   initHardware();
 
   while(1);
@@ -188,9 +189,9 @@ int main (int argc, char *argv[]){
 }
 
 //Fun
-int getPeriodAmount(int timeDiv, short tone, int waveFormSize){
-  return (int) (49152*(1/(timeDiv*waveFormSize*tone)));
-  // return (int) (486875*(1/(timeDiv*waveFormSize*tone)));
+int getPeriodAmount(short timeDiv, short tone, int waveFormSize){
+  return (49152/(timeDiv*waveFormSize*tone));
+  // return (486875/(timeDiv*waveFormSize*tone));
 }
 
 /*Function to add the time a tone will be played to a list, given a tone, length (div), and list*/
@@ -199,8 +200,8 @@ void addFrequency(int timeDiv, short tone, short *list, int start){
   int periods = getPeriodAmount(timeDiv, tone, 2)*2;
   int i;
   for(i = start; i < periods + start; i += 2){
-    list[i] = -1;
-    list[++i] = 1;
+    list[i] = -SHRT_MAX;
+    list[++i] = SHRT_MAX;
   }
 }
 
@@ -222,7 +223,6 @@ void initHardware (void){
 
 void initIntc(void){
   set_interrupts_base((void *)AVR32_INTC_ADDRESS);
-
   init_interrupts();
 }
 
@@ -239,7 +239,7 @@ void initButtons(void){
 
 void initLeds(void){
   //Enable all LEDs on PIOB
-  pioc->per = 0xfF; //0xff == all LEDs
+  pioc->per = 0xff; //0xff == all LEDs
   pioc->oer = 0xff;
 }
 
@@ -285,7 +285,7 @@ void button_isr(void){
   }*/ else if(newButtonState == SW0){//Switch0
     /*SILENCE WILL FALL...*/
     currentSample = NULL;
-    pioc->codr = 0xff;
+    // pioc->codr = 0xff; //Unsure if this works as intended
   }
 }
 
@@ -312,6 +312,6 @@ void abdac_isr(void){
       }
     }
   }
-  abdac->SDR.channel0 = output*SHRT_MAX*0.4;
-  abdac->SDR.channel1 = output*SHRT_MAX*0.4;
+  abdac->SDR.channel0 = output*0.5;
+  abdac->SDR.channel1 = output*0.5;
 }
