@@ -44,14 +44,14 @@ short FLAA2[] = {C4,D4,E4,F4,E4,D4,C4,D4,E4,D4,C4,B3};
 short FLAA3[] = {C4,D4,E4,D4,C4,B3,A3,A3};
 short FLAA4[] = {A3,A4,G4,F4,E4,C4,A3,B3,C4,D4,E4,F4,E4,D4,C4};
 
-short FLAATIME1[] = {4,4,4,5,4,4,3,4};
-short FLAATIME2[] = {4,4,4,4,4,4,4,4,4,4,4,2};
-short FLAATIME3[] = {4,4,2,4,4,2,2,2};
-short FLAATIME4[] = {2,2,4,4,4,4,2,4,4,2,4,4,4,4,4};
+short FLAASTROKE1[] = {4,4,4,5,4,4,3,4};
+short FLAASTROKE2[] = {4,4,4,4,4,4,4,4,4,4,4,2};
+short FLAASTROKE3[] = {4,4,2,4,4,2,2,2};
+short FLAASTROKE4[] = {2,2,4,4,4,4,2,4,4,2,4,4,4,4,4};
 
 // Scale roll 8 steps
 short SCALE[] = {C4,D4,E4,F4,G4,A4,B4,C5};
-short SCALETIME[] = {2,2,2,2,2,2,2,2};
+short SCALESTROKE[] = {2,2,2,2,2,2,2,2};
 
 // Saw Waveform 17 steps
 short SAW[] = {-SHRT_MAX*(8/8),-SHRT_MAX*(7/8),-SHRT_MAX*(6/8),-SHRT_MAX*(5/8),-SHRT_MAX*(4/8),-SHRT_MAX*(3/8),-SHRT_MAX*(2/8),-SHRT_MAX*(1/8),0,SHRT_MAX*(1/8),SHRT_MAX*(2/8),SHRT_MAX*(3/8),SHRT_MAX*(4/8),SHRT_MAX*(5/8),SHRT_MAX*(6/8),SHRT_MAX*(7/8),SHRT_MAX*(8/8)};

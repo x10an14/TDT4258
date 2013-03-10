@@ -67,12 +67,12 @@ int main (int argc, char *argv[]){
   square->list = SQUARE;
   sine->list = sineList;
   scale->list = SCALE;
-  //Repeat of above, but for timeList
-  flaa1->timeList = FLAATIME1;
-  flaa2->timeList = FLAATIME2;
-  flaa3->timeList = FLAATIME3;
-  flaa4->timeList = FLAATIME4;
-  scale->timeList = SCALETIME;
+  //Repeat of above, but for strokeList
+  flaa1->strokeList = FLAASTROKE1;
+  flaa2->strokeList = FLAASTROKE2;
+  flaa3->strokeList = FLAASTROKE3;
+  flaa4->strokeList = FLAASTROKE4;
+  scale->strokeList = SCALESTROKE;
   //Repeat of all above, except that pointer is a sampleCollection* pointer
   flaaklyp = (sampleCollection*) malloc(sizeof(sampleCollection));
   flaaklyp->size = 10;
@@ -101,7 +101,7 @@ int main (int argc, char *argv[]){
     int j, size;
     for(j = 0; j < small->size; j++){
       //temp variable with how many times each tone is played
-      size = (int) getAmountOfPeriods(small->timeList[j], small->list[j])*(ABDAC_SAMPLERATE/small->list[j]);
+      size = (int) (ABDAC_SAMPLERATE/small->list[j]);
       //Self-explanatory
       memCntr += size;
       //If tonevalue changes, or we've reached the end of a playlist(sample)
@@ -123,8 +123,8 @@ int main (int argc, char *argv[]){
     sample *small = flaaklyp->list[i];
     int j, size;
     for(j = 0; j < small->size; j++){
-      size = getAmountOfPeriods(small->timeList[j], small->list[j], 2)*2;
-      addFrequency(small->timeList[j], small->list[j], flaaklypa->list, cntr);
+      size = (int)(ABDAC_SAMPLERATE/small->list[j]);
+      addFrequency(small->strokeList[j], small->list[j], flaaklypa->list, cntr);
       cntr += size;
       if(small->list[j-1] == small->list[j] ||
         j+1 == small->size){
@@ -142,11 +142,13 @@ int main (int argc, char *argv[]){
   int size;
   for(i = 0; i < scale->size; i++){
     //temp variable with how many times each tone is played
-    size = getAmountOfPeriods(SCALETIME[i], SCALETIME[i],2)*2;
+    size = (int) (ABDAC_SAMPLERATE/SCALESTROKE[i]);
     //Self-explanatory
     memCntr += size;
     //If tonevalue changes, or we've reached the end of a playlist(sample)
-    memCntr += 4; //Silence
+    if(i+1 == scale->size){
+      memCntr += 4; //Silence
+    }
   }
 
   //Assigning space
@@ -157,28 +159,30 @@ int main (int argc, char *argv[]){
   //Assigning(/Combining) values to final list (flaaklypa->list)
   cntr = 0;
   for(i = 0; i < scale->size; i++){
-    size = getAmountOfPeriods(SCALETIME[i], SCALE[i], 2)*2;
-    addFrequency(SCALETIME[i], SCALE[i], scale->list, cntr);
+    size = (int) (ABDAC_SAMPLERATE/SCALESTROKE[i]);
+    addFrequency(SCALESTROKE[i], SCALE[i], scale->list, cntr);
     cntr += size;
-    addZeroes(4, scale->list, cntr);
-    cntr += 4;
+    if (i+1 == scale->size){
+      addZeroes(4, scale->list, cntr);
+      cntr += 4;
+    }
   }
   //The rate (amount of times we play each element) is already set with the function addFrequency. So no need to use it on this sample
   flaaklypa->rateMax = 0;
-  flaaklypa->usingTimeList = 1;
+  flaaklypa->usingStrokeList = 1;
   scale->rateMax = 0;
-  scale->usingTimeList = 1;
+  scale->usingStrokeList = 1;
 
-  saw->usingTimeList = 0;
+  saw->usingStrokeList = 0;
   saw->rateMax = SAWRATE;
   saw->rateCntr = 0;
-  triangle->usingTimeList = 0;
+  triangle->usingStrokeList = 0;
   triangle->rateMax = TRIANGLERATE;
   triangle->rateCntr = 0;
-  square->usingTimeList = 0;
+  square->usingStrokeList = 0;
   square->rateMax = SQUARERATE;
   square->rateCntr = 0;
-  sine->usingTimeList = 0;
+  sine->usingStrokeList = 0;
   sine->rateMax = SINERATE;
   sine->rateCntr = 0;
 
@@ -188,16 +192,10 @@ int main (int argc, char *argv[]){
   return 0;
 }
 
-//Fun
-int getAmountOfPeriods(short stroke, short tone){
-  return (tone/stroke);
-  // return (486875/(timeDiv*waveFormSize*tone));
-}
-
 /*Function to add the time a tone will be played to a list, given a tone, length (div), and list*/
 void addFrequency(int stroke, short tone, short *list, int start){
   //First get the amount of periods each tone has to be played to get the correct pitch, but multiply result with 2 so that below for-loop will set amplitude values correctly
-  int periods = getAmountOfPeriods(stroke, tone, 2)*2;
+  int periods = (int) (tone/stroke);
   int periodSize = ABDAC_SAMPLERATE/tone;
   int halfPeriod = periodSize/2;
   int i;
@@ -301,7 +299,7 @@ void abdac_isr(void){
   short output = 0;
   /*General sample-list play without rate*/
   if(currentSample != NULL){ /*Check to see if the pointer is actually pointing at a struct*/
-    if(currentSample->usingTimeList){ /*Check to see if we've already calculated how long to 'dwell' on each element in member list*/
+    if(currentSample->usingStrokeList){ /*Check to see if we've already calculated how long to 'dwell' on each element in member list*/
       output = currentSample->list[currentSample->playCntr];
       currentSample->playCntr++;
       if (currentSample->playCntr >= currentSample->size){ /*If we've reached the end of the list, reset playCntr to 0*/
