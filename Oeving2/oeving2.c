@@ -77,16 +77,18 @@ int main (int argc, char *argv[]){
   int memCntr = 0;
   //cntr-list with how many times each tone is played
   for(i = 0; i < flaaklyp->size; i++){
+    //Temporary variable for readability
+    sample *small = flaaklyp->list[i];
     //for-loop cntr
     int j;
-    for(j = 0; j < flaaklyp->list[i]->size; j++){
+    for(j = 0; j < small->size; j++){
       //temp variable with how many times each tone is played
-      short size = (short) getPeriodAmount(flaaklyp->list[i]->timeList[j], flaaklyp->list[i]->list[j],2);
+      short size = (short) getPeriodAmount(small->timeList[j], small->list[j],2)*2;
       //Self-explanatory
       memCntr += size;
       //If tonevalue changes, or we've reached the end of a playlist(sample)
-      if(flaaklyp->list[i]->list[j-1] == flaaklyp->list[i]->list[j] ||
-        j+1 == flaaklyp->list[i]->size){
+      if(small->list[j-1] != small->list[j] ||
+        j+1 == small->size){
         memCntr += 4; //Silence
       }
     }
@@ -103,10 +105,10 @@ int main (int argc, char *argv[]){
     sample *small = flaaklyp->list[i];
     int j;
     for(j = 0; j < small->size; j++){
-      short size = (short) getPeriodAmount(small->timeList[j], small->list[j], 2);
+      short size = (short) getPeriodAmount(small->timeList[j], small->list[j], 2)*2;
       addFrequency(small->timeList[j], small->list[j], flaaklypa->list, cntr);
       cntr += size;
-      if(small->list[j-1] == small->list[j] ||
+      if(small->list[j-1] != small->list[j] ||
         j+1 == small->size){
         addZeroes(4, flaaklypa->list, cntr);
         cntr += 4;
