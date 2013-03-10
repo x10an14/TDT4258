@@ -116,6 +116,9 @@ int main (int argc, char *argv[]){
     }
   }
 
+  //The rate (amount of times we play each element) is already set with the function addFrequency. So no need to use it on this sample
+  flaaklypa->rateMax = 0;
+
   initHardware();
 
   while(1);

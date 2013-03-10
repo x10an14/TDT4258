@@ -24,6 +24,8 @@ typedef struct sample{
     short *list;
     //A list of short values carrying the X in Y/X where Y always equals 1. (To get tones of different time length)
     short *timeList;
+    //Int used as bool for whether list is used with timeList or rateCntr
+    short usingTimeList;
     //Counter and size for both abovementioned lists
     short playCntr, size;
     //Counter and maxvalue for rate of playing (If timelist is not used, these two are meant to be used instead)
