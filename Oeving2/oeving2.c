@@ -111,9 +111,9 @@ int main (int argc, char *argv[]){
   //Assign values to final list (flaaklypa->list)
   cntr = 0;
   for(i = 0; i < flaaklyp->size; i++){
+    smallSample *small = flaaklyp->list[i];
     int j;
-    for(j = 0; j < flaaklyp->list[i]->size; j++){
-      smallSample *small = flaaklyp->list[i];
+    for(j = 0; j < small->size; j++){
       short size = (short) getFrequencySize(small->timeList[j], small->list[j], 2);
       addFrequency(small->timeList[j], small->list[j], flaaklypa->list, cntr);
       cntr += size;
@@ -133,12 +133,12 @@ int main (int argc, char *argv[]){
 
 //Fun
 int getFrequencySize(int timeDiv, short tone, int waveFormSize){
-  return (int) (46875*(1/(timeDiv*waveFormSize*tone)));
+  return (int) (468750*(1/(timeDiv*waveFormSize*tone)));
 }
 
 /*Function to add the time a tone will be played to a list, given a tone, length (div), and list*/
 void addFrequency(int timeDiv, short tone, short *list, int start){
-  int freqCntr = 46875*(1/(timeDiv*tone));
+  int freqCntr = getFrequencySize(timeDiv, tone, 2);
   int i;
   for(i = start; i < freqCntr + start; i++){
     if(i < freqCntr/2){
@@ -220,7 +220,6 @@ void button_isr(void){
   } else if(newButtonState == SW5){//Switch05
     playListPtr = squareWave;
     *ratePtr = SQUARERATE;
-    *ratePtr = toneScale[tone_position];
   } else if(newButtonState == 0x10){//Switch04
     playListPtr = flaaklypa->list;
   }/* else if(newButtonState == 0x8){//Switch03
