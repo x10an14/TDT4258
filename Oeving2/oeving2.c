@@ -28,8 +28,9 @@ int volatile cntr = 0;
 short *playListPtr = NULL;
 int *ratePtr = NULL;
 
-sample *flaaklypa, *flaa1, *flaa2, *flaa3, *flaa4, *playList;
+sample *flaaklypa, *flaa1, *flaa2, *flaa3, *flaa4, *playList, *saw;
 sampleCollection *flaaklyp;
+
 
 int main (int argc, char *argv[]){
   //Allocate space on heap for pointers
