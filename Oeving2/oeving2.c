@@ -62,10 +62,10 @@ int main (int argc, char *argv[]){
   square->list = SQUARE;
   scale->list = SCALE;
   //Repeat of above, but for timeList
-  flaa1->timeList = TIME1;
-  flaa2->timeList = TIME2;
-  flaa3->timeList = TIME3;
-  flaa4->timeList = TIME4;
+  flaa1->timeList = FLAATIME1;
+  flaa2->timeList = FLAATIME2;
+  flaa3->timeList = FLAATIME3;
+  flaa4->timeList = FLAATIME4;
   scale->timeList = SCALETIME;
   //Repeat of all above, except that pointer is a sampleCollection* pointer
   flaaklyp = (sampleCollection*) malloc(sizeof(sampleCollection));

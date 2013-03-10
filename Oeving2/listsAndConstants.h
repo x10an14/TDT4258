@@ -7,7 +7,6 @@
 
 /*Array sizes.*/
 #define ARRAYSIZE 17
-//#define TONESIZE 8
 
 /*Button values in hex*/
 #define SW7 0x80
@@ -40,14 +39,13 @@ short FLAA2[] = {C4,D4,E4,F4,E4,D4,C4,D4,E4,D4,C4,B3};
 short FLAA3[] = {C4,D4,E4,D4,C4,B3,A3,A3};
 short FLAA4[] = {A3,A4,G4,F4,E4,C4,A3,B3,C4,D4,E4,F4,E4,D4,C4};
 
-short TIME1[] = {4,4,4,5,4,4,3,4};
-short TIME2[] = {4,4,4,4,4,4,4,4,4,4,4,2};
-short TIME3[] = {4,4,2,4,4,2,2,2};
-short TIME4[] = {2,2,4,4,4,4,2,4,4,2,4,4,4,4,4};
+short FLAATIME1[] = {4,4,4,5,4,4,3,4};
+short FLAATIME2[] = {4,4,4,4,4,4,4,4,4,4,4,2};
+short FLAATIME3[] = {4,4,2,4,4,2,2,2};
+short FLAATIME4[] = {2,2,4,4,4,4,2,4,4,2,4,4,4,4,4};
 
 // Scale roll 8 steps
 short SCALE[] = {C4,D4,E4,F4,G4,A4,B4,C5};
-//short toneScale[TONESIZE] = {C4,D4,E4,F4,G4,A4,B4};
 short SCALETIME[] = {2,2,2,2,2,2,2,2};
 
 // Saw Waveform 17 steps
