@@ -23,9 +23,9 @@ typedef struct sample{
     //List of short-values (amplitude values) for tune that this struct holds
     short *list;
     //A list of short values carrying the X in Y/X where Y always equals 1. (To get tones of different time length)
-    short *timeList;
-    //Int used as bool for whether list is used with timeList or rateCntr
-    short usingTimeList;
+    short *strokeList;
+    //Int used as bool for whether list is used with strokeList or rateCntr
+    short usingStrokeList;
     //Counter and size for both abovementioned lists
     short playCntr, size;
     //Counter and maxvalue for rate of playing (If timelist is not used, these two are meant to be used instead)
@@ -51,8 +51,8 @@ static void initHardware (void);
 
 static void button_isr(void);
 static void abdac_isr(void);
-void addFrequency(int timeDiv, short tone, short *list, int start);
-int getPeriodAmount(int timeDiv, short tone, int waveFormSize);
+void addFrequency(int stroke, short tone, short *list, int start);
+int getAmountOfPeriods(int stroke, short tone);
 void addZeroes(int amount, short *list, int start);
 
 #endif
