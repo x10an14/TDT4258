@@ -208,7 +208,7 @@ void addFrequency(short stroke, short tone, short *list, int start){
       list[j] = -SHRT_MAX;
     }
     for (j = halfPeriod; j < periodSize; j++){
-      list[++j] = SHRT_MAX;
+      list[j] = SHRT_MAX;
     }
   }
 }
