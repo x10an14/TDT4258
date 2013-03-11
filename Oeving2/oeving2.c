@@ -207,9 +207,9 @@ void addZeroes(int amount, short *list, int start){
 /* funksjon for å initialisere maskinvaren, må utvides */
 void initHardware (void){
   initIntc();
+  initAudio();
   initLeds();
   initButtons();
-  initAudio();
 }
 
 void initIntc(void){
@@ -226,8 +226,8 @@ void initButtons(void){
   piob->ier = active; //Activating interrupt for switches in variable active
   //Disable the rest of the switches
   piob->idr = ~active;
-  piob->codr = 0xff;
-  piob->sodr = SW0;
+  pioc->codr = 0xff;
+  pioc->sodr = SW0;
 }
 
 void initLeds(void){
