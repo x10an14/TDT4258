@@ -32,7 +32,7 @@ int main (int argc, char *argv[]){
   *DEFAULT.list = 0;
   *DEFAULT.strokeList = 0;
   DEFAULT.usingStrokeList = 0;
-  Default.playCntr = 0;
+  DEFAULT.playCntr = 0;
   DEFAULT.size = 0;
   DEFAULT.rateCntr = 0;
   DEFAULT.rateMax = 0;
@@ -197,7 +197,7 @@ int main (int argc, char *argv[]){
   sawSample->rateMax = SAWRATE;
   sineSample->rateMax = SINERATE;
   squareSample->rateMax = SQUARERATE;
-  triangleSample->rateMax = TRIANGLERATE
+  triangleSample->rateMax = TRIANGLERATE;
 
   initHardware();
 
