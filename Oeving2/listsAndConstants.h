@@ -22,7 +22,7 @@
 #define SAWRATE 20
 #define SQUARERATE 20
 #define TRIANGLERATE 20
-#define SINERATE 20
+#define SINERATE 16
 
 //#define TONE#OCTAVE AmountOfRepetitionsPerSquareWaveElementPerSecondToGenerateSaidTone
 #define A3 110

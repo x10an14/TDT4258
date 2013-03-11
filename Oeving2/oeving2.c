@@ -32,7 +32,7 @@ int main (int argc, char *argv[]){
   //for-loop cntr
   int i;
   for (i=0; i < 102; i++){
-    sineSampleList[i] = sin(M_PI/102*i)*SHRT_MAX;
+    sineSampleList[i] = sin((M_PI*i)/102)*SHRT_MAX;
   }
 
   //Allocate space on heap for pointers
