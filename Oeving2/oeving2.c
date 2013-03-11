@@ -57,10 +57,15 @@ int main (int argc, char *argv[]){
   squareSample->size = 17;
   triangleSample->size = 17;
 
+  //Assigning space for tonelists! (playlists in sample)
   flaa1->list = (short*) malloc(flaa1->size*sizeof(short));
   flaa2->list = (short*) malloc(flaa2->size*sizeof(short));
   flaa3->list = (short*) malloc(flaa3->size*sizeof(short));
   flaa4->list = (short*) malloc(flaa4->size*sizeof(short));
+  sawSample->list = (short*) malloc(sawSample->size*sizeof(short));
+  sineSample->list = (short*) malloc(sineSample->size*sizeof(short));
+  scaleSample->list = (short*) malloc(scaleSample->size*sizeof(short));
+  triangleSample->list = (short*) malloc(triangleSample->size*sizeof(short));
 
   //Initialize and declare variable for above allocated short-list-members
   flaa1->list = FLAA1;
@@ -74,6 +79,12 @@ int main (int argc, char *argv[]){
   triangleSample->list = TRIANGLE;
 
   //Repeat of above, but for strokeList
+  flaa1->strokeList = (short*) malloc(flaa1->size*sizeof(short));
+  flaa2->strokeList = (short*) malloc(flaa2->size*sizeof(short));
+  flaa3->strokeList = (short*) malloc(flaa3->size*sizeof(short));
+  flaa4->strokeList = (short*) malloc(flaa4->size*sizeof(short));
+  scaleSample->strokeList = (short*) malloc(scaleSample->size*sizeof(short));
+
   flaa1->strokeList = FLAASTROKE1;
   flaa2->strokeList = FLAASTROKE2;
   flaa3->strokeList = FLAASTROKE3;
