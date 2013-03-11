@@ -57,6 +57,11 @@ int main (int argc, char *argv[]){
   squareSample->size = 17;
   triangleSample->size = 17;
 
+  flaa1->list = (short*) malloc(flaa1->size*sizeof(short));
+  flaa2->list = (short*) malloc(flaa2->size*sizeof(short));
+  flaa3->list = (short*) malloc(flaa3->size*sizeof(short));
+  flaa4->list = (short*) malloc(flaa4->size*sizeof(short));
+
   //Initialize and declare variable for above allocated short-list-members
   flaa1->list = FLAA1;
   flaa2->list = FLAA2;

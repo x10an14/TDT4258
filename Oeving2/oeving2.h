@@ -20,7 +20,7 @@
 /*Structs we've made ourselves for this assignment*/
 
 typedef struct sample{
-    //List of short-values (amplitude values) for tune that this struct holds
+    //List of short-values (amplitude/tone values) for tune that this struct holds
     short *list;
     //A list of short values carrying the X in Y/X where Y always equals 1. (To get tones of different time length)
     short *strokeList;
