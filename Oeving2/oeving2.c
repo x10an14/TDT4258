@@ -205,10 +205,10 @@ void addFrequency(short stroke, short tone, short *list, int start){
   for(i = start; i < periods + start; i++){
     int j;
     for (j = 0; j < halfPeriod; j++){
-      list[i] = -SHRT_MAX;
+      list[j] = -SHRT_MAX;
     }
     for (j = halfPeriod; j < periodSize; j++){
-      list[++i] = SHRT_MAX;
+      list[++j] = SHRT_MAX;
     }
   }
 }
