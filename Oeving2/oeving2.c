@@ -58,13 +58,13 @@ int main (int argc, char *argv[]){
   triangleSample->size = 17;
 
   //Initialize and declare variable for above allocated short-list-members
-  flaa1->list = &FLAA1;
-  flaa2->list = &FLAA2;
-  flaa3->list = &FLAA3;
-  flaa4->list = &FLAA4;
+  flaa1->list = FLAA1;
+  flaa2->list = FLAA2;
+  flaa3->list = FLAA3;
+  flaa4->list = FLAA4;
   sawSample->list = SAW;
   sineSample->list = sineSampleList;
-  scaleSample->list = &SCALE;
+  scaleSample->list = SCALE;
   squareSample->list = SQUARE;
   triangleSample->list = TRIANGLE;
 
