@@ -226,6 +226,8 @@ void initButtons(void){
   piob->ier = active; //Activating interrupt for switches in variable active
   //Disable the rest of the switches
   piob->idr = ~active;
+  piob->codr = 0xff;
+  piob->sodr = SW0;
 }
 
 void initLeds(void){
