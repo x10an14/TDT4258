@@ -36,7 +36,7 @@
 #define B4 247
 #define C5 262
 
-#define ABDAC_SAMPLERATE 49152
+#define ABDAC_SAMPLERATE 46875
 
 /* megalists! \o/ */
 short FLAA1[] = {E4,A4,B4,C5,B4,A4,G4,E4};

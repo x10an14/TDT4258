@@ -107,11 +107,6 @@ int main (int argc, char *argv[]){
       size = (int) (ABDAC_SAMPLERATE/small->list[j]);
       //Self-explanatory (if you've read the above comments)
       memCntr += size;
-      /*If tonevalue stays the same, or we've reached the end of a playlist(sample), we might want just a small, teeny-tiny break so that those with the most sensitive ears can differ.*/
-      if(small->list[j-1] == small->list[j] ||
-        j+1 == small->size){
-        memCntr += 4; //Silence
-      }
     }
   }
 
@@ -129,14 +124,9 @@ int main (int argc, char *argv[]){
       size = (int)(ABDAC_SAMPLERATE/small->strokeList[j]);
       addFrequency(small->strokeList[j], small->list[j], flaaklypaSample->list, cntr);
       cntr += size;
-/*      if(small->list[j-1] == small->list[j] ||
-        j+1 == small->size){
-        addZeroes(4, flaaklypaSample->list, cntr);
-        cntr += 4;
-      }*/
     }
   }
-   
+
   // SAME METHOD BUT FOR SCALE
   //Count to see how much space is needed
   //cntr for how much space we need
@@ -148,10 +138,6 @@ int main (int argc, char *argv[]){
     size = (int) (ABDAC_SAMPLERATE/SCALESTROKE[i]);
     //Self-explanatory
     memCntr += size;
-    //If tonevalue changes, or we've reached the end of a playlist(sample)
-    if(i+1 == scaleSample->size){
-      memCntr += 4; //Silence
-    }
   }
 
   //Assigning space
@@ -165,11 +151,8 @@ int main (int argc, char *argv[]){
     size = (int) (ABDAC_SAMPLERATE/SCALESTROKE[i]);
     addFrequency(SCALESTROKE[i], SCALE[i], scaleSample->list, cntr);
     cntr += size;
-    if (i+1 == scaleSample->size){
-      addZeroes(4, scaleSample->list, cntr);
-      cntr += 4;
-    }
   }
+
   //The rate (amount of times we play each element) is already set with the function addFrequency. So no need to use it on this sample
   flaaklypaSample->usingStrokeList = 1;
   scaleSample->usingStrokeList = 1;
@@ -191,7 +174,7 @@ int main (int argc, char *argv[]){
 
   initHardware();
 //  pioc->sodr = 0xff;
-  
+
   while(1);
   return 0;
 }
