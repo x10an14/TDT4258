@@ -27,6 +27,16 @@ sample *flaaklypaSample, *flaa1, *flaa2, *flaa3, *flaa4,
 sampleCollection *flaaklyp;
 
 int main (int argc, char *argv[]){
+  //Default sample struct
+  sample DEFAULT;
+  *DEFAULT.list = 0;
+  *DEFAULT.strokeList = 0;
+  DEFAULT.usingStrokeList = 0;
+  Default.playCntr = 0;
+  DEFAULT.size = 0;
+  DEFAULT.rateCntr = 0;
+  DEFAULT.rateMax = 0;
+
   // Creating of sinus wave list 102 steps
   short *sineSampleList = (short*) malloc(102*sizeof(short));;
   //for-loop cntr
@@ -45,6 +55,18 @@ int main (int argc, char *argv[]){
   scaleSample = (sample*) malloc(sizeof(sample));
   squareSample = (sample*) malloc(sizeof(sample));
   triangleSample = (sample*) malloc(sizeof(sample));
+  flaaklypaSample = (sample*) malloc(sizeof(sample*));
+
+  //Setting default sampleValues
+  flaa1 = &DEFAULT;
+  flaa2 = &DEFAULT;
+  flaa3 = &DEFAULT;
+  flaa4 = &DEFAULT;
+  sawSample = &DEFAULT;
+  sineSample = &DEFAULT;
+  scaleSample = &DEFAULT;
+  squareSample = &DEFAULT;
+  triangleSample = &DEFAULT;
 
   //Declare variable for above allocated short-size-members
   flaa1->size = 8;
@@ -127,7 +149,6 @@ int main (int argc, char *argv[]){
   }
 
   //Assigning space
-  flaaklypaSample = (sample*) malloc(sizeof(sample*));
   flaaklypaSample->size = memCntr;
   flaaklypaSample->list = (short*) calloc((short) 0, memCntr*sizeof(short));
 
@@ -173,20 +194,10 @@ int main (int argc, char *argv[]){
   flaaklypaSample->usingStrokeList = 1;
   scaleSample->usingStrokeList = 1;
 
-  sawSample->usingStrokeList = 0;
-  sineSample->usingStrokeList = 0;
-  squareSample->usingStrokeList = 0;
-  triangleSample->usingStrokeList = 0;
-
   sawSample->rateMax = SAWRATE;
   sineSample->rateMax = SINERATE;
   squareSample->rateMax = SQUARERATE;
-  triangleSample->rateMax = TRIANGLERATE;
-
-  sawSample->rateCntr = 0;
-  sineSample->rateCntr = 0;
-  squareSample->rateCntr = 0;
-  triangleSample->rateCntr = 0;
+  triangleSample->rateMax = TRIANGLERATE
 
   initHardware();
 
