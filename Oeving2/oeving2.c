@@ -126,17 +126,17 @@ int main (int argc, char *argv[]){
     sample *small = flaaklyp->list[i];
     int j, size;
     for(j = 0; j < small->size; j++){
-      size = (int)(ABDAC_SAMPLERATE/small->list[j]);
+      size = (int)(ABDAC_SAMPLERATE/small->strokeList[j]);
       addFrequency(small->strokeList[j], small->list[j], flaaklypaSample->list, cntr);
       cntr += size;
-      if(small->list[j-1] == small->list[j] ||
+/*      if(small->list[j-1] == small->list[j] ||
         j+1 == small->size){
         addZeroes(4, flaaklypaSample->list, cntr);
         cntr += 4;
-      }
+      }*/
     }
   }
-
+   
   // SAME METHOD BUT FOR SCALE
   //Count to see how much space is needed
   //cntr for how much space we need
@@ -190,15 +190,16 @@ int main (int argc, char *argv[]){
   triangleSample->rateCntr = 0;
 
   initHardware();
-
+//  pioc->sodr = 0xff;
+  
   while(1);
   return 0;
 }
 
 /*Function to add the time a tone will be played to a list, given a tone, length (stroke), and list*/
-void addFrequency(int stroke, short tone, short *list, int start){
+void addFrequency(short stroke, short tone, short *list, int start){
   int periods = (int) (tone/stroke);
-  int periodSize = ABDAC_SAMPLERATE/tone;
+  int periodSize = (int) ABDAC_SAMPLERATE/tone;
   int halfPeriod = periodSize/2;
   int i;
   for(i = start; i < periods + start; i++){

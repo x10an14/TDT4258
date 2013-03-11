@@ -51,7 +51,7 @@ static void initHardware (void);
 
 static void button_isr(void);
 static void abdac_isr(void);
-void addFrequency(int stroke, short tone, short *list, int start);
+void addFrequency(short stroke, short tone, short *list, int start);
 int getAmountOfPeriods(int stroke, short tone);
 void addZeroes(int amount, short *list, int start);
 
