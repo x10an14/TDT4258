@@ -247,8 +247,8 @@ void initButtons(void){
 
 void initLeds(void){
   //Enable all LEDs on PIOB
-  pioc->per = 0xff-SW1; //0xff == all LEDs
-  pioc->oer = 0xff-SW1;
+  pioc->per = 0xff; //0xff == all LEDs
+  pioc->oer = 0xff;
 }
 
 void initAudio(void){
