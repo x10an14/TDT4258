@@ -61,12 +61,12 @@ short SAW[] = {-SHRT_MAX, -(7/8)*SHRT_MAX, -(6/8)*SHRT_MAX, -(5/8)*SHRT_MAX,
             (5/8)*SHRT_MAX, (6/8)*SHRT_MAX, (7/8)*SHRT_MAX};
 
 // Triangle Waveform 17 steps
-short triangle[] = {0,(1/4)*SHRT_MAX, (2/4)*SHRT_MAX, (3/4)*SHRT_MAX,
+short TRIANGLE[] = {0,(1/4)*SHRT_MAX, (2/4)*SHRT_MAX, (3/4)*SHRT_MAX,
             (4/4)*SHRT_MAX, (3/4)*SHRT_MAX, (2/4)*SHRT_MAX, (1/4)*SHRT_MAX, 0,
             -(1/4)*SHRT_MAX, -(2/4)*SHRT_MAX, -(3/4)*SHRT_MAX, -(4/4)*SHRT_MAX,
             -(3/4)*SHRT_MAX, -(2/4)*SHRT_MAX, -(1/4)*SHRT_MAX};
 
 // Square Waveform 16 steps
-short square[]={SHRT_MAX, SHRT_MAX, SHRT_MAX, SHRT_MAX, SHRT_MAX, SHRT_MAX,
+short SQUARE[]={SHRT_MAX, SHRT_MAX, SHRT_MAX, SHRT_MAX, SHRT_MAX, SHRT_MAX,
             SHRT_MAX, SHRT_MAX, -SHRT_MAX, -SHRT_MAX, -SHRT_MAX, -SHRT_MAX,
             -SHRT_MAX, -SHRT_MAX, -SHRT_MAX, -SHRT_MAX};
