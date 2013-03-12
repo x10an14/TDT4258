@@ -15,7 +15,7 @@ void sampleConstructor(sample *inpt, int size, int maxRate, short *tonelist, sho
 	inpt->playCntr = 0;
 
 	/*Special for samples w/o strokeList*/
-	if(maxRate > 0 && strokelist != NULL){
+	if(maxRate > 0 && strokelist == NULL){
 		inpt->usingStrokeList = 0;
 		inpt->rateMax = (short) maxRate;
 		return;
@@ -34,13 +34,13 @@ void addFrequency(short stroke, short tone, short *list, int start){
 	int periodSize = (int) ABDAC_SAMPLERATE/tone;
 	int halfPeriod = periodSize/2;
 	int i;
-	for(i = start; i < periods + start; i++){
+	for(i = 0; i < periods; i++){
 		int j;
 		for (j = 0; j < halfPeriod; j++){
-			list[j] = -SHRT_MAX;
+			list[start+j+(i*periodSize)] = -SHRT_MAX;
 		}
 		for (j = halfPeriod; j < periodSize; j++){
-			list[j] = SHRT_MAX;
+			list[start+j+(i*periodSize)] = SHRT_MAX;
 		}
 	}
 }
