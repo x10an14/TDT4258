@@ -29,7 +29,7 @@ sampleCollection *flaaklyp;
 int main (int argc, char *argv[]){
   //Default sample struct
   sample DEFAULT;
-  int *zeroPtr = 0;
+  short *zeroPtr = 0;
   DEFAULT.list = zeroPtr;
   DEFAULT.strokeList = zeroPtr;
   DEFAULT.usingStrokeList = 0;
