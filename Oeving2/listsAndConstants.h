@@ -46,35 +46,27 @@
 #define ABDAC_SAMPLERATE 46875
 
 /* megalists! \o/ */
-extern short FLAA1[] = {E4,A4,B4,C5,B4,A4,G4,E4};
-extern short FLAA2[] = {C4,D4,E4,F4,E4,D4,C4,D4,E4,D4,C4,B3};
-extern short FLAA3[] = {C4,D4,E4,D4,C4,B3,A3,G_3,A3};
-extern short FLAA4[] = {A3,A4,G4,F4,E4,C4,A3,B3,C4,D4,E4,F4,E4,D4,E4};
+extern short FLAA1;
+extern short FLAA2;
+extern short FLAA3;
+extern short FLAA4;
 
-extern short FLAASTROKE1[] = {4,4,4,8,8,4,4,4};
-extern short FLAASTROKE2[] = {8,8,4,8,8,4,8,8,4,8,8,2};
-extern short FLAASTROKE3[] = {8,8,4,8,8,4,8,8,1};
-extern short FLAASTROKE4[] = {4,2,8,8,4,4,4,8,8,4,8,8,4,4,1};
+extern short FLAASTROKE1;
+extern short FLAASTROKE2;
+extern short FLAASTROKE3;
+extern short FLAASTROKE4;
 
 // Scale roll 8 steps
-extern short SCALE[] = {C4,D4,E4,F4,G4,A4,B4,C5};
-extern short SCALESTROKE[] = {2,2,2,2,2,2,2,2};
+extern short SCALE;
+extern short SCALESTROKE;
 
 // Saw Waveform 17 steps
-extern short SAW[] = {-SHRT_MAX, -(7/8)*SHRT_MAX, -(6/8)*SHRT_MAX, -(5/8)*SHRT_MAX,
-            -(4/8)*SHRT_MAX, (-3/8)*SHRT_MAX, -(2/8)*SHRT_MAX, -(1/8)*SHRT_MAX,
-            0, (1/8)*SHRT_MAX, (2/8)*SHRT_MAX, (3/8)*SHRT_MAX, (4/8)*SHRT_MAX,
-            (5/8)*SHRT_MAX, (6/8)*SHRT_MAX, (7/8)*SHRT_MAX};
+extern short SAW;
 
 // Triangle Waveform 17 steps
-extern short TRIANGLE[] = {0,(1/4)*SHRT_MAX, (2/4)*SHRT_MAX, (3/4)*SHRT_MAX,
-            (4/4)*SHRT_MAX, (3/4)*SHRT_MAX, (2/4)*SHRT_MAX, (1/4)*SHRT_MAX, 0,
-            -(1/4)*SHRT_MAX, -(2/4)*SHRT_MAX, -(3/4)*SHRT_MAX, -(4/4)*SHRT_MAX,
-            -(3/4)*SHRT_MAX, -(2/4)*SHRT_MAX, -(1/4)*SHRT_MAX};
+extern short TRIANGLE;
 
-// Square Waveform 16 steps
-extern short SQUARE[]={SHRT_MAX, SHRT_MAX, SHRT_MAX, SHRT_MAX, SHRT_MAX, SHRT_MAX,
-            SHRT_MAX, SHRT_MAX, -SHRT_MAX, -SHRT_MAX, -SHRT_MAX, -SHRT_MAX,
-            -SHRT_MAX, -SHRT_MAX, -SHRT_MAX, -SHRT_MAX};
+// Square Waveform 17 steps
+extern short SQUARE;
 
 #endif
