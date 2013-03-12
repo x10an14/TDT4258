@@ -1,20 +1,20 @@
 CC=avr32-gcc
-CFLAGS=-g -Wall -Iinclude 
+CFLAGS=-g -Wall -Iinclude
 LDFLAGS=-g -Wall -pedantic -Llib -lavr32b-interrupts -lm
 TARGET=oeving2.elf
 
 
-# Command to upload program to flash 
+# Command to upload program to flash
 AVR32PROGRAM = avr32program
 
 ####### RULES ##########################################################
 .PHONY : all
 all: $(TARGET)
 
-oeving2.elf: oeving2.o
+oeving2.elf: %.o
 	$(CC) $^ -o $@ $(LDFLAGS)
 
-oeving2.o: oeving2.c 
+%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # upload to STK1000 (program flash)
