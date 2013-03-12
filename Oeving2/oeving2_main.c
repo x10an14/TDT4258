@@ -11,9 +11,6 @@
 #include "oeving2.h"
 #include "listsAndConstants.h"
 
-//buttonState variable
-short static volatile newButtonState;
-
 //All below are global
 short *currentSamplePtr = NULL;
 int *ratePtr = NULL;

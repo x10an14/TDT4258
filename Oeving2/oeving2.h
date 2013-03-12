@@ -39,7 +39,10 @@ typedef struct sampleCollection{
     short size;
 }sampleCollection;
 
-
+volatile avr32_pio_t *piob = &AVR32_PIOB;
+volatile avr32_pio_t *pioc = &AVR32_PIOC;
+volatile avr32_pm_t *pm = &AVR32_PM;
+volatile avr32_abdac_t *abdac = &AVR32_ABDAC;
 
 /* prototyper */
 int main (int argc, char *argv[]);

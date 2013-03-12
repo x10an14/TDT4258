@@ -1,5 +1,9 @@
 #include "oeving2.h"
 
+
+//buttonState variable
+short volatile newButtonState;
+
 void button_isr(void){
   newButtonState = ~piob->pdsr;//Read which switch was pushed (invert)
   newButtonState &= piob->isr;//Read interrupt vector, and with pushed button-value, and enabling next interrupt
