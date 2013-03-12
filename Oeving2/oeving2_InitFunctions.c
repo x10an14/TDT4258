@@ -1,7 +1,8 @@
 #include "oeving2.h"
+#include "sys/interrupts.h"
 
 /* funksjon for å initialisere maskinvaren, må utvides */
-void initHardware (void){
+void initHardware(void){
   initIntc();
   initAudio();
   initLeds();
