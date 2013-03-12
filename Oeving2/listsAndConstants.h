@@ -1,4 +1,4 @@
-/* legg andre "includes" her, sammen med "defines" og prototyper */
+/* legg andre "includes" her, sammen med "defines" */
 //Moved the above line to this file instead!
 #include "limits.h"
 
