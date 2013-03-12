@@ -11,7 +11,7 @@ AVR32PROGRAM = avr32program
 .PHONY : all
 all: $(TARGET)
 
-oeving2.elf: *.o
+oeving2.elf: oeving2_main.o oeving2_InitFunctions.o oeving2_InterruptFunctions.o oeving2_SampleFunctions.o
 	$(CC) $^ -o $@ $(LDFLAGS)
 
 %.o: %.c
