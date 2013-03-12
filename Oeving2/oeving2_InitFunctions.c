@@ -1,5 +1,5 @@
 #include "oeving2.h"
-#include "listaAndConstants.h"
+#include "listsAndConstants.h"
 #include "sys/interrupts.h"
 
 /* funksjon for å initialisere maskinvaren, må utvides */
