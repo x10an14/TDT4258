@@ -27,17 +27,6 @@ sample *flaaklypaSample, *flaa1, *flaa2, *flaa3, *flaa4,
 sampleCollection *flaaklyp;
 
 int main (int argc, char *argv[]){
-  /*//Default sample struct
-  sample DEFAULT;
-  short *zeroPtr = 0;
-  DEFAULT.list = zeroPtr;
-  DEFAULT.strokeList = zeroPtr;
-  DEFAULT.usingStrokeList = 0;
-  DEFAULT.playCntr = 0;
-  DEFAULT.size = 0;
-  DEFAULT.rateCntr = 0;
-  DEFAULT.rateMax = 0;*/
-
   // Creating of sinus wave list 102 steps
   short *sineSampleList = (short*) malloc(102*sizeof(short));;
   //for-loop cntr
@@ -46,7 +35,7 @@ int main (int argc, char *argv[]){
     sineSampleList[i] = sin((M_PI*i)/102)*SHRT_MAX;
   }
 
-  //Allocate space on heap for pointers (And set all member-values to zero)
+  //Allocate space on heap for pointers (And set all member-values to zero!)
   flaa1 = (sample*) calloc(1, sizeof(sample));
   flaa2 = (sample*) calloc(1, sizeof(sample));
   flaa3 = (sample*) calloc(1, sizeof(sample));
@@ -58,18 +47,7 @@ int main (int argc, char *argv[]){
   triangleSample = (sample*) calloc(1, sizeof(sample));
   flaaklypaSample = (sample*) calloc(1, sizeof(sample*));
 
-  /*//Setting default sampleValues
-  memcpy(flaa1, &DEFAULT, sizeof(DEFAULT));
-  memcpy(flaa2, &DEFAULT, sizeof(DEFAULT));
-  memcpy(flaa3, &DEFAULT, sizeof(DEFAULT));
-  memcpy(flaa4, &DEFAULT, sizeof(DEFAULT));
-  memcpy(sawSample, &DEFAULT, sizeof(DEFAULT));
-  memcpy(sineSample, &DEFAULT, sizeof(DEFAULT));
-  memcpy(scaleSample, &DEFAULT, sizeof(DEFAULT));
-  memcpy(squareSample, &DEFAULT, sizeof(DEFAULT));
-  memcpy(triangleSample, &DEFAULT, sizeof(DEFAULT));*/
-
-  //Declare variable for above allocated short-size-members
+  //Initialize variable for above allocated short-size-members
   flaa1->size = 8;
   flaa2->size = 12;
   flaa3->size = 8;
