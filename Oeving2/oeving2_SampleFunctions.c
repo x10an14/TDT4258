@@ -3,7 +3,7 @@
 #include "oeving2.h"
 
 
-void sampleConstructor(sample *inpt, int size, int maxRate, short *tonelist, short *strokelist){
+sample* sampleConstructor(sample *inpt, int size, int maxRate, short *tonelist, short *strokelist){
 	/*Common things for all samples*/
 	//Allocate space on heap for pointers (And set all member-values to zero!)
 	inpt = (sample*) calloc(1, sizeof(sample));
@@ -18,13 +18,14 @@ void sampleConstructor(sample *inpt, int size, int maxRate, short *tonelist, sho
 	if(maxRate > 0 && strokelist == NULL){
 		inpt->usingStrokeList = 0;
 		inpt->rateMax = (short) maxRate;
-		return;
+		return inpt;
 	}
 
 	/*If the sample in question DOES use strokeList:*/
 	inpt->strokeList = strokelist;
 	inpt->usingStrokeList = 1;
 	inpt->rateMax = 0;
+	return inpt;
 }
 
 
