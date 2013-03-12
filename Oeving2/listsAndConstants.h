@@ -20,10 +20,10 @@
 #define SW0 0x1
 
 /*Obsolete? Rates of which we will play each single element before moving on to next element (creating pitch)*/
-#define SAWRATE 20
-#define SQUARERATE 20
-#define TRIANGLERATE 20
-#define SINERATE 16
+#define SAWRATE 16
+#define SQUARERATE 16
+#define TRIANGLERATE 16
+#define SINERATE 2
 
 //#define TONE#OCTAVE AmountOfRepetitionsPerSquareWaveElementPerSecondToGenerateSaidTone
 #define A3 110
