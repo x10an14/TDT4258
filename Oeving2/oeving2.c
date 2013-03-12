@@ -27,12 +27,12 @@ sample *flaaklypaSample, *flaa1, *flaa2, *flaa3, *flaa4,
 sampleCollection *flaaklyp;
 
 int main (int argc, char *argv[]){
-  // Creating of sinus wave list 102 steps
-  short *sineSampleList = (short*) malloc(102*sizeof(short));;
+  // Creating of sinus wave list 128 steps
+  short *sineSampleList = (short*) malloc(SINEARRAYSIZE*sizeof(short));;
   //for-loop cntr
   int i;
-  for (i=0; i < 102; i++){
-    sineSampleList[i] = sin((M_PI*i)/102)*SHRT_MAX;
+  for (i=0; i < SINEARRAYSIZE; i++){
+    sineSampleList[i] = sin((M_PI*i)/SINEARRAYSIZE)*SHRT_MAX;
   }
 
   //Allocate space on heap for pointers (And set all member-values to zero!)
@@ -52,11 +52,11 @@ int main (int argc, char *argv[]){
   flaa2->size = 12;
   flaa3->size = 8;
   flaa4->size = 15;
-  sawSample->size = 17;
-  sineSample->size = 102;  // 17 * 6 = 102
+  sawSample->size = ARRAYSIZE;
+  sineSample->size = SINEARRAYSIZE;
   scaleSample->size = 8;
-  squareSample->size = 17;
-  triangleSample->size = 17;
+  squareSample->size = ARRAYSIZE;
+  triangleSample->size = ARRAYSIZE;
 
   //Assigning space for tonelists! (playlists in sample)
   flaa1->list = (short*) malloc(flaa1->size*sizeof(short));

@@ -6,7 +6,8 @@
 #define BUTTONS_INT_LEVEL 0
 
 /*Array sizes.*/
-#define ARRAYSIZE 17
+#define ARRAYSIZE 16
+#define SINEARRAYSIZE 128
 
 /*Button values in hex*/
 #define SW7 0x80
@@ -54,8 +55,18 @@ short SCALE[] = {C4,D4,E4,F4,G4,A4,B4,C5};
 short SCALESTROKE[] = {2,2,2,2,2,2,2,2};
 
 // Saw Waveform 17 steps
-short SAW[] = {-SHRT_MAX*(8/8),-SHRT_MAX*(7/8),-SHRT_MAX*(6/8),-SHRT_MAX*(5/8),-SHRT_MAX*(4/8),-SHRT_MAX*(3/8),-SHRT_MAX*(2/8),-SHRT_MAX*(1/8),0,SHRT_MAX*(1/8),SHRT_MAX*(2/8),SHRT_MAX*(3/8),SHRT_MAX*(4/8),SHRT_MAX*(5/8),SHRT_MAX*(6/8),SHRT_MAX*(7/8),SHRT_MAX*(8/8)};
+short SAW[] = {-SHRT_MAX, -(7/8)*SHRT_MAX, -(6/8)*SHRT_MAX, -(5/8)*SHRT_MAX,
+            -(4/8)*SHRT_MAX, (-3/8)*SHRT_MAX, -(2/8)*SHRT_MAX, -(1/8)*SHRT_MAX,
+            0, (1/8)*SHRT_MAX, (2/8)*SHRT_MAX, (3/8)*SHRT_MAX, (4/8)*SHRT_MAX,
+            (5/8)*SHRT_MAX, (6/8)*SHRT_MAX, (7/8)*SHRT_MAX};
+
 // Triangle Waveform 17 steps
-short TRIANGLE[] = {0,SHRT_MAX*(2/8),SHRT_MAX*(4/8),SHRT_MAX*(6/8),SHRT_MAX*(8/8),SHRT_MAX*(6/8),SHRT_MAX*(4/8),SHRT_MAX*(2/8),0,-SHRT_MAX*(2/8),-SHRT_MAX*(4/8),-SHRT_MAX*(6/8),-SHRT_MAX*(8/8),-SHRT_MAX*(6/8),-SHRT_MAX*(4/8),-SHRT_MAX*(2/8),0};
-// Square Waveform 17 steps
-short SQUARE[] = {-SHRT_MAX,-SHRT_MAX,-SHRT_MAX,-SHRT_MAX,-SHRT_MAX,-SHRT_MAX,-SHRT_MAX,-SHRT_MAX,SHRT_MAX,SHRT_MAX,SHRT_MAX,SHRT_MAX,SHRT_MAX,SHRT_MAX,SHRT_MAX,SHRT_MAX,SHRT_MAX};
+short triangle[] = {0,(1/4)*SHRT_MAX, (2/4)*SHRT_MAX, (3/4)*SHRT_MAX,
+            (4/4)*SHRT_MAX, (3/4)*SHRT_MAX, (2/4)*SHRT_MAX, (1/4)*SHRT_MAX, 0,
+            -(1/4)*SHRT_MAX, -(2/4)*SHRT_MAX, -(3/4)*SHRT_MAX, -(4/4)*SHRT_MAX,
+            -(3/4)*SHRT_MAX, -(2/4)*SHRT_MAX, -(1/4)*SHRT_MAX};
+
+// Square Waveform 16 steps
+short square[]={SHRT_MAX, SHRT_MAX, SHRT_MAX, SHRT_MAX, SHRT_MAX, SHRT_MAX,
+            SHRT_MAX, SHRT_MAX, -SHRT_MAX, -SHRT_MAX, -SHRT_MAX, -SHRT_MAX,
+            -SHRT_MAX, -SHRT_MAX, -SHRT_MAX, -SHRT_MAX};
