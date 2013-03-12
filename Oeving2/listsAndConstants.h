@@ -26,6 +26,7 @@
 #define SINERATE 2
 
 //#define TONE#OCTAVE AmountOfRepetitionsPerSquareWaveElementPerSecondToGenerateSaidTone
+#define G_3 104
 #define A3 110
 #define B3 123
 #define C4 131
@@ -42,13 +43,13 @@
 /* megalists! \o/ */
 short FLAA1[] = {E4,A4,B4,C5,B4,A4,G4,E4};
 short FLAA2[] = {C4,D4,E4,F4,E4,D4,C4,D4,E4,D4,C4,B3};
-short FLAA3[] = {C4,D4,E4,D4,C4,B3,A3,A3};
-short FLAA4[] = {A3,A4,G4,F4,E4,C4,A3,B3,C4,D4,E4,F4,E4,D4,C4};
+short FLAA3[] = {C4,D4,E4,D4,C4,B3,A3,G_3,A3};
+short FLAA4[] = {A3,A4,G4,F4,E4,C4,A3,B3,C4,D4,E4,F4,E4,D4,E4};
 
-short FLAASTROKE1[] = {4,4,4,5,4,4,3,4};
-short FLAASTROKE2[] = {4,4,4,4,4,4,4,4,4,4,4,2};
-short FLAASTROKE3[] = {4,4,2,4,4,2,2,2};
-short FLAASTROKE4[] = {2,2,4,4,4,4,2,4,4,2,4,4,4,4,4};
+short FLAASTROKE1[] = {4,4,4,8,8,4,4,4};
+short FLAASTROKE2[] = {8,8,4,8,8,4,8,8,4,8,8,2};
+short FLAASTROKE3[] = {8,8,4,8,8,4,8,8,1};
+short FLAASTROKE4[] = {4,2,8,8,4,4,4,8,8,4,8,8,4,4,1}
 
 // Scale roll 8 steps
 short SCALE[] = {C4,D4,E4,F4,G4,A4,B4,C5};
