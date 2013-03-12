@@ -27,7 +27,7 @@ sample *flaaklypaSample, *flaa1, *flaa2, *flaa3, *flaa4,
 sampleCollection *flaaklyp;
 
 int main (int argc, char *argv[]){
-  //Default sample struct
+  /*//Default sample struct
   sample DEFAULT;
   short *zeroPtr = 0;
   DEFAULT.list = zeroPtr;
@@ -36,7 +36,7 @@ int main (int argc, char *argv[]){
   DEFAULT.playCntr = 0;
   DEFAULT.size = 0;
   DEFAULT.rateCntr = 0;
-  DEFAULT.rateMax = 0;
+  DEFAULT.rateMax = 0;*/
 
   // Creating of sinus wave list 102 steps
   short *sineSampleList = (short*) malloc(102*sizeof(short));;
@@ -46,28 +46,28 @@ int main (int argc, char *argv[]){
     sineSampleList[i] = sin((M_PI*i)/102)*SHRT_MAX;
   }
 
-  //Allocate space on heap for pointers
-  flaa1 = (sample*) malloc(sizeof(sample));
-  flaa2 = (sample*) malloc(sizeof(sample));
-  flaa3 = (sample*) malloc(sizeof(sample));
-  flaa4 = (sample*) malloc(sizeof(sample));
-  sawSample = (sample*) malloc(sizeof(sample));
-  sineSample = (sample*) malloc(sizeof(sample));
-  scaleSample = (sample*) malloc(sizeof(sample));
-  squareSample = (sample*) malloc(sizeof(sample));
-  triangleSample = (sample*) malloc(sizeof(sample));
-  flaaklypaSample = (sample*) malloc(sizeof(sample*));
+  //Allocate space on heap for pointers (And set all member-values to zero)
+  flaa1 = (sample*) calloc(1, sizeof(sample));
+  flaa2 = (sample*) calloc(1, sizeof(sample));
+  flaa3 = (sample*) calloc(1, sizeof(sample));
+  flaa4 = (sample*) calloc(1, sizeof(sample));
+  sawSample = (sample*) calloc(1, sizeof(sample));
+  sineSample = (sample*) calloc(1, sizeof(sample));
+  scaleSample = (sample*) calloc(1, sizeof(sample));
+  squareSample = (sample*) calloc(1, sizeof(sample));
+  triangleSample = (sample*) calloc(1, sizeof(sample));
+  flaaklypaSample = (sample*) calloc(1, sizeof(sample*));
 
-  //Setting default sampleValues
-  *flaa1 = *DEFAULT;
-  *flaa2 = *DEFAULT;
-  *flaa3 = *DEFAULT;
-  *flaa4 = *DEFAULT;
-  *sawSample = *DEFAULT;
-  *sineSample = *DEFAULT;
-  *scaleSample = *DEFAULT;
-  *squareSample = *DEFAULT;
-  *triangleSample = *DEFAULT;
+  /*//Setting default sampleValues
+  memcpy(flaa1, &DEFAULT, sizeof(DEFAULT));
+  memcpy(flaa2, &DEFAULT, sizeof(DEFAULT));
+  memcpy(flaa3, &DEFAULT, sizeof(DEFAULT));
+  memcpy(flaa4, &DEFAULT, sizeof(DEFAULT));
+  memcpy(sawSample, &DEFAULT, sizeof(DEFAULT));
+  memcpy(sineSample, &DEFAULT, sizeof(DEFAULT));
+  memcpy(scaleSample, &DEFAULT, sizeof(DEFAULT));
+  memcpy(squareSample, &DEFAULT, sizeof(DEFAULT));
+  memcpy(triangleSample, &DEFAULT, sizeof(DEFAULT));*/
 
   //Declare variable for above allocated short-size-members
   flaa1->size = 8;
