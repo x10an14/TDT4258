@@ -53,14 +53,14 @@ int main (int argc, char *argv[]){
 	}
 
 
-  sampleConstructor(flaa1, 8, 0, &FLAA1, &FLAASTROKE1);
-  sampleConstructor(flaa2, 12, 0, &FLAA2, &FLAASTROKE2);
-  sampleConstructor(flaa3, 9, 0, &FLAA3, &FLAASTROKE3);
-  sampleConstructor(flaa4, 15, 0, &FLAA4, &FLAASTROKE4);
-  sampleConstructor(sawSample, ARRAYSIZE, SAWRATE, &SAW, NULL);
-  sampleConstructor(sineSample, SINEARRAYSIZE, SINERATE, &sineSampleList, NULL);
-  sampleConstructor(triangleSample, ARRAYSIZE, TRIANGLERATE, &TRIANGLE, NULL);
-  sampleConstructor(squareSample, ARRAYSIZE, SQUARERATE, &SQUARE, NULL);
+  sampleConstructor(flaa1, 8, 0, FLAA1, FLAASTROKE1);
+  sampleConstructor(flaa2, 12, 0, FLAA2, FLAASTROKE2);
+  sampleConstructor(flaa3, 9, 0, FLAA3, FLAASTROKE3);
+  sampleConstructor(flaa4, 15, 0, FLAA4, FLAASTROKE4);
+  sampleConstructor(sawSample, ARRAYSIZE, SAWRATE, SAW, NULL);
+  sampleConstructor(sineSample, SINEARRAYSIZE, SINERATE, sineSampleList, NULL);
+  sampleConstructor(triangleSample, ARRAYSIZE, TRIANGLERATE, TRIANGLE, NULL);
+  sampleConstructor(squareSample, ARRAYSIZE, SQUARERATE, SQUARE, NULL);
 
   /*flaa1 = (sample*) calloc(1, sizeof(sample));
   flaa2 = (sample*) calloc(1, sizeof(sample));
@@ -183,7 +183,7 @@ int main (int argc, char *argv[]){
 		memCntr += size;
 	}
 
-  sampleConstructor(scaleSample, memCntr, 0, &SCALE, &SCALESTROKE);
+  sampleConstructor(scaleSample, memCntr, 0, SCALE, SCALESTROKE);
 	/*//Assigning space
 	scaleSample = (sample*) malloc(sizeof(sample*));
 	scaleSample->size = memCntr;
