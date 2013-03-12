@@ -59,15 +59,15 @@ int main (int argc, char *argv[]){
   flaaklypaSample = (sample*) malloc(sizeof(sample*));
 
   //Setting default sampleValues
-  flaa1 = &DEFAULT;
-  flaa2 = &DEFAULT;
-  flaa3 = &DEFAULT;
-  flaa4 = &DEFAULT;
-  sawSample = &DEFAULT;
-  sineSample = &DEFAULT;
-  scaleSample = &DEFAULT;
-  squareSample = &DEFAULT;
-  triangleSample = &DEFAULT;
+  *flaa1 = *DEFAULT;
+  *flaa2 = *DEFAULT;
+  *flaa3 = *DEFAULT;
+  *flaa4 = *DEFAULT;
+  *sawSample = *DEFAULT;
+  *sineSample = *DEFAULT;
+  *scaleSample = *DEFAULT;
+  *squareSample = *DEFAULT;
+  *triangleSample = *DEFAULT;
 
   //Declare variable for above allocated short-size-members
   flaa1->size = 8;
@@ -316,10 +316,9 @@ void button_isr(void){
   }/* else if(newButtonState == SW1){//Switch01
 
   }*/ else if(newButtonState == SW0){//Switch0
-    setAbdacOnOff(0);
     /*SILENCE WILL FALL...*/
+    setAbdacOnOff(0);
     currentSample = NULL;
-    // pioc->codr = 0xff; //Unsure if this works as intended
   }
 }
 
