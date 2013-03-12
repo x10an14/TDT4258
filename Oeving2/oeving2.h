@@ -16,6 +16,7 @@
 #include "sys/interrupts.h"
 #include "avr32/ap7000.h"
 #include "avr32/abdac_101.h"
+#include "listsAndConstants.h"
 
 
 /*Structs we've made ourselves for this assignment*/

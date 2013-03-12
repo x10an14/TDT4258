@@ -9,7 +9,6 @@
 #include <math.h>
 #include "sys/interrupts.h"
 #include "oeving2.h"
-#include "listsAndConstants.h"
 
 
 int main (int argc, char *argv[]){
@@ -36,11 +35,11 @@ int main (int argc, char *argv[]){
   //Initialize variable for above allocated short-size-members
   flaa1->size = 8;
   flaa2->size = 12;
-  flaa3->size = 8;
+  flaa3->size = 9;
   flaa4->size = 15;
   sawSample->size = ARRAYSIZE;
   sineSample->size = SINEARRAYSIZE;
-  scaleSample->size = 8;
+  scaleSample->size = 8; //An octave is eight tones long
   squareSample->size = ARRAYSIZE;
   triangleSample->size = ARRAYSIZE;
 
