@@ -41,10 +41,10 @@ typedef struct sampleCollection{
     short size;
 }sampleCollection;
 
-extern volatile avr32_pio_t *piob = &AVR32_PIOB;
-extern volatile avr32_pio_t *pioc = &AVR32_PIOC;
-extern volatile avr32_pm_t *pm = &AVR32_PM;
-extern volatile avr32_abdac_t *abdac = &AVR32_ABDAC;
+extern volatile avr32_pio_t *piob;
+extern volatile avr32_pio_t *pioc;
+extern volatile avr32_pm_t *pm;
+extern volatile avr32_abdac_t *abdac;
 
 //All below are global
 sample *flaaklypaSample, *flaa1, *flaa2, *flaa3, *flaa4,
