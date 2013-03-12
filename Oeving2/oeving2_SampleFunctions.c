@@ -1,4 +1,7 @@
+#include <limits.h>
 #include "oeving2.h"
+#include "listsAndConstants.h"
+
 
 /*Function to add the time a tone will be played to a list, given a tone, length (stroke), and list*/
 void addFrequency(short stroke, short tone, short *list, int start){
