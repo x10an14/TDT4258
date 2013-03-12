@@ -1,5 +1,7 @@
 /* legg andre "includes" her, sammen med "defines" */
 //Moved the above line to this file instead!
+
+#ifndef OEVING_2_LISTS_AND_CONSTANTS
 #include "limits.h"
 
 /* macroes!!!! \o/ */
@@ -72,3 +74,5 @@ short TRIANGLE[] = {0,(1/4)*SHRT_MAX, (2/4)*SHRT_MAX, (3/4)*SHRT_MAX,
 short SQUARE[]={SHRT_MAX, SHRT_MAX, SHRT_MAX, SHRT_MAX, SHRT_MAX, SHRT_MAX,
             SHRT_MAX, SHRT_MAX, -SHRT_MAX, -SHRT_MAX, -SHRT_MAX, -SHRT_MAX,
             -SHRT_MAX, -SHRT_MAX, -SHRT_MAX, -SHRT_MAX};
+
+#endif
