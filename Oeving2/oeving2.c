@@ -29,8 +29,8 @@ sampleCollection *flaaklyp;
 int main (int argc, char *argv[]){
   //Default sample struct
   sample DEFAULT;
-  *DEFAULT.list = 0;
-  *DEFAULT.strokeList = 0;
+  *(DEFAULT.list) = 0;
+  *(DEFAULT.strokeList) = 0;
   DEFAULT.usingStrokeList = 0;
   DEFAULT.playCntr = 0;
   DEFAULT.size = 0;
