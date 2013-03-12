@@ -276,8 +276,15 @@ void initAudio(void){
   piob->PDR.p21 = 1;
   piob->ASR.p20 = 1;
   piob->ASR.p21 = 1;
-  abdac->CR.en = 1;
-  abdac->IER.tx_ready = 1;
+  setAbdacOnOff(1);
+}
+
+void setAbdacOnOff(int value){
+  if(value != abdac->CR.en &&
+    value != abdac->IER.tx_ready){
+    abdac->CR.en = value;
+    abdac->IER.tx_ready = value;
+  }
 }
 
 void button_isr(void){
@@ -289,20 +296,27 @@ void button_isr(void){
   pioc->sodr = newButtonState; //Turn on the light corresponding to the button pushed
 
   if(newButtonState == SW7){//Switch07
+    setAbdacOnOff(1);
     currentSample = sawSample;
   } else if(newButtonState == SW6){//Switch06
+    setAbdacOnOff(1);
     currentSample = triangleSample;
   } else if(newButtonState == SW5){//Switch05
+    setAbdacOnOff(1);
     currentSample = squareSample;
   } else if(newButtonState == SW4){//Switch04
+    setAbdacOnOff(1);
     currentSample = flaaklypaSample;
   } else if(newButtonState == SW3){//Switch03
+    setAbdacOnOff(1);
     currentSample = scaleSample;
   } else if(newButtonState == SW2){//Switch02
+    setAbdacOnOff(1);
     currentSample = sineSample;
   }/* else if(newButtonState == SW1){//Switch01
 
   }*/ else if(newButtonState == SW0){//Switch0
+    setAbdacOnOff(0);
     /*SILENCE WILL FALL...*/
     currentSample = NULL;
     // pioc->codr = 0xff; //Unsure if this works as intended
