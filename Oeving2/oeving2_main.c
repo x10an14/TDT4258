@@ -164,7 +164,8 @@ int main (int argc, char *argv[]){
     int j, size;
     for(j = 0; j < small->size; j++){
       size = (int)(ABDAC_SAMPLERATE/small->strokeList[j]);
-      addFrequency(small->strokeList[j], small->list[j], flaaklypaSample->list, cntr);
+      //Her er det en feil! Se i addFrequency for forklaring!
+addFrequency(small->strokeList[j], small->list[j], flaaklypaSample->list, cntr);
       cntr += size;
     }
   }
@@ -192,7 +193,8 @@ int main (int argc, char *argv[]){
 	cntr = 0;
 	for(i = 0; i < scaleSample->size; i++){
 		size = (int) (ABDAC_SAMPLERATE/SCALESTROKE[i]);
-		addFrequency(SCALESTROKE[i], SCALE[i], scaleSample->list, cntr);
+		//Her er det en feil! Se i addFrequency for forklaring!
+addFrequency(SCALESTROKE[i], SCALE[i], scaleSample->list, cntr);
 		cntr += size;
 	}
 
