@@ -129,7 +129,7 @@ int main (int argc, char *argv[]){
 
   //Assigning space
   flaaklypaSample->size = memCntr;
-  flaaklypaSample->list = (short*) calloc((short) 0, memCntr*sizeof(short));
+  flaaklypaSample->list = (short*) calloc(memCntr, sizeof(short));
 
   //Assigning(/Combining) values to final list (flaaklypaSample->list)
   int cntr = 0;
@@ -159,7 +159,7 @@ int main (int argc, char *argv[]){
   //Assigning space
   scaleSample = (sample*) malloc(sizeof(sample*));
   scaleSample->size = memCntr;
-  scaleSample->list = (short*) calloc((short) 0, memCntr*sizeof(short)); //Total size of tune
+  scaleSample->list = (short*) calloc(memCntr, sizeof(short)); //Total size of tune
 
   //Assigning(/Combining) values to final list (flaaklypaSample->list)
   cntr = 0;
