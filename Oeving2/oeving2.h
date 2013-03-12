@@ -65,6 +65,6 @@ void addFrequency(short stroke, short tone, short *list, int start);
 int getAmountOfPeriods(int stroke, short tone);
 void addZeroes(int amount, short *list, int start);
 void setAbdacOnOff(int value);
-void sampleConstructor(sample *inpt, int size, int maxRate, int usesStrokelist, short *tonelist, short *strokelist);
+void sampleConstructor(sample *inpt, int size, int maxRate, short *tonelist, short *strokelist);
 
 #endif
