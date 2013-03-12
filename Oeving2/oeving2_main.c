@@ -146,7 +146,7 @@ int main (int argc, char *argv[]){
     int j, size;
     for(j = 0; j < small->size; j++){
       /*size == temp variable with how much space is needed for each period of each tone in the final list*/
-      size = (int) (ABDAC_SAMPLERATE/small->list[j]);
+      size = (int) (ABDAC_SAMPLERATE/small->strokeList[j]);
       //Self-explanatory (if you've read the above comments)
       memCntr += size;
     }
@@ -163,7 +163,7 @@ int main (int argc, char *argv[]){
     sample *small = flaaklyp->list[i];
     int j, size;
     for(j = 0; j < small->size; j++){
-      size = (int)(ABDAC_SAMPLERATE/small->list[j]);
+      size = (int)(ABDAC_SAMPLERATE/small->strokeList[j]);
       addFrequency(small->strokeList[j], small->list[j], flaaklypaSample->list, cntr);
       cntr += size;
     }
