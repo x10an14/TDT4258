@@ -12,7 +12,7 @@
 // #include <avr32/ap7000.h> /* inkludere Atmel-headerfil */
 // #include <sys/interrupts.h>
 //Commented out above so that we can compile on our own machines (see lines below)
-#include <stdlib.h>
+
 #include "sys/interrupts.h"
 #include "avr32/ap7000.h"
 #include "avr32/abdac_101.h"
@@ -46,8 +46,6 @@ volatile avr32_pm_t *pm = &AVR32_PM;
 volatile avr32_abdac_t *abdac = &AVR32_ABDAC;
 
 //All below are global
-short *currentSamplePtr = NULL;
-int *ratePtr = NULL;
 sample *flaaklypaSample, *flaa1, *flaa2, *flaa3, *flaa4,
        *squareSample, *sawSample, *triangleSample, *scaleSample, *sineSample, *currentSample;
 sampleCollection *flaaklyp;

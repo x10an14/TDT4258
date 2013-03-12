@@ -2,6 +2,7 @@
 //Moved the above line to this file instead!
 
 #ifndef OEVING_2_LISTS_AND_CONSTANTS
+#define OEVING_2_LISTS_AND_CONSTANTS
 #include "limits.h"
 
 /* macroes!!!! \o/ */
