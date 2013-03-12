@@ -61,62 +61,6 @@ int main (int argc, char *argv[]){
   triangleSample = sampleConstructor(triangleSample, ARRAYSIZE, TRIANGLERATE, TRIANGLE, NULL);
   squareSample = sampleConstructor(squareSample, ARRAYSIZE, SQUARERATE, SQUARE, NULL);
 
-  /*flaa1 = (sample*) calloc(1, sizeof(sample));
-  flaa2 = (sample*) calloc(1, sizeof(sample));
-  flaa3 = (sample*) calloc(1, sizeof(sample));
-  flaa4 = (sample*) calloc(1, sizeof(sample));
-  sawSample = (sample*) calloc(1, sizeof(sample));
-  sineSample = (sample*) calloc(1, sizeof(sample));
-  scaleSample = (sample*) calloc(1, sizeof(sample));
-  squareSample = (sample*) calloc(1, sizeof(sample));
-  triangleSample = (sample*) calloc(1, sizeof(sample));
-  flaaklypaSample = (sample*) calloc(1, sizeof(sample*));
-
-  //Initialize variable for above allocated short-size-members
-  flaa1->size = 8;
-  flaa2->size = 12;
-  flaa3->size = 9;
-  flaa4->size = 15;
-  sawSample->size = ARRAYSIZE;
-  sineSample->size = SINEARRAYSIZE;
-  scaleSample->size = 8; //An octave is eight tones long
-  squareSample->size = ARRAYSIZE;
-  triangleSample->size = ARRAYSIZE;
-
-  //Assigning space for tonelists! (playlists in sample)
-  flaa1->list = (short*) malloc(flaa1->size*sizeof(short));
-  flaa2->list = (short*) malloc(flaa2->size*sizeof(short));
-  flaa3->list = (short*) malloc(flaa3->size*sizeof(short));
-  flaa4->list = (short*) malloc(flaa4->size*sizeof(short));
-  sawSample->list = (short*) malloc(sawSample->size*sizeof(short));
-  sineSample->list = (short*) malloc(sineSample->size*sizeof(short));
-  scaleSample->list = (short*) malloc(scaleSample->size*sizeof(short));
-  triangleSample->list = (short*) malloc(triangleSample->size*sizeof(short));
-
-  //Initialize and declare variable for above allocated short-list-members
-  flaa1->list = FLAA1;
-  flaa2->list = FLAA2;
-  flaa3->list = FLAA3;
-  flaa4->list = FLAA4;
-  sawSample->list = SAW;
-  sineSample->list = sineSampleList;
-  scaleSample->list = SCALE;
-  squareSample->list = SQUARE;
-  triangleSample->list = TRIANGLE;
-
-  //Repeat of above, but for strokeList
-  flaa1->strokeList = (short*) malloc(flaa1->size*sizeof(short));
-  flaa2->strokeList = (short*) malloc(flaa2->size*sizeof(short));
-  flaa3->strokeList = (short*) malloc(flaa3->size*sizeof(short));
-  flaa4->strokeList = (short*) malloc(flaa4->size*sizeof(short));
-  scaleSample->strokeList = (short*) malloc(scaleSample->size*sizeof(short));
-
-  flaa1->strokeList = FLAASTROKE1;
-  flaa2->strokeList = FLAASTROKE2;
-  flaa3->strokeList = FLAASTROKE3;
-  flaa4->strokeList = FLAASTROKE4;
-  scaleSample->strokeList = SCALESTROKE;*/
-
   //Repeat of all above, except that pointer is a sampleCollection* pointer
   flaaklyp = (sampleCollection*) malloc(sizeof(sampleCollection));
   flaaklyp->size = 10;
@@ -184,10 +128,6 @@ addFrequency(small->strokeList[j], small->list[j], flaaklypaSample->list, cntr);
 	}
 
   scaleSample = sampleConstructor(scaleSample, memCntr, 0, SCALE, SCALESTROKE);
-	/*//Assigning space
-	scaleSample = (sample*) malloc(sizeof(sample*));
-	scaleSample->size = memCntr;
-	scaleSample->list = (short*) calloc(memCntr, sizeof(short)); //Total size of tune*/
 
 	//Assigning(/Combining) values to final list (flaaklypaSample->list)
 	cntr = 0;
@@ -198,15 +138,6 @@ addFrequency(SCALESTROKE[i], SCALE[i], scaleSample->list, cntr);
 		cntr += size;
 	}
 
-/*	//The rate (amount of times we play each element) is already set with the function addFrequency. So no need to use it on this sample
-	flaaklypaSample->usingStrokeList = 1;
-	scaleSample->usingStrokeList = 1;
-
-	sawSample->rateMax = SAWRATE;
-	sineSample->rateMax = SINERATE;
-	squareSample->rateMax = SQUARERATE;
-	triangleSample->rateMax = TRIANGLERATE;
-*/
 	initHardware();
 
 	while(1);
