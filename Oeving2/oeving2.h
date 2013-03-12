@@ -12,6 +12,7 @@
 // #include <avr32/ap7000.h> /* inkludere Atmel-headerfil */
 // #include <sys/interrupts.h>
 //Commented out above so that we can compile on our own machines (see lines below)
+#include <stdlib.h>
 #include "sys/interrupts.h"
 #include "avr32/ap7000.h"
 #include "avr32/abdac_101.h"
