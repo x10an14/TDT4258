@@ -26,34 +26,43 @@ short SCALESTROKE[] = {2,2,2,2,2,2,2,2};
 
 // Saw Waveform 17 steps
 short SAW[] = {-SHRT_MAX, -(7/8)*SHRT_MAX, -(6/8)*SHRT_MAX, -(5/8)*SHRT_MAX,
-            -(4/8)*SHRT_MAX, (-3/8)*SHRT_MAX, -(2/8)*SHRT_MAX, -(1/8)*SHRT_MAX,
-            0, (1/8)*SHRT_MAX, (2/8)*SHRT_MAX, (3/8)*SHRT_MAX, (4/8)*SHRT_MAX,
-            (5/8)*SHRT_MAX, (6/8)*SHRT_MAX, (7/8)*SHRT_MAX};
+						-(4/8)*SHRT_MAX, (-3/8)*SHRT_MAX, -(2/8)*SHRT_MAX, -(1/8)*SHRT_MAX,
+						0, (1/8)*SHRT_MAX, (2/8)*SHRT_MAX, (3/8)*SHRT_MAX, (4/8)*SHRT_MAX,
+						(5/8)*SHRT_MAX, (6/8)*SHRT_MAX, (7/8)*SHRT_MAX};
 
 // Triangle Waveform 17 steps
 short TRIANGLE[] = {0,(1/4)*SHRT_MAX, (2/4)*SHRT_MAX, (3/4)*SHRT_MAX,
-            (4/4)*SHRT_MAX, (3/4)*SHRT_MAX, (2/4)*SHRT_MAX, (1/4)*SHRT_MAX, 0,
-            -(1/4)*SHRT_MAX, -(2/4)*SHRT_MAX, -(3/4)*SHRT_MAX, -(4/4)*SHRT_MAX,
-            -(3/4)*SHRT_MAX, -(2/4)*SHRT_MAX, -(1/4)*SHRT_MAX};
+						(4/4)*SHRT_MAX, (3/4)*SHRT_MAX, (2/4)*SHRT_MAX, (1/4)*SHRT_MAX, 0,
+						-(1/4)*SHRT_MAX, -(2/4)*SHRT_MAX, -(3/4)*SHRT_MAX, -(4/4)*SHRT_MAX,
+						-(3/4)*SHRT_MAX, -(2/4)*SHRT_MAX, -(1/4)*SHRT_MAX};
 
 // Square Waveform 16 steps
 short SQUARE[]={SHRT_MAX, SHRT_MAX, SHRT_MAX, SHRT_MAX, SHRT_MAX, SHRT_MAX,
-            SHRT_MAX, SHRT_MAX, -SHRT_MAX, -SHRT_MAX, -SHRT_MAX, -SHRT_MAX,
-            -SHRT_MAX, -SHRT_MAX, -SHRT_MAX, -SHRT_MAX};
+						SHRT_MAX, SHRT_MAX, -SHRT_MAX, -SHRT_MAX, -SHRT_MAX, -SHRT_MAX,
+						-SHRT_MAX, -SHRT_MAX, -SHRT_MAX, -SHRT_MAX};
 
 
 
 int main (int argc, char *argv[]){
-  // Creating of sinus wave list 128 steps
-  short *sineSampleList = (short*) malloc(SINEARRAYSIZE*sizeof(short));;
-  //for-loop cntr
-  int i;
-  for (i=0; i < SINEARRAYSIZE; i++){
-    sineSampleList[i] = SHRT_MAX*sin((M_PI*i)/SINEARRAYSIZE);
-  }
+	// Creating of sinus wave list 128 steps
+	short *sineSampleList = (short*) malloc(SINEARRAYSIZE*sizeof(short));;
+	//for-loop cntr
+	int i;
+	for (i=0; i < SINEARRAYSIZE; i++){
+		sineSampleList[i] = SHRT_MAX*sin((M_PI*i)/SINEARRAYSIZE);
+	}
 
-  //Allocate space on heap for pointers (And set all member-values to zero!)
-  flaa1 = (sample*) calloc(1, sizeof(sample));
+
+  sampleConstructor(flaa1, 8, 0, &FLAA1, &FLAASTROKE1);
+  sampleConstructor(flaa2, 12, 0, &FLAA2, &FLAASTROKE2);
+  sampleConstructor(flaa3, 9, 0, &FLAA3, &FLAASTROKE3);
+  sampleConstructor(flaa4, 15, 0, &FLAA4, &FLAASTROKE4);
+  sampleConstructor(sawSample, ARRAYSIZE, SAWRATE, &SAW, NULL);
+  sampleConstructor(sineSample, SINEARRAYSIZE, SINERATE, &sineSampleList, NULL);
+  sampleConstructor(triangleSample, ARRAYSIZE, TRIANGLERATE, &TRIANGLE, NULL);
+  sampleConstructor(squareSample, ARRAYSIZE, SQUARERATE, &SQUARE, NULL);
+
+  /*flaa1 = (sample*) calloc(1, sizeof(sample));
   flaa2 = (sample*) calloc(1, sizeof(sample));
   flaa3 = (sample*) calloc(1, sizeof(sample));
   flaa4 = (sample*) calloc(1, sizeof(sample));
@@ -107,7 +116,7 @@ int main (int argc, char *argv[]){
   flaa2->strokeList = FLAASTROKE2;
   flaa3->strokeList = FLAASTROKE3;
   flaa4->strokeList = FLAASTROKE4;
-  scaleSample->strokeList = SCALESTROKE;
+  scaleSample->strokeList = SCALESTROKE;*/
 
   //Repeat of all above, except that pointer is a sampleCollection* pointer
   flaaklyp = (sampleCollection*) malloc(sizeof(sampleCollection));
@@ -144,9 +153,10 @@ int main (int argc, char *argv[]){
     }
   }
 
-  //Assigning space
+  sampleConstructor(flaaklypaSample, memCntr, 0, NULL, NULL);
+/*  //Assigning space
   flaaklypaSample->size = memCntr;
-  flaaklypaSample->list = (short*) calloc(memCntr, sizeof(short));
+  flaaklypaSample->list = (short*) calloc(memCntr, sizeof(short));*/
 
   //Assigning(/Combining) values to final list (flaaklypaSample->list)
   int cntr = 0;
@@ -169,34 +179,35 @@ int main (int argc, char *argv[]){
   for(i = 0; i < scaleSample->size; i++){
     //temp variable with how many times each tone is played
     size = (int) (ABDAC_SAMPLERATE/SCALESTROKE[i]);
-    //Self-explanatory
-    memCntr += size;
-  }
+		//Self-explanatory
+		memCntr += size;
+	}
 
-  //Assigning space
-  scaleSample = (sample*) malloc(sizeof(sample*));
-  scaleSample->size = memCntr;
-  scaleSample->list = (short*) calloc(memCntr, sizeof(short)); //Total size of tune
+  sampleConstructor(scaleSample, memCntr, 0, &SCALE, &SCALESTROKE);
+	/*//Assigning space
+	scaleSample = (sample*) malloc(sizeof(sample*));
+	scaleSample->size = memCntr;
+	scaleSample->list = (short*) calloc(memCntr, sizeof(short)); //Total size of tune*/
 
-  //Assigning(/Combining) values to final list (flaaklypaSample->list)
-  cntr = 0;
-  for(i = 0; i < scaleSample->size; i++){
-    size = (int) (ABDAC_SAMPLERATE/SCALESTROKE[i]);
-    addFrequency(SCALESTROKE[i], SCALE[i], scaleSample->list, cntr);
-    cntr += size;
-  }
+	//Assigning(/Combining) values to final list (flaaklypaSample->list)
+	cntr = 0;
+	for(i = 0; i < scaleSample->size; i++){
+		size = (int) (ABDAC_SAMPLERATE/SCALESTROKE[i]);
+		addFrequency(SCALESTROKE[i], SCALE[i], scaleSample->list, cntr);
+		cntr += size;
+	}
 
-  //The rate (amount of times we play each element) is already set with the function addFrequency. So no need to use it on this sample
-  flaaklypaSample->usingStrokeList = 1;
-  scaleSample->usingStrokeList = 1;
+/*	//The rate (amount of times we play each element) is already set with the function addFrequency. So no need to use it on this sample
+	flaaklypaSample->usingStrokeList = 1;
+	scaleSample->usingStrokeList = 1;
 
-  sawSample->rateMax = SAWRATE;
-  sineSample->rateMax = SINERATE;
-  squareSample->rateMax = SQUARERATE;
-  triangleSample->rateMax = TRIANGLERATE;
+	sawSample->rateMax = SAWRATE;
+	sineSample->rateMax = SINERATE;
+	squareSample->rateMax = SQUARERATE;
+	triangleSample->rateMax = TRIANGLERATE;
+*/
+	initHardware();
 
-  initHardware();
-
-  while(1);
-  return 0;
+	while(1);
+	return 0;
 }

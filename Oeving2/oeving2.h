@@ -22,23 +22,23 @@
 /*Structs we've made ourselves for this assignment*/
 
 typedef struct sample{
-    //List of short-values (amplitude/tone values) for tune that this struct holds
-    short *list;
-    //A list of short values carrying the X in Y/X where Y always equals 1. (To get tones of different time length)
-    short *strokeList;
-    //Int used as bool for whether list is used with strokeList or rateCntr
-    short usingStrokeList;
-    //Counter and size for both abovementioned lists
-    short playCntr, size;
-    //Counter and maxvalue for rate of playing (If timelist is not used, these two are meant to be used instead)
-    short rateCntr, rateMax;
+		//List of short-values (amplitude/tone values) for tune that this struct holds
+		short *list;
+		//A list of short values carrying the X in Y/X where Y always equals 1. (To get tones of different time length)
+		short *strokeList;
+		//Int used as bool for whether list is used with strokeList or rateCntr
+		short usingStrokeList;
+		//Counter and size for both abovementioned lists
+		short playCntr, size;
+		//Counter and maxvalue for rate of playing (If timelist is not used, these two are meant to be used instead)
+		short rateCntr, rateMax;
 }sample;
 
 typedef struct sampleCollection{
-    //List to pointers which point a sample struct each
-    sample **list;
-    //Size of abovementioned list
-    short size;
+		//List to pointers which point a sample struct each
+		sample **list;
+		//Size of abovementioned list
+		short size;
 }sampleCollection;
 
 extern volatile avr32_pio_t *piob;
@@ -47,8 +47,8 @@ extern volatile avr32_pm_t *pm;
 extern volatile avr32_abdac_t *abdac;
 
 //All below are global
-sample *flaaklypaSample, *flaa1, *flaa2, *flaa3, *flaa4,
-       *squareSample, *sawSample, *triangleSample, *scaleSample, *sineSample, *currentSample;
+sample *flaaklypaSample, *flaa1, *flaa2, *flaa3, *flaa4, *squareSample,
+		*sawSample, *triangleSample, *scaleSample, *sineSample, *currentSample;
 sampleCollection *flaaklyp;
 
 /* prototyper */
@@ -65,5 +65,6 @@ void addFrequency(short stroke, short tone, short *list, int start);
 int getAmountOfPeriods(int stroke, short tone);
 void addZeroes(int amount, short *list, int start);
 void setAbdacOnOff(int value);
+void sampleConstructor(sample *inpt, int size, int maxRate, int usesStrokelist, short *tonelist, short *strokelist);
 
 #endif
