@@ -46,27 +46,27 @@
 #define ABDAC_SAMPLERATE 46875
 
 /* megalists! \o/ */
-extern short FLAA1;
-extern short FLAA2;
-extern short FLAA3;
-extern short FLAA4;
+extern short FLAA1[];
+extern short FLAA2[];
+extern short FLAA3[];
+extern short FLAA4[];
 
-extern short FLAASTROKE1;
-extern short FLAASTROKE2;
-extern short FLAASTROKE3;
-extern short FLAASTROKE4;
+extern short FLAASTROKE1[];
+extern short FLAASTROKE2[];
+extern short FLAASTROKE3[];
+extern short FLAASTROKE4[];
 
 // Scale roll 8 steps
-extern short SCALE;
-extern short SCALESTROKE;
+extern short SCALE[];
+extern short SCALESTROKE[];
 
 // Saw Waveform 17 steps
-extern short SAW;
+extern short SAW[];
 
 // Triangle Waveform 17 steps
-extern short TRIANGLE;
+extern short TRIANGLE[];
 
 // Square Waveform 17 steps
-extern short SQUARE;
+extern short SQUARE[];
 
 #endif
