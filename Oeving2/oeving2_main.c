@@ -11,12 +11,6 @@
 #include "oeving2.h"
 #include "listsAndConstants.h"
 
-//All below are global
-short *currentSamplePtr = NULL;
-int *ratePtr = NULL;
-sample *flaaklypaSample, *flaa1, *flaa2, *flaa3, *flaa4,
-       *squareSample, *sawSample, *triangleSample, *scaleSample, *sineSample, *currentSample;
-sampleCollection *flaaklyp;
 
 int main (int argc, char *argv[]){
   // Creating of sinus wave list 128 steps

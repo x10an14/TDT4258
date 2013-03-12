@@ -44,6 +44,13 @@ volatile avr32_pio_t *pioc = &AVR32_PIOC;
 volatile avr32_pm_t *pm = &AVR32_PM;
 volatile avr32_abdac_t *abdac = &AVR32_ABDAC;
 
+//All below are global
+short *currentSamplePtr = NULL;
+int *ratePtr = NULL;
+sample *flaaklypaSample, *flaa1, *flaa2, *flaa3, *flaa4,
+       *squareSample, *sawSample, *triangleSample, *scaleSample, *sineSample, *currentSample;
+sampleCollection *flaaklyp;
+
 /* prototyper */
 int main (int argc, char *argv[]);
 void initIntc(void);
