@@ -54,5 +54,6 @@ static void abdac_isr(void);
 void addFrequency(short stroke, short tone, short *list, int start);
 int getAmountOfPeriods(int stroke, short tone);
 void addZeroes(int amount, short *list, int start);
+void setAbdacOnOff(int value);
 
 #endif
