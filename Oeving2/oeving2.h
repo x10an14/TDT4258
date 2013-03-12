@@ -43,11 +43,11 @@ typedef struct sampleCollection{
 
 /* prototyper */
 int main (int argc, char *argv[]);
-static void initIntc(void);
-static void initButtons(void);
-static void initLeds(void);
-static void initAudio(void);
-static void initHardware (void);
+void initIntc(void);
+void initButtons(void);
+void initLeds(void);
+void initAudio(void);
+void initHardware (void);
 
 void button_isr(void);
 void abdac_isr(void);
