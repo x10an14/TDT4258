@@ -295,8 +295,8 @@ void button_isr(void){
 
   }*/ else if(newButtonState == SW0){//Switch0
     /*SILENCE WILL FALL...*/
-    setAbdacOnOff(0);
     currentSample = NULL;
+    setAbdacOnOff(0);
   }
 }
 
