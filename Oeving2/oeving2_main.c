@@ -11,11 +11,6 @@
 #include "oeving2.h"
 #include "listsAndConstants.h"
 
-volatile avr32_pio_t *piob = &AVR32_PIOB;
-volatile avr32_pio_t *pioc = &AVR32_PIOC;
-volatile avr32_pm_t *pm = &AVR32_PM;
-volatile avr32_abdac_t *abdac = &AVR32_ABDAC;
-
 //buttonState variable
 short static volatile newButtonState;
 
