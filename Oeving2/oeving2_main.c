@@ -100,8 +100,8 @@ int main (int argc, char *argv[]){
 
 	flaaklypaSample = sampleConstructor(flaaklypaSample, memCntr, 0, NULL, NULL);
 
-	//Assigning(/Combining) values to final list (flaaklypaSample->list)
-	int cntr = 0;
+	//Assigning(/Combining) values to final list (flaaklypaSample->list)*/
+	int cntr = 0;/*
 	for(i = 0; i < flaaklyp->size; i++){
 		sample *small = flaaklyp->list[i];
 		int j, size;
