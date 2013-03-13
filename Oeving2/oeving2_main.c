@@ -57,14 +57,14 @@ int main (int argc, char *argv[]){
 	flaa3 = sampleConstructor(flaa3, 9, 0, FLAA3, FLAASTROKE3);
 	flaa4 = sampleConstructor(flaa4, 15, 0, FLAA4, FLAASTROKE4);
 	sawSample = sampleConstructor(sawSample, ARRAYSIZE, SAWRATE, SAW, NULL);
+	squareSample = sampleConstructor(squareSample, ARRAYSIZE, SQUARERATE, SQUARE, NULL);
 	sineSample = sampleConstructor(sineSample, SINEARRAYSIZE, SINERATE, sineSampleList, NULL);
 	triangleSample = sampleConstructor(triangleSample, ARRAYSIZE, TRIANGLERATE, TRIANGLE, NULL);
-	squareSample = sampleConstructor(squareSample, ARRAYSIZE, SQUARERATE, SQUARE, NULL);
 
 	//Repeat of all above, except that pointer is a sampleCollection* pointer
 	flaaklyp = (sampleCollection*) malloc(sizeof(sampleCollection));
 	flaaklyp->size = 10;
-	flaaklyp->list = (sample**) malloc(flaaklyp->size*sizeof(sample*));
+	flaaklyp->list = (sample**) malloc(10*sizeof(sample*));
 
 	/*The below for-loop declares the list member of the sampleCollection pointer to be the addresses of the above sample pointers
 	(Flaaklypa variants only!)*/
@@ -80,7 +80,7 @@ int main (int argc, char *argv[]){
 		}
 	}
 
-	//Count to see how much space is needed for flaaklypaSample->list/size
+	//Count to see how much space is needed for flaaklypaSample->list / size
 	//cntr for how much space needed
 	int memCntr = 0;
 	for(i = 0; i < flaaklyp->size; i++){
@@ -97,9 +97,6 @@ int main (int argc, char *argv[]){
 	}
 
 	flaaklypaSample = sampleConstructor(flaaklypaSample, memCntr, 0, NULL, NULL);
-/*	//Assigning space
-	flaaklypaSample->size = memCntr;
-	flaaklypaSample->list = (short*) calloc(memCntr, sizeof(short));*/
 
 	//Assigning(/Combining) values to final list (flaaklypaSample->list)
 	int cntr = 0;
