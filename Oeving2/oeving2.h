@@ -62,7 +62,7 @@ void initHardware (void);
 
 void button_isr(void);
 void abdac_isr(void);
-void addFrequency(short stroke, short tone, short *list, int start);
+sample* addFrequency(sample *inpt, short stroke, short tone, int start);
 int getAmountOfPeriods(int stroke, short tone);
 void addZeroes(int amount, short *list, int start);
 void setAbdacOnOff(int value);
