@@ -28,7 +28,7 @@
 #define SAWRATE 16
 #define SQUARERATE 16
 #define TRIANGLERATE 4
-#define SINERATE 2
+#define SINERATE 1
 
 //#define TONE#OCTAVE AmountOfRepetitionsPerSquareWaveElementPerSecondToGenerateSaidTone
 #define G_3 104
