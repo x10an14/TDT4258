@@ -10,7 +10,9 @@ sample* sampleConstructor(sample *inpt, int size, int maxRate, short *tonelist, 
 
 	inpt->size = size;
 	inpt->list = (short*) calloc(size, sizeof(short));
-	inpt->list = tonelist;
+	if (tonelist != NULL)
+		inpt->list = tonelist;
+	}
 	inpt->rateCntr = 0;
 	inpt->playCntr = 0;
 
