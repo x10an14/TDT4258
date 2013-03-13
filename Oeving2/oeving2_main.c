@@ -108,9 +108,9 @@ int main (int argc, char *argv[]){
 		int j, size;
 		for(j = 0; j < small->size; j++){
 			size = (int)(ABDAC_SAMPLERATE/small->strokeList[j]);
-			cntr += size;
 			//Her er det en feil! Se i addFrequency for forklaring!
 			flaaklypaSample = addFrequency(flaaklypaSample, small->strokeList[j], small->list[j], cntr);
+			cntr += size;
 		}
 	}
 
