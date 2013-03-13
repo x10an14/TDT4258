@@ -52,19 +52,21 @@ int main (int argc, char *argv[]){
 	}
 
 
+/*
 	flaa1 = sampleConstructor(flaa1, 8, 0, FLAA1, FLAASTROKE1);
 	flaa2 = sampleConstructor(flaa2, 12, 0, FLAA2, FLAASTROKE2);
 	flaa3 = sampleConstructor(flaa3, 9, 0, FLAA3, FLAASTROKE3);
-	flaa4 = sampleConstructor(flaa4, 15, 0, FLAA4, FLAASTROKE4);
+	flaa4 = sampleConstructor(flaa4, 15, 0, FLAA4, FLAASTROKE4);*/
 	sawSample = sampleConstructor(sawSample, ARRAYSIZE, SAWRATE, SAW, NULL);
 	squareSample = sampleConstructor(squareSample, ARRAYSIZE, SQUARERATE, SQUARE, NULL);
 	sineSample = sampleConstructor(sineSample, SINEARRAYSIZE, SINERATE, sineSampleList, NULL);
 	triangleSample = sampleConstructor(triangleSample, ARRAYSIZE, TRIANGLERATE, TRIANGLE, NULL);
 
+  /*
 	//Repeat of all above, except that pointer is a sampleCollection* pointer
 	flaaklyp = (sampleCollection*) malloc(sizeof(sampleCollection));
 	flaaklyp->size = 10;
-	flaaklyp->list = (sample**) malloc(10*sizeof(sample*));
+	flaaklyp->list = (sample**) malloc(10*sizeof(sample*));*/
 
 	/*The below for-loop declares the list member of the sampleCollection pointer to be the addresses of the above sample pointers
 	(Flaaklypa variants only!)*/
@@ -82,14 +84,14 @@ int main (int argc, char *argv[]){
 
 	//Count to see how much space is needed for flaaklypaSample->list / size
 	//cntr for how much space needed
-	int memCntr = 0;
+	int memCntr = 0;/*
 	for(i = 0; i < flaaklyp->size; i++){
 		//Temporary variable for readability
 		sample *small = flaaklyp->list[i];
 		//Inner for-loop cntr
 		int j, size;
 		for(j = 0; j < small->size; j++){
-			/*size == temp variable with how much space is needed for each period of each tone in the final list*/
+			//size == temp variable with how much space is needed for each period of each tone in the final list
 			size = (int) (ABDAC_SAMPLERATE/small->strokeList[j]);
 			//Self-explanatory (if you've read the above comments)
 			memCntr += size;
@@ -109,12 +111,10 @@ int main (int argc, char *argv[]){
 			flaaklypaSample = addFrequency(flaaklypaSample, small->strokeList[j], small->list[j], cntr);
 			cntr += size;
 		}
-	}
+	}*/
 
-	// SAME METHOD BUT FOR SCALE
-	//Count to see how much space is needed
-	//cntr for how much space we need
-	//cntr-list with how many times each tone is played
+
+	/*Do the same for our scaleSample playlist*/
 	memCntr = 0;
 	int size;
 	for(i = 0; i < scaleSample->size; i++){
@@ -123,7 +123,7 @@ int main (int argc, char *argv[]){
 		//Self-explanatory
 		memCntr += size;
 	}
-/*
+
 	scaleSample = sampleConstructor(scaleSample, memCntr, 0, SCALE, SCALESTROKE);
 
 	//Assigning(/Combining) values to final list (flaaklypaSample->list)
@@ -131,9 +131,9 @@ int main (int argc, char *argv[]){
 	for(i = 0; i < scaleSample->size; i++){
 		size = (int) (ABDAC_SAMPLERATE/SCALESTROKE[i]);
 		//Her er det en feil! Se i addFrequency for forklaring!
-addFrequency(SCALESTROKE[i], SCALE[i], scaleSample->list, cntr);
+		addFrequency(SCALESTROKE[i], SCALE[i], scaleSample->list, cntr);
 		cntr += size;
-	}*/
+	}
 
 	initHardware();
 
