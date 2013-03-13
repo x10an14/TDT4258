@@ -69,7 +69,7 @@ int main (int argc, char *argv[]){
 	flaaklyp->list = (sample**) malloc(10*sizeof(sample*));*/
 
 	/*The below for-loop declares the list member of the sampleCollection pointer to be the addresses of the above sample pointers
-	(Flaaklypa variants only!)*/
+	(Flaaklypa variants only!)
 	for (i = 0; i < 10; i++){
 		if(i == 0 || i == 2 || i == 8 || i == 6){
 			flaaklyp->list[i] = flaa1;
@@ -80,7 +80,7 @@ int main (int argc, char *argv[]){
 		} else{
 			flaaklyp->list[i] = flaa4;
 		}
-	}
+	}*/
 
 	//Count to see how much space is needed for flaaklypaSample->list / size
 	//cntr for how much space needed
