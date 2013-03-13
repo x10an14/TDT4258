@@ -21,15 +21,15 @@ void button_isr(void){
 	} else if(newButtonState == SW5){//Switch05
 		setAbdacOnOff(1);
 		currentSample = squareSample;
-	// } else if(newButtonState == SW4){//Switch04 /*Below code is commented out because: NOT WORKING!*/
-	// 	setAbdacOnOff(1);
-	// 	currentSample = flaaklypaSample;
-	// } else if(newButtonState == SW3){//Switch03
-	// 	setAbdacOnOff(1);
-	// 	currentSample = scaleSample;
-	} else if(newButtonState == SW2){//Switch02
+	} else if(newButtonState == SW4){//Switch04
 		setAbdacOnOff(1);
 		currentSample = sineSample;
+	// } else if(newButtonState == SW3){//Switch03/*Below code is commented out because: NOT WORKING!*/
+	// 	setAbdacOnOff(1);
+	// 	currentSample = flaaklypaSample;
+	// } else if(newButtonState == SW2){//Switch02
+	// 	setAbdacOnOff(1);
+	// 	currentSample = scaleSample;
 	// }/* else if(newButtonState == SW1){//Switch01*/
 	} else if(newButtonState == SW0){//Switch0
 		/*SILENCE WILL FALL...*/
