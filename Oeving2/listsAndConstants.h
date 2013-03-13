@@ -25,9 +25,9 @@
 #define SW0 0x1
 
 /*Obsolete? Rates of which we will play each single element before moving on to next element (creating pitch)*/
-#define SAWRATE 4
-#define SQUARERATE 16
+#define SAWRATE 6
 #define TRIANGLERATE 8
+#define SQUARERATE 16
 #define SINERATE 1
 
 //#define TONE#OCTAVE AmountOfRepetitionsPerSquareWaveElementPerSecondToGenerateSaidTone
