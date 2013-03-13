@@ -82,7 +82,7 @@ int main (int argc, char *argv[]){
 
 	//Count to see how much space is needed for flaaklypaSample->list / size
 	//cntr for how much space needed
-	int memCntr = 0;
+	long memCntr = 0;
 	for(i = 0; i < flaaklyp->size; i++){
 		//Temporary variable for readability
 		sample *small = flaaklyp->list[i];
@@ -102,9 +102,9 @@ int main (int argc, char *argv[]){
 	int cntr = 0;
 	for(i = 0; i < flaaklyp->size; i++){
 		sample *small = flaaklyp->list[i];
-		int j, size;
+		long j, size;
 		for(j = 0; j < small->size; j++){
-			size = (int)(ABDAC_SAMPLERATE/small->strokeList[j]);
+			size = (long)(ABDAC_SAMPLERATE/small->strokeList[j]);
 			//Her er det en feil! Se i addFrequency for forklaring!
 			flaaklypaSample = addFrequency(flaaklypaSample, small->strokeList[j], small->list[j], cntr);
 			cntr += size;
