@@ -14,21 +14,25 @@ sample* sampleConstructor(sample *inpt, int size, int maxRate, short *tonelist, 
 	} else{ //We have a list already declared (and malloc'd) that we want to use
 		inpt->list = tonelist;
 	}
-	inpt->rateCntr = 0;
-	inpt->playCntr = 0;
 
-	/*Special for samples w/o strokeList*/
-	if(maxRate > 0 && strokelist == NULL){
+	if(strokelist != NULL){/*If the sample in question DOES use strokeList:*/
+		inpt->rateMax = 0;
+		inpt->usingStrokeList = 1;
+		inpt->strokeList = strokelist;
+	} else if(maxRate > 0){/*Special for samples w/o strokeList*/
+		inpt->strokeList = NULL;
 		inpt->usingStrokeList = 0;
 		inpt->rateMax = (short) maxRate;
-		return inpt;
+	} else{ /*We have an error. This is a situation not accounted for.*/
+		inpt->rateMax = 0;
+		inpt->strokeList = NULL;
+		inpt->usingStrokeList = 0;
 	}
 
-	/*If the sample in question DOES use strokeList:*/
-	inpt->strokeList = strokelist;
-	inpt->usingStrokeList = 1;
-	inpt->rateMax = 0;
+	inpt->rateCntr = 0;
+	inpt->playCntr = 0;
 	return inpt;
+
 }
 
 
