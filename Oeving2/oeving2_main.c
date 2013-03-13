@@ -109,7 +109,7 @@ int main (int argc, char *argv[]){
     for(j = 0; j < small->size; j++){
       size = (int)(ABDAC_SAMPLERATE/small->strokeList[j]);
       //Her er det en feil! Se i addFrequency for forklaring!
-      addFrequency(small->strokeList[j], small->list[j], flaaklypaSample->list, cntr);
+      flaaklypaSample = addFrequency(flaaklypaSample, small->strokeList[j], small->list[j], cntr);
       cntr += size;
     }
   }
@@ -126,7 +126,7 @@ int main (int argc, char *argv[]){
 		//Self-explanatory
 		memCntr += size;
 	}
-
+/*
   scaleSample = sampleConstructor(scaleSample, memCntr, 0, SCALE, SCALESTROKE);
 
 	//Assigning(/Combining) values to final list (flaaklypaSample->list)
@@ -136,7 +136,7 @@ int main (int argc, char *argv[]){
 		//Her er det en feil! Se i addFrequency for forklaring!
 addFrequency(SCALESTROKE[i], SCALE[i], scaleSample->list, cntr);
 		cntr += size;
-	}
+	}*/
 
 	initHardware();
 

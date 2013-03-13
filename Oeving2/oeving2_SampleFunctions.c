@@ -30,7 +30,7 @@ sample* sampleConstructor(sample *inpt, int size, int maxRate, short *tonelist, 
 
 
 /*Function to add the time a tone will be played to a list, given a tone, length (stroke), and list*/
-void addFrequency(short stroke, short tone, short *list, int start){
+sample* addFrequency(sample *inpt, short stroke, short tone, int start){
 	/*We have a problem here. In the for-loops calling this method, we calculate the amount of i*j by the following math: ABDAC_SAMPLERATE/stroke.
 	However, this number i BIGGER than periods*periodSize.
 	This is a problem, but it shouldn't be the segfault we are looking for.*/
@@ -41,12 +41,13 @@ void addFrequency(short stroke, short tone, short *list, int start){
 	for(i = 0; i < periods; i++){
 		int j;
 		for (j = 0; j < halfPeriod; j++){
-			list[start+j+(i*periodSize)] = -SHRT_MAX;
+			inpt->list[start+j+(i*periodSize)] = -SHRT_MAX;
 		}
 		for (j = halfPeriod; j < periodSize; j++){
-			list[start+j+(i*periodSize)] = SHRT_MAX;
+			inpt->list[start+j+(i*periodSize)] = SHRT_MAX;
 		}
 	}
+	return inpt;
 }
 
 /*Function to add 0 an amount of times to a list*/
