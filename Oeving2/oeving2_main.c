@@ -115,13 +115,10 @@ int main (int argc, char *argv[]){
 
 
 	/*Do the same for our scaleSample playlist*/
-	memCntr = 0;
-	int size; i = 0;
+	memCntr = 0; i = 0;
 	for(i = 0; i < 8; i++){
-		//temp variable with how many times each tone is played
-		size = (int) (ABDAC_SAMPLERATE/SCALESTROKE[i]);
-		//Self-explanatory
-		memCntr += size;
+		/*temp variable with how many times each tone is played*/
+		memCntr = (int) (ABDAC_SAMPLERATE/SCALESTROKE[i]);
 	}
 
 	scaleSample = sampleConstructor(scaleSample, memCntr, 0, SCALE, SCALESTROKE);
