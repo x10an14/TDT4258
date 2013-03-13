@@ -27,7 +27,7 @@
 /*Obsolete? Rates of which we will play each single element before moving on to next element (creating pitch)*/
 #define SAWRATE 16
 #define SQUARERATE 16
-#define TRIANGLERATE 16
+#define TRIANGLERATE 4
 #define SINERATE 2
 
 //#define TONE#OCTAVE AmountOfRepetitionsPerSquareWaveElementPerSecondToGenerateSaidTone
