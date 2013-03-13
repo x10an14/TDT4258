@@ -8,7 +8,7 @@ sample* sampleConstructor(sample *inpt, int size, int maxRate, short *tonelist, 
 	//Allocate space on heap for pointers (And set all member-values to zero!)
 	inpt = (sample*) calloc(1, sizeof(sample));
 
-	inpt->size = (short) size;
+	inpt->size = size;
 	inpt->list = (short*) calloc(size, sizeof(short));
 	inpt->list = tonelist;
 	inpt->rateCntr = 0;

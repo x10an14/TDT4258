@@ -109,7 +109,7 @@ int main (int argc, char *argv[]){
     for(j = 0; j < small->size; j++){
       size = (int)(ABDAC_SAMPLERATE/small->strokeList[j]);
       //Her er det en feil! Se i addFrequency for forklaring!
-addFrequency(small->strokeList[j], small->list[j], flaaklypaSample->list, cntr);
+      addFrequency(small->strokeList[j], small->list[j], flaaklypaSample->list, cntr);
       cntr += size;
     }
   }

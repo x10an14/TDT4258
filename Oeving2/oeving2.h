@@ -29,7 +29,8 @@ typedef struct sample{
 		//Int used as bool for whether list is used with strokeList or rateCntr
 		short usingStrokeList;
 		//Counter and size for both abovementioned lists
-		short playCntr, size;
+		short playCntr;
+		int size;
 		//Counter and maxvalue for rate of playing (If timelist is not used, these two are meant to be used instead)
 		short rateCntr, rateMax;
 }sample;
