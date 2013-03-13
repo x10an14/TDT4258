@@ -9,8 +9,9 @@ sample* sampleConstructor(sample *inpt, int size, int maxRate, short *tonelist, 
 	inpt = (sample*) calloc(1, sizeof(sample));
 
 	inpt->size = size;
-	inpt->list = (short*) calloc(size, sizeof(short));
-	if(tonelist != NULL){
+	if(tonelist == NULL){ //We will fill the list at a later point
+		inpt->list = (short*) calloc(size, sizeof(short));
+	} else{ //We have a list already declared (and malloc'd) that we want to use
 		inpt->list = tonelist;
 	}
 	inpt->rateCntr = 0;
