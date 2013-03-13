@@ -62,7 +62,7 @@ int main (int argc, char *argv[]){
 	sineSample = sampleConstructor(sineSample, SINEARRAYSIZE, SINERATE, sineSampleList, NULL);
 	triangleSample = sampleConstructor(triangleSample, ARRAYSIZE, TRIANGLERATE, TRIANGLE, NULL);
 
-  /*
+	/*
 	//Repeat of all above, except that pointer is a sampleCollection* pointer
 	flaaklyp = (sampleCollection*) malloc(sizeof(sampleCollection));
 	flaaklyp->size = 10;
@@ -124,6 +124,7 @@ int main (int argc, char *argv[]){
 	scaleSample = sampleConstructor(scaleSample, memCntr, 0, SCALE, SCALESTROKE);
 
 	//Assigning(/Combining) values to final list (flaaklypaSample->list)
+	int size;
 	cntr = 0;
 	for(i = 0; i < scaleSample->size; i++){
 		size = (int) (ABDAC_SAMPLERATE/SCALESTROKE[i]);
