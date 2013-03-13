@@ -65,6 +65,6 @@ void abdac_isr(void){
 			}
 		}
 	}
-	abdac->SDR.channel0 = output*0.5;
-	abdac->SDR.channel1 = output*0.5;
+	abdac->SDR.channel0 = output;
+	abdac->SDR.channel1 = output;
 }
