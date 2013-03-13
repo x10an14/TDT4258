@@ -26,14 +26,14 @@ short SCALESTROKE[] = {2,2,2,2,2,2,2,2};
 
 // Saw Waveform 17 steps
 short SAW[] = {-SHRT_MAX, -(7*SHRT_MAX)/8, -(6*SHRT_MAX)/8, -(5*SHRT_MAX)/8,
-						-(4*SHRT_MAX)/8, (-3/8)*SHRT_MAX, -(2*SHRT_MAX)/8, -(1*SHRT_MAX)/8,
-						0, (1*SHRT_MAX)/8, (2*SHRT_MAX)/8, (3*SHRT_MAX)/8, (4*SHRT_MAX)/8,
+						-(4*SHRT_MAX)/8, (-3/8)*SHRT_MAX, -(2*SHRT_MAX)/8, -(SHRT_MAX)/8,
+						0, (SHRT_MAX)/8, (2*SHRT_MAX)/8, (3*SHRT_MAX)/8, (4*SHRT_MAX)/8,
 						(5*SHRT_MAX)/8, (6*SHRT_MAX)/8, (7*SHRT_MAX)/8};
 
 // Triangle Waveform 17 steps
 short TRIANGLE[] = {0,(1*SHRT_MAX)/4, (2*SHRT_MAX)/4, (3*SHRT_MAX)/4,
-						*SHRT_MAX, (3*SHRT_MAX)/4, (2*SHRT_MAX)/4, (1*SHRT_MAX)/4, 0,
-						-(1*SHRT_MAX)/4, -(2*SHRT_MAX)/4, -(3*SHRT_MAX)/4, -SHRT_MAX,
+						SHRT_MAX, (3*SHRT_MAX)/4, (2*SHRT_MAX)/4, (SHRT_MAX)/4, 0,
+						-(SHRT_MAX)/4, -(2*SHRT_MAX)/4, -(3*SHRT_MAX)/4, -SHRT_MAX,
 						-(3*SHRT_MAX)/4, -(2*SHRT_MAX)/4, -(1*SHRT_MAX)/4};
 
 // Square Waveform 16 steps
