@@ -131,7 +131,7 @@ int main (int argc, char *argv[]){
 	for(i = 0; i < scaleSample->size; i++){
 		size = (int) (ABDAC_SAMPLERATE/SCALESTROKE[i]);
 		//Her er det en feil! Se i addFrequency for forklaring!
-		addFrequency(SCALESTROKE[i], SCALE[i], scaleSample->list, cntr);
+		scaleSample = addFrequency(scaleSample, SCALESTROKE[i], SCALE[i], cntr);
 		cntr += size;
 	}
 
