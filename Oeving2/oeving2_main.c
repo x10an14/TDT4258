@@ -121,12 +121,12 @@ int main (int argc, char *argv[]){
 
 
 	/*Do the same for our scaleSample playlist*/
-	/*memCntr = 0; i = 0;
+	memCntr = 0;
 	for(i = 0; i < 8; i++){
 		//memCntr is a counter variable with the same function as it had for the creation of flaaklypaSample's size
 		memCntr += (int) (ABDAC_SAMPLERATE/SCALESTROKE[i]);
 	}
-
+/*
 	scaleSample = sampleConstructor(scaleSample, memCntr, 0, SCALE, SCALESTROKE);
 
 	//Assigning(/Combining) values to final list (scaleSample->list)

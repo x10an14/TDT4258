@@ -30,7 +30,7 @@ void initButtons(void){
 
 
 	//The below line initializes variable 'active' with the combined values of the switches listes on the right hand side of the equals sign.
-	short active = SW7+SW6+SW5+SW4+SW3+SW2+SW0;
+	short active = SW7+SW6+SW5+SW4+/*SW3+SW2+*/SW0; //Commented out SW3 and SW2 because our sampleStructs don't work when genereting tone based on strokes
 
 	//Below we activate the switches by writing to the PIOEnableRegister, Pull-upEnableRegister, and InterruptEnableRegister
 	piob->per = active;
@@ -38,7 +38,7 @@ void initButtons(void){
 	piob->ier = active;
 
 	//Below we disable the rest of the switches by sending the inverted value of the 'active' variable to the buttons InterruptDisableRegister
-	piob->idr = SW1;
+	piob->idr = SW1+SW2+SW3;//Same as comment on line 33
 }
 
 //Function for initializing LEDs
