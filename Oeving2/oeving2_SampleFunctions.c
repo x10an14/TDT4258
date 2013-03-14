@@ -33,12 +33,12 @@ sample* sampleConstructor(sample *inpt, int size, int maxRate, short *tonelist, 
 		inpt->usingStrokeList = 0;
 		inpt->rateMax = (short) maxRate;
 	} else{ /*Else, we have an error. This is a situation not accounted for, and it is not intended for this situation to happen.*/
+		inpt->size = 0;
 		inpt->rateMax = 0;
 		inpt->list = NULL;
 		inpt->strokeList = NULL;
 		inpt->usingStrokeList = 0;
 	}
-
 	return inpt;
 }
 
