@@ -26,7 +26,7 @@
 #define SAWRATE 18
 #define TRIANGLERATE 32
 #define SQUARERATE 48
-#define SINERATE 2
+#define SINERATE 3
 
 //List of macroes, where we have the name of a tone, which will be replaced with the frequency of said tone divided by 2. This is because we're presupposing we will use a square waveform to play the listts using these tones.
 #define G_3 104
