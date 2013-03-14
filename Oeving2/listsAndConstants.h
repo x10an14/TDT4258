@@ -24,9 +24,9 @@
 
 /*Rates of which we will play each single element before moving on to next element (manipulating pitch and time each element will be played simultaneously)*/
 #define SAWRATE 48
-#define TRIANGLERATE 24
-#define SQUARERATE 12
-#define SINERATE 64
+#define TRIANGLERATE 32
+#define SQUARERATE 18
+#define SINERATE 18
 
 //List of macroes, where we have the name of a tone, which will be replaced with the frequency of said tone divided by 2. This is because we're presupposing we will use a square waveform to play the listts using these tones.
 #define G_3 104
