@@ -61,13 +61,7 @@ sample* addFrequency(sample *inpt, short stroke, short tone, int start){
 
 	int amountOfPeriods = (int) (tone/stroke);
 	int periodSize = (int) ABDAC_SAMPLERATE/tone;
-	int halfPeriod;
-	//The following check to see whether halfPeriod should be periodSize/2 or periodSize/2 + 1 should be safe due to the above comments mention of the math simplification when calculating the "distance" modified from start in the given inpt->list
-	if(periodSize%2 == 0){
-		halfPeriod = periodSize/2;
-	} else{
-		halfPeriod = (periodSize/2)+1;
-	}
+	int halfPeriod = periodSize/2;
 
 	//Counter for the first for-loop
 	int i;
