@@ -124,7 +124,7 @@ int main (int argc, char *argv[]){
 	/*memCntr = 0; i = 0;
 	for(i = 0; i < 8; i++){
 		//memCntr is a counter variable with the same function as it had for the creation of flaaklypaSample's size
-		memCntr = (int) (ABDAC_SAMPLERATE/SCALESTROKE[i]);
+		memCntr += (int) (ABDAC_SAMPLERATE/SCALESTROKE[i]);
 	}
 
 	scaleSample = sampleConstructor(scaleSample, memCntr, 0, SCALE, SCALESTROKE);

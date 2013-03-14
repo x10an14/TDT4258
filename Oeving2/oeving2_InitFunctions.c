@@ -38,7 +38,7 @@ void initButtons(void){
 	piob->ier = active;
 
 	//Below we disable the rest of the switches by sending the inverted value of the 'active' variable to the buttons InterruptDisableRegister
-	piob->idr = ~active;
+	piob->idr = SW1;
 }
 
 //Function for initializing LEDs
