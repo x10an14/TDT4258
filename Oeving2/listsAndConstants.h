@@ -10,7 +10,7 @@
 
 /*Array sizes.*/
 #define ARRAYSIZE 16
-#define SINEARRAYSIZE 128
+#define SINEARRAYSIZE 64
 
 /*Button values in hex values*/
 #define SW7 0x80
