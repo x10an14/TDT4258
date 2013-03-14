@@ -23,10 +23,10 @@
 #define SW0 0x1
 
 /*Rates of which we will play each single element before moving on to next element (manipulating pitch and time each element will be played simultaneously)*/
-#define SINERATE 32
-#define SQUARERATE 12
-#define TRIANGLERATE 24
 #define SAWRATE 48
+#define TRIANGLERATE 24
+#define SQUARERATE 12
+#define SINERATE 64
 
 //List of macroes, where we have the name of a tone, which will be replaced with the frequency of said tone divided by 2. This is because we're presupposing we will use a square waveform to play the listts using these tones.
 #define G_3 104
