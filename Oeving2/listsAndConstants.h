@@ -42,7 +42,8 @@
 #define C5 262
 
 //The rate at which the ABDAC samples each output ((12*1000^2)/256)
-#define ABDAC_SAMPLERATE 46875
+//Testing OSC0 instead at 20Mhz
+#define ABDAC_SAMPLERATE 78125
 
 //Lists which in theory can be used in every single C-file, so therefore they are declared with type-modifier extern. Have not tested whether it is needed, because we only really use them in oeving2_main.c
 //Tone-lists which together in specific order compose the tune "Reodors Ballade" from the famous norwegian story "Flåklypa"

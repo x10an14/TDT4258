@@ -56,7 +56,7 @@ void initLeds(void){
 //Function for initializing ABDAC (Audio)
 void initAudio(void){
 	//Below we use the PowerManager first to choose which oscillator we want the ABDAC to utilize
-	pm->GCCTRL[6].oscsel = 1;
+	pm->GCCTRL[6].oscsel = 0;
 	//Then below we set the diven (Divide Enable) register to zero to turn it off.
 	pm->GCCTRL[6].diven = 0;
 	//Then below we choose which PLL we want to use
