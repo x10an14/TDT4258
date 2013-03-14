@@ -45,7 +45,7 @@ short SQUARE[]={SHRT_MAX, SHRT_MAX, SHRT_MAX, SHRT_MAX, SHRT_MAX, SHRT_MAX,
 
 
 int main (int argc, char *argv[]){
-	// Creation of sinus wave list 128 steps
+	// Creation of sinus wave list 64 steps
 	//First allocate sufficient space.
 	short *sineSampleList = (short*) malloc(SINEARRAYSIZE*sizeof(short));
 
@@ -117,16 +117,16 @@ int main (int argc, char *argv[]){
 			flaaklypaSample = addFrequency(flaaklypaSample, small->strokeList[j], small->list[j], cntr);
 			cntr += size;
 		}
-	}*/
+	}
 
 
-	/*Do the same for our scaleSample playlist*/
-	int memCntr = 0;
+	//Do the same for our scaleSample playlist
+	memCntr = 0; i = 0;
 	for(i = 0; i < 8; i++){
 		//memCntr is a counter variable with the same function as it had for the creation of flaaklypaSample's size
 		memCntr += (int) (ABDAC_SAMPLERATE/SCALESTROKE[i]);
 	}
-/*
+
 	scaleSample = sampleConstructor(scaleSample, memCntr, 0, SCALE, SCALESTROKE);
 
 	//Assigning(/Combining) values to final list (scaleSample->list)
