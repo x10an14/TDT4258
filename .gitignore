@@ -21,3 +21,6 @@
 
 # Zipped
 *.zip
+
+# Images
+*.img
