@@ -1,3 +1,6 @@
+Link guide: http://www.freesoftwaremagazine.com/articles/drivers_linux
+
+
 insmod <moduleName>.ko //To load module
 lsmod //Should then display major and minor number for driver
 (Example: driver 504 0 - Live 0xc0932000)

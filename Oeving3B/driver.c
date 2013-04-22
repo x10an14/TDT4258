@@ -41,7 +41,9 @@ static struct file_operations driver_fops = {
 /* init-funksjon (kalles når modul lastes) */
 
 static int __init driver_init (void) {
+  int result;
   /* allokere device-nummer */
+  //result = register_chrdev()
 
   /* be om tilgang til I/O-porter */
 
