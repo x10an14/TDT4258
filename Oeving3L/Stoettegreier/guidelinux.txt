@@ -1,0 +1,51 @@
+
+
+From another group, unchecked:
+
+ 
+
+Guide til linux på mikrocontrollere
+
+ 
+
+Oppsett av sd kort:
+
+ 
+
+Last ned image http://www.idi.ntnu.no/emner/tdt4258/_media/atstk1002_bsp_sd_image_3.0.0.tar.gz
+
+Flash dette til sd kort av 512mb
+
+Kjør "dd if=pathtoimage of=pathtosdcard"
+
+ 
+
+Flash microcontroller:
+
+avr32program program -vef0,8MB u-boot.bin
+
+(u-boot.bin finnes i samme arkiv som image av sdkortet)
+
+Start linux:
+
+ 
+
+1. start minicom med "minicom -D /dev/ttyS0"
+
+2. CTRL-A + Z, deretter O (configure minicom), Serial port setup, disable hardware flow control
+
+3. Restart microcontroller, husk å avbryte med space når den spør om det
+
+4. Skriv følgende i console "setenv bootargs console=ttyS0 root=/dev/mmcblk0p1 fbmem=600K rootwait"
+
+5. Skriv "saveenv" deretter "boot"
+
+6. Enjoy linux!
+
+ 
+
+Steg 2 trenger du ikke gjøre mer en en gang når du starter minicom
+
+ 
+
+Steg 3,4 og 5 trenger du kun å gjøre en gang per fysiske microcontroller kort

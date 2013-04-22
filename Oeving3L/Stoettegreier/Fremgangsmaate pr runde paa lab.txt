@@ -1,0 +1,25 @@
+Finn ett MicroSD kort 512MB eller større
+
+Dytt hardwareswitchen MOT SD kontaktene
+
+Koble minnekortet til en labpc/linux pc og kjør følgende kommando:
+dd if=<LinuxImaget som vi har fått fra nettsiden>.img of=/dev/sdb
+(Kan være at det blir noe annet en /dev/sdb, men skal være sdb om kun ett usb minnepinne/kort koblet til)
+
+Open minicom with:
+minicom -D /dev/ttyS0
+
+Then, inside minicom, go to the CTRL+A Z menu:
+<CTRL+a>, <z>
+
+Then go to cOnfigure Minicom:
+<o>
+
+Then choose Serial Port Setup and press enter.
+
+Then hit <F> on the keyboard to turn Hardware Flow Control off (no)
+
+Then <enter> your way out again to the cmdline for Minicom
+
+Then hit the reset switch on the STK1000.
+
