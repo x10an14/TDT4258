@@ -1,0 +1,5 @@
+insmod <moduleName>.ko //To load module
+lsmod //Should then display major and minor number for driver
+(Example: driver 504 0 - Live 0xc0932000)
+rmmod driver //Should remove driver
+mknod /dev/driver c 504 0 //Makes an i-node in /dev/ called driver which corresponds to the device driver with major 504 and minor 0
