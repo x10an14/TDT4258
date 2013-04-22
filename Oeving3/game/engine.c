@@ -1,3 +1,4 @@
+##include "include/sampleStructs.h"
 
 /* Prototypes */
 void movePlayer(/*Modifiable object for directions? or simply an int/char*/);
