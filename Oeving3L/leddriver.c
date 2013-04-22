@@ -74,6 +74,7 @@ int light_LEDs(int newState){ //outside this function LED state vars always appe
 }
 
 static int __init driver_init (void) {
+  int reg_succeded;
   /* allokere device-nummer */
 
   /* be om tilgang til I/O-porter */
@@ -86,7 +87,7 @@ static int __init driver_init (void) {
   
 
   say_hello();
-  int reg_succeded = register_chrdev(0, "ledDriver", &driver_fops);
+  reg_succeded = register_chrdev(0, "ledDriver", &driver_fops);
   //int reg_region_succeded = register_chrdev(65, "driver", &driver_fops);
   //printk(KERN_ALERT "reg success: %d\n", reg_succeded);
   //printk(KERN_ALERT "regregion: %d\n", reg_region_succeded);
@@ -117,8 +118,12 @@ static int driver_release (struct inode *inode, struct file *filp) {
 
 static ssize_t driver_read (struct file *filp, char __user *buff,
               size_t count, loff_t *offp) {
+  //printk(KERN_ALERT "no way it segs");
+  //printk(KERN_ALERT "no way it segs %x\n", currentLedStatus);
+
+  size_t out;
   sprintf(buff, "%x", currentLedStatus);
-  size_t out = count;
+  out = count;
 
   //printk(KERN_ALERT "read called, ouputting %x, out = %d\n", currentLedStatus, out);
   return out;
@@ -128,10 +133,8 @@ static ssize_t driver_read (struct file *filp, char __user *buff,
 
 static ssize_t driver_write (struct file *filp, const char __user *buff,
                size_t count, loff_t *offp) {
-  printk(KERN_ALERT "write called with param = %s ,", buff);
-  
-
   int newLedStatus;
+  printk(KERN_ALERT "write called with param = %s ,", buff);
   sscanf(buff, "%X", &newLedStatus);
   //printk(KERN_ALERT "parsed ledStatus is %x +10 = %x\n", newLedStatus, newLedStatus+10);
   light_LEDs(newLedStatus);
