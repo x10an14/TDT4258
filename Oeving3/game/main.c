@@ -1,4 +1,6 @@
 #include "stdio.h"
+#include "linux/soundcard.h" //For sound
+// #include ""
 
 
 /* Project include files */
@@ -11,7 +13,8 @@ There will hopefully (if there's time) be animals which you should avoid to surv
 The map will (again, hopefully if we finish on time), consist of rivers, bushes, trees and rocks.
 The goal of the game is to move as far as possible (distance, not amount of steps) away from the starting point.
 Ideally, the map should automagically generate "new" areas as you move around, but let's see how far we get with that.
-The LEDs on the board will be indicators of your current health/hunger.*/
+The LEDs on the board will be indicators of your current health/hunger.
+*/
 
 
 
