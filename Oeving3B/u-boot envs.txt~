@@ -1,0 +1,9 @@
+U-Boot> printenv                                                                     
+bootdelay=1                                                                          
+baudrate=115200                                                                      
+ethact=macb0                                                                         
+bootargs=console=ttyS0 root=/dev/mmcblk0p1 fbmem=600k rootwait                       
+bootcmd=mmc init; ext2load mmc 0:1 0x90400000 /boot/uImage; bootm 0x90400000         
+stdin=serial                                                                         
+stdout=serial                                                                        
+stderr=serial  
