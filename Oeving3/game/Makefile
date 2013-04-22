@@ -1,17 +1,21 @@
 #Empty..
 #For now...
-CC=avr32-linux-gcc
-CFLAGS=-g -Wall -Iinclude
-LDFLAGS=-g -Wall -pedantic -Llib -lm
-TARGET=game.out
+CC := avr32-linux-gcc
+TARGET := SurvivalGame.out
+PROGRAM_C_FILES := $(wildcard *.c)
+program_C_OBJS  := ${program_C_SRCS:.c=.o}
+INCLUDE_DIRS :=
+
+#LDFLAGS=-g -Wall -pedantic -Llib -lm
+CFLAGS +=$(foreach includedir,$(INCLUDE_DIRS), -I$s(includedir) -g -Wall)
 
 ##################### RULES ###########################
 .PHONY : all
 all: $(TARGET)
 
 #Game C-files
-game.out: main.c io.c graphics.c engine.c
-	$(CC) $^ -o $@(LDFLAGS)
+$(TARGET): $(program_C_OBJS)
+	$(CC) $(program_C_OBJS) -o $(TARGET)
 
 .PHONY : clean
 clean:
