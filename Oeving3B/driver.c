@@ -65,9 +65,9 @@ static int __init driver_init (void) {
   int result = 0;
   int driverMajor = 474;
   /* allokere device-nummer */ //WTF?
-  result = register_chrdev(driverMajor,"STK1000_SwitchDriver",&driver_fops);
+  result = register_chrdev(driverMajor,"driver",&driver_fops);
   if(result < 0){
-    printk("<1> STK1000_SwitchDriver: cannot obtain driverMajor number %d\n",driverMajor);
+    printk("<1> driver: cannot obtain driverMajor number %d\n",driverMajor);
     return result;
   }
 
@@ -79,14 +79,14 @@ static int __init driver_init (void) {
 
   memset(memory_buffer,0,1);
   printk("<1> Hello world!");
-  printk("<1> Inserting STK1000_SwitchDriver module\n", );
+  printk("<1> Inserting driver: driver module\n");
   /* be om tilgang til I/O-porter */ //WTF?
 
   /* initialisere PIO-maskinvaren (som i øving 2) */ //Ehm... øving 2 initialiserte omtrent alt via interrupt_controller, så hvordan?
   short active = SW0+SW1+SW2+SW3+SW4+SW5+SW6+SW7;
   piob->per = active; //Enable Register
   piob->puer= active; //Pull-Up Enable Register
-  pioB->ier = active; //Interrupt Enable register
+  piob->ier = active; //Interrupt Enable register
   piob->idr = ~active; //Disable the rest
 
   /* registrere device i systemet (må gjøres når alt annet er initialisert) */
