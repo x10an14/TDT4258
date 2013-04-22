@@ -37,8 +37,43 @@ static struct file_operations driver_fops = {
   .release = driver_release
 };
 
+/* major & minor numre */
+
+
+/*golbale variabler : */
+
+volatile avr32_pio_t *piob = &AVR32_PIOB;  // LED
+static int ledBitmask = 0x4001e700;
+static int currentLedStatus = 0x00;
+
 /*****************************************************************************/
 /* init-funksjon (kalles når modul lastes) */
+
+int say_hello(int error){
+  if (error == 0)
+    printk(KERN_ALERT "LED driver initiated!nn\n");
+  else 
+    printk(KERN_ALERT "error occured while initializing!\n");
+  return 0;
+}
+
+int setup_LEDs(void){
+  piob->per |= 0xfffffff & ledBitmask;
+  piob->oer = 0xffffffff & ledBitmask;
+  piob->codr = 0xffffffff & ledBitmask;
+  piob->sodr = 0x00000000 & ledBitmask;
+  return 0;
+}
+
+int light_LEDs(int newState){ //outside this function LED state vars always appear in "normal" 0xXX format
+  currentLedStatus = newState;
+  int encodedState = 0x0000 | (0x03 & newState) | (0x1e0 & (newState << 2)) | (0x400000 & (newState << 15));
+  printk(KERN_ALERT "encodedState is %x", encodedState);
+  piob->codr = (0xffff << 8) & ledBitmask;
+  piob->sodr = (encodedState << 8) & ledBitmask; 
+  printk(KERN_ALERT "written to sodr: %x", (encodedState << 8) & ledBitmask);
+  return 0; 
+}
 
 static int __init driver_init (void) {
   /* allokere device-nummer */
@@ -48,7 +83,12 @@ static int __init driver_init (void) {
   /* initialisere PIO-maskinvaren (som i øving 2) */
  
   /* registrere device i systemet (må gjøres når alt annet er initialisert) */
-  printk(KERN_ALERT, "hellow world");
+  setup_LEDs();
+  light_LEDs(0xaa);
+  
+
+  say_hello(register_chrdev_region(65, 1, "driver"));
+  printk(KERN_ALERT, "%d\n", register_chrdev(65, "driver", &driver_fops));
   return 0;
 }
 
@@ -56,8 +96,7 @@ static int __init driver_init (void) {
 /* exit-funksjon (kalles når modul fjernes fra systemet) */
 
 static void __exit driver_exit (void) {
-  printk(KERN_ALERT, "goodbye world");
-  return 0;
+  printk(KERN_ALERT "goodbye world\n");
 }
 
 /*****************************************************************************/
@@ -84,6 +123,10 @@ static ssize_t driver_read (struct file *filp, char __user *buff,
 
 static ssize_t driver_write (struct file *filp, const char __user *buff,
                size_t count, loff_t *offp) {
+  printk(KERN_ALERT "write called \n");
+
+  light_LEDs(0x66);
+  //light_LEDs(ledsToLight);
   return 0;
 }
 
