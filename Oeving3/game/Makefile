@@ -3,7 +3,7 @@
 CC := avr32-linux-gcc
 TARGET := SurvivalGame.out
 PROGRAM_C_FILES := $(wildcard *.c)
-program_C_OBJS  := ${program_C_SRCS:.c=.o}
+program_C_OBJS  := ${PROGRAM_C_FILES:.c=.o}
 INCLUDE_DIRS :=
 
 #LDFLAGS=-g -Wall -pedantic -Llib -lm
