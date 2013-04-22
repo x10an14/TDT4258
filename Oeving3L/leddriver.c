@@ -87,7 +87,7 @@ static int __init driver_init (void) {
   
 
   say_hello();
-  reg_succeded = register_chrdev(0, "ledDriver", &driver_fops);
+  reg_succeded = register_chrdev(0, "leddriver", &driver_fops);
   //int reg_region_succeded = register_chrdev(65, "driver", &driver_fops);
   //printk(KERN_ALERT "reg success: %d\n", reg_succeded);
   //printk(KERN_ALERT "regregion: %d\n", reg_region_succeded);

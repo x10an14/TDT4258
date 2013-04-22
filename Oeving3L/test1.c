@@ -3,7 +3,7 @@
 int main (void) {
 	printf(":::: test initiated: \n");
 	FILE* led_driver;
-	led_driver = fopen("/dev/leddriver", "r");
+	led_driver = fopen("/dev/swdriver", "r");
 	int intToOutput;
 	fscanf(led_driver, "%x", &intToOutput);
 	printf(":::: test closed, read %x\n", intToOutput);

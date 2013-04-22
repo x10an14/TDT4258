@@ -58,14 +58,14 @@ int setup_SW(void){
   return 0;
 }
 int read_SW(void){
-  return piob->pdsr;
+  return piob->pdsr % 0x100;
 }
 
 static int __init driver_init (void) {
   int reg_succeded;
   setup_SW();
   say_hello();
-  reg_succeded = register_chrdev(0, "ledDriver", &driver_fops);
+  reg_succeded = register_chrdev(0, "swdriver", &driver_fops);
   printk(KERN_ALERT "reg success: %d\n", reg_succeded);
 
   int readSW = read_SW();
@@ -97,12 +97,9 @@ static int driver_release (struct inode *inode, struct file *filp) {
 
 static ssize_t driver_read (struct file *filp, char __user *buff,
               size_t count, loff_t *offp) {
-  //printk(KERN_ALERT "no way it segs");
-  //printk(KERN_ALERT "no way it segs %x\n", currentLedStatus);
-
-  //size_t out;
-  //sprintf(buff, "%x", rea);
-  //out = count;
+  size_t out;
+  sprintf(buff, "%x", read_SW());
+  out = count;
 
   //printk(KERN_ALERT "read called, ouputting %x, out = %d\n", currentLedStatus, out);
   return out;
@@ -112,13 +109,8 @@ static ssize_t driver_read (struct file *filp, char __user *buff,
 
 static ssize_t driver_write (struct file *filp, const char __user *buff,
                size_t count, loff_t *offp) {
-  //int newLedStatus;
-  printk(KERN_ALERT "write called with param = %s ,", buff);
-  //sscanf(buff, "%X", &newLedStatus);
-  //printk(KERN_ALERT "parsed ledStatus is %x +10 = %x\n", newLedStatus, newLedStatus+10);
-  //light_LEDs(newLedStatus);
-  //light_LEDs(ledsToLight);
-  return count;
+  printk(KERN_ALERT "NO WRITE ALLOWED\n");
+  return -1;
 }
 
 /*****************************************************************************/
