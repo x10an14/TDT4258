@@ -11,3 +11,5 @@ typedef struct screen{
 	//Set of pointers to mapBloc-pointers so that we can "dynamically" replace the borders of the map until we have replaced the whole map?
 	//(The whole set of mapBlocks creating the entire map)
 }screen;
+
+#endif
