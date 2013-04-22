@@ -48,7 +48,7 @@ static int __init driver_init (void) {
   /* initialisere PIO-maskinvaren (som i øving 2) */
 
   /* registrere device i systemet (må gjøres når alt annet er initialisert) */
-  printk("<X> Hello world!");
+  printk("<1> Hello world!");
 
   return 0;
 }
@@ -57,7 +57,7 @@ static int __init driver_init (void) {
 /* exit-funksjon (kalles når modul fjernes fra systemet) */
 
 static void __exit driver_exit (void) {
-  printk("<X> Goodbye cruel world!");
+  printk("<1> Goodbye cruel world!");
 }
 
 /*****************************************************************************/
