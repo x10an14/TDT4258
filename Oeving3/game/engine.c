@@ -1,4 +1,4 @@
-##include "include/sampleStructs.h"
+#include "include/sampleStructs.h"
 
 /* Prototypes */
 void generateMap(void); //Generate map and put player in the centre.
