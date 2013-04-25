@@ -17,7 +17,7 @@ void insertPlayers(Objects *container, int amountOfPlayers){
 		List[i]->form = (Form*) malloc(sizeof(Form));
 		int radius = 15;
 		List[i]->form->radius = radius;
-		List[i]->form->x = 150; List[i]->form->y = SCREEN_HEIGHT-(radius/2);
+		List[i]->form->x = 150; List[i]->form->y = SCREEN_HEIGHT-(radius/2)-4;
 		List[i]->form->dx = 0; List[i]->form->dy = -5;
 		List[i]->form->formType = SQUARE;
 		List[i]->form->red = 0; List[i]->form->blue = 255;
