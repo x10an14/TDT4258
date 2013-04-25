@@ -13,7 +13,6 @@ char background_blue = 15;
 FILE *screen;
 
 void setUpLCDDriver(){
-	printf("asdaw\n");
 	screen = (FILE*) fopen("/dev/fb0","r+");
 	printf("Opened screen file: %d errno %s?22\n", screen, strerror(errno));
 	draw_background();
@@ -42,12 +41,7 @@ int draw_square(int x, int y, int radius, char red, char green, char blue){
 	int file_Y, file_X;
 	for (file_Y = (y-radius)*SCREEN_WIDTH*3 ; file_Y < (y+radius)*SCREEN_WIDTH*3 ; file_Y+=SCREEN_WIDTH*3){
 		file_X = (x-radius)*3;
-		printf("filex %d filey %d \n", file_X, file_Y);
-		if(screen == NULL){
-			printf("Screen was NULL\n");
-		}
 		fseek(screen, file_Y+file_X, 0);
-		printf("check\n");
 
 		while (file_X < (x+radius)*3){
 			putPixel(screen, red, green, blue);
