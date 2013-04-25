@@ -105,6 +105,8 @@ static void __exit driver_exit (void) {
 /* fops-funksjoner */
 
 static int driver_open (struct inode *inode, struct file *filp) {
+  printk(KERN_ALERT "LEDdriver loaded successfully \n", buff);
+
   return 0;
 }
 

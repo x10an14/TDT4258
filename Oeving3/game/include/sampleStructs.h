@@ -2,44 +2,43 @@
 #define OEVING_3_H_SAMPLE_STRUCTS
 
 /* Sample structs */
+
+typedef enum {
+	SQUARE, TRIANGLE, CIRCLE
+} FormType;
+
+typedef struct Form{
+	short x;
+	short y;
+	short dx;
+	short dy;
+	int radius;
+	int red;
+	int green;
+	int blue;
+	FormType formType;
+} Form;
+
 typedef struct Player{
-	short playerX, playerY; //Current coordinates of player
 	short health, healthMax; //Current amount of Health for player and maximum amount
 	//void *graphics; //Pointer to graphics image that represent player on screen.
-	int dx;
-	int dy;
-	int radius;
-	int col_red;
-	int col_green;
-	int col_blue;
-//	enum Form form;
+	Form* form;
 }Player;
 
 typedef struct Enemy{
-	short x, y; //Current coordinates of enemy
 	short health, healthMax; //Current amount of Health for enemy and maximum amount
 	//void *graphics; //Pointer to graphics image that represent enemy on screen.
-	int dx;
-	int dy;
-	int radius;
-	int col_red;
-	int col_green;
-	int col_blue;
-//	enum Form form;
+	Form* form;
 }Enemy;
 
 typedef struct Shot{
-	short x,y;		//Current coordinates of shot
 	short damage;	//Damage current shot does
 	//void *graphics;	//Pointer to graphics image that represents the shot on the screen
-	int dx;
-	int dy;
-	int radius;
-	int col_red;
-	int col_green;
-	int col_blue;
-	//enum Form form;
+	Form* form;
 }Shot;
+
+
+
 
 typedef struct Objects{
 	Player **playerList;

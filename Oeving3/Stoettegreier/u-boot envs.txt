@@ -9,3 +9,5 @@ stdout=serial
 stderr=serial  
 
 Commands: printenv, setenv, saveenv
+
+setenv bootcmd mmc init; ext2load mmc 0:1 0x90400000 /boot/uImage; bootm 0x90400000

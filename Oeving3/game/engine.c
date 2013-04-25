@@ -14,20 +14,22 @@ void playSound(/*Pointer to sound to play (we were told that we were given some 
 
 void loseHealth(Objects *object, Type type, int listIndex, int amount);//Lose health, maybe flash each time? Continously flash when health is <= 3? Called by shotHit, when true. If 0, kill player/enemy.
 
-void move(Objects *object, Type type, int listIndex); //Moves parameter object according to its role, if player, then like so, if enemy, then like so, and if shot, then like so.
+void computeMove(Objects *object, Type type, int listIndex); //Moves parameter object according to its role, if player, then like so, if enemy, then like so, and if shot, then like so.
 
 void refreshTick();/* Function which should be called at each "tick", and refresh all sprites on screen after having called move, by first calling move() and then calling function(s) in graphics. */
 
 
 Player* generatePlayer(Player *player){
-	player->playerX = 150;
-	player->playerY = 220;
-	player->dx = 6;
-	player->dy = 0;
-	player->radius = 15;
-	player->col_red = 0;
-	player->col_blue = 0;
-	player->col_green = 0;
+	player->form = malloc(sizeof(Form));
+	player->form->x = 150;
+	player->form->y = 150;
+	player->form->dx = 0;
+	player->form->dy = -3;
+	player->form->radius = 15;
+	player->form->red = 0;
+	player->form->blue = 0;
+	player->form->green = 0;
+	player->form->formType = SQUARE;
 	return player;
 }
 
@@ -45,7 +47,7 @@ void loseHealth(Objects *object, Type type, int listIndex, int amount){
 	}
 }
 
-void move(Objects *object, Type type, int listIndex){
+void computeMove(Objects *object, Type type, int listIndex){
 	switch(type){
 		case PLAYER:
 		break;
@@ -61,7 +63,7 @@ void move(Objects *object, Type type, int listIndex){
 void startGame(Player *player){
 	/* Infinite loop for now */
 	while(1){
-		usleep(100000);
+		usleep(30000);
 		make_new_frame(player);
 	}
 }
