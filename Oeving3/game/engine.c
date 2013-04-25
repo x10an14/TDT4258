@@ -39,8 +39,9 @@ void loseHealth(Type type, int listIndex, int amount){
 	}
 }
 
-int isPlayerInsideScreen(int listIndex, int nextX){
+int isPlayerInsideScreen(int listIndex){
 	Form *player = container->playerList[listIndex]->form;
+	int nextX = player->x + player->dx + player->radius;
 	if(nextX >= 0 && nextX < SCREEN_WIDTH){
 		return 1;
 	}
@@ -64,22 +65,11 @@ void computeMove(Type type, int listIndex){
 	switch(type){
 		case PLAYER:
 		{Form *playForm = container->playerList[listIndex]->form;
-		int nextX = playForm->x;
-		if(isButtonDown(7) && !isButtonDown(6)){
-			/* Then move left */
-			nextX -= playForm->dx - playForm->radius;
-		} else if(isButtonDown(6) && isButtonDown(7)){
-			nextX += playForm->dx + playForm->radius;
-		}
-		if(isPlayerInsideScreen(listIndex, nextX)){
-			playForm->x = nextX - playForm->radius;
-		}
 
 		if(isButtonDown(5)){
 			// FIRE!
-
 		}
-		redraw_square(playForm);}
+		movePlayer(playForm);}
 		break;
 
 		case ENEMY:
@@ -97,6 +87,29 @@ void computeMove(Type type, int listIndex){
 		break;
 	}
 }
+
+void incrementCoordinates(Type type, int listIndex){
+	switch(type){
+		case PLAYER:
+		{container->playerList[listIndex]->form->x += container->playerList[listIndex]->form->dx;
+		}
+		break;
+
+		case ENEMY:
+		{container->enemyList[listIndex]->form->x += container->enemyList[listIndex]->form->dx;
+		}
+		break;
+
+		case SHOT:
+		{container->shotList[listIndex]->form->x += container->shotList[listIndex]->form->dx;
+		}
+		break;
+	}
+}
+
+// Objects *getContainer(){
+// 	return container;
+// }
 
 void startGame(){
 	/* Infinite loop for now */
