@@ -96,6 +96,11 @@ void computeMove(Type type, int listIndex){
 
 void startGame(){
 	/* Infinite loop for now */
+	initiateIO();
+	printf("lightingleds\n");
+	lightLeds(0x5f);
+
+	printf("leds lighta\n");
 	int i;
 	while(1){
 		usleep(30000);

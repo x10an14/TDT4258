@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <errno.h>
 FILE* buttonsDriver;
-
+FILE* ledDriver;
 int A(void){
 	return 0;
 }
@@ -15,9 +15,12 @@ int C(void){
 	return 0;
 }
 
-int initiateButtons(){
+int initiateIO(){
 	buttonsDriver = (FILE*) fopen("/dev/swdriver","r+");
-	printf("Opened buttons-driver file: %d errno %s?22\n", buttonsDriver, strerror(errno));
+	
+	printf("Opened buttons-driver  file: %d errno %s?22\n", buttonsDriver, strerror(errno));
+
+
 }
 
 
@@ -38,4 +41,15 @@ int isButtonDown(int buttonNumber){
 		return 0;
 	else
 		return 1;
+}
+int lightLeds(int leds){
+	ledDriver = (FILE*) fopen("/dev/leddriver","w");
+	char buff[3];
+	sprintf(buff, "%x\0", leds);
+	fprintf(ledDriver, "%x", leds);
+	printf("%s", buff);
+	fclose(ledDriver);
+	//printf("print to leddriver returns %d\n", fputs(buff, ledDriver));
+	//fputc(leds, ledDriver);
+	return 1;
 }
