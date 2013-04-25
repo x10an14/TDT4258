@@ -147,10 +147,9 @@ int movePlayer(Player* thePlayer){
 
 int make_new_frame(Objects* container){
 	
-	draw(container->playerList[0]->form);
 
 
-	move(container->playerList[0]);
+	movePlayer(container->playerList[0]);
 	return 0;
 }
 

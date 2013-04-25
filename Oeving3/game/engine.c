@@ -42,6 +42,7 @@ void computeMove(Type type, int listIndex){
 void startGame(){
 	/* Infinite loop for now */
 	int i;
+	draw(container->playerList[0]->form);
 	while(1){
 		usleep(30000);
 		make_new_frame(container);
