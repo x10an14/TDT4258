@@ -41,9 +41,8 @@ void loseHealth(Type type, int listIndex, int amount){
 
 int isPlayerInsideScreen(int listIndex){
 	Form *player = container->playerList[listIndex]->form;
-	int rightX = player->x + player->dx + player->radius;
-	int leftX = player->x - player->dx - player->radius;
-	if(leftX >= 0 && rightX < SCREEN_WIDTH){
+	int nextX = player->x + player->dx + player->radius;
+	if(nextX >= 0 && nextX < SCREEN_WIDTH){
 		return 1;
 	}
 	return 0;
@@ -90,7 +89,12 @@ void computeMove(Type type, int listIndex){
 }
 
 void incrementCoordinates(Type type, int listIndex){
-
+	switch(type){
+		case PLAYER:
+		{container->playerList[listIndex]->form->x += container->playerList[listIndex]->form->dx;
+		}
+		break;
+	}
 }
 
 // Objects *getContainer(){
