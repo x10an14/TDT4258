@@ -48,6 +48,11 @@ typedef struct Objects{
 	int playerSize, enemySize, shotSize;
 } Objects;
 
+
+typedef enum {
+	PLAYER, SHOT, ENEMY
+} type;
+
 //enum Form{
 //	Circle,
 //	Square
