@@ -190,8 +190,8 @@ void make_new_frame(){ //Supposed to move all objects
 		form = container->playerList[i]->form;
 		// printf("Calling computeMove...\n");
 		computeMove(PLAYER, i);
-		
-		if(isPlayerInsideScreen(listIndex)){
+
+		if(isPlayerInsideScreen(i)){
 			redraw_square(form);
 			incrementCoordinates(PLAYER, listIndex);
 		} else{
