@@ -10,10 +10,10 @@ Objects* insertShot(Objects *container, int x, int y, int damage, int radius);
 
 
 Objects* insertPlayers(Objects *container, int amountOfPlayers){
-	Player **List[amountOfPlayers] = malloc(sizeof(Player*));
+	Player **List = malloc(sizeof(Player*) * amountOfPlayers);
 	int i;
 	for(i = 0; i < amountOfPlayers; i++){
-		List[i] =  malloc(sizeof(Player));
+		List[i] = malloc(sizeof(Player));
 		List[i]->playerX = 150; List[i]->playerY = 220;
 		List[i]->dx = 6; List[i]->dy = 0;
 		List[i]->radius = 15;
