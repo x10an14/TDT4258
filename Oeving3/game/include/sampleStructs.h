@@ -45,14 +45,11 @@ typedef struct Objects{
 	Shot **shotList;
 	Enemy **enemyList;
 	int playerSize, enemySize, shotSize;
+	int playerMax, enemyMax, shotMax;
 } Objects;
 
 typedef enum {
 	PLAYER, SHOT, ENEMY
 }Type;
 
-//enum Form{
-//	Circle,
-//	Square
-//}
 #endif
