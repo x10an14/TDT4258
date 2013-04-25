@@ -26,7 +26,7 @@ void loseHealth(Type type, int listIndex, int amount){
 	}
 }
 
-void computeMoves(Type type, int listIndex){
+void computeMove(Type type, int listIndex){
 	switch(type){
 		case PLAYER:
 		break;
