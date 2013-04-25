@@ -4,6 +4,7 @@
 // #include <sys/types.h>
 
 /* Project include files */
+#include "include/prototypes.h"
 #include "include/listsAndConstants.h"
 #include "include/sampleStructs.h"
 
@@ -13,10 +14,10 @@ int main(){
 	printf("Initializing game...\n");
 
 	/* Initialize structs */
-	Player* playerOne = malloc(sizeof(Player));
-	playerOne = generatePlayer(playerOne);
+	Objects *container = generateObjects(1);
 	setUpLCDDriver();
-	startGame(playerOne);
 
+	startGame();
+	
 	return 0;
 }

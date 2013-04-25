@@ -12,13 +12,6 @@ char background_green = 225;
 char background_blue = 15;
 FILE *screen;
 
-/* Prototypes */
-void setUpLCDDriver(void);
-int draw_background(void);
-int draw_square(int x, int y, int radius, char red, char green, char blue);
-int redraw_player(Player *thePlayer);
-int make_new_frame(Player *thePlayer);
-
 void setUpLCDDriver(){
 	screen = (FILE*) fopen("/dev/fb0","r+");
 	printf("Opened screen file: %d errno %s?22\n", screen, strerror(errno));

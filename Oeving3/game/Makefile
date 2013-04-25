@@ -7,7 +7,7 @@ program_C_OBJS  := ${PROGRAM_C_FILES:.c=.o}
 INCLUDE_DIRS :=
 
 #LDFLAGS=-g -Wall -pedantic -Llib -lm
-CFLAGS +=$(foreach includedir,$(INCLUDE_DIRS), -I$s(includedir) -g -Wall)
+CFLAGS +=$(foreach includedir,$(INCLUDE_DIRS), -I$s(includedir) -g -Wall --std=c99)
 
 ##################### RULES ###########################
 .PHONY : all
