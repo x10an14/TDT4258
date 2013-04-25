@@ -8,7 +8,10 @@ Objects *container;
 
 Objects* generateObjects(int amountOfPlayers){
 	container = (Objects*) malloc(sizeof(Objects));
+
 	insertPlayers(container, amountOfPlayers);
+	insertFirstEnemy(container);
+
 	return container;
 }
 
