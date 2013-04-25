@@ -42,14 +42,15 @@ void insertFirstEnemy(Objects *container){
 	Form *form = malloc(sizeof(Form));
 	int radius = 10;
 	form->radius = radius;
-	form->x = radius + 10;
-	form->y = radius + 10;
+	form->x = radius + 10+5;
+	form->y = radius + 10+5;
 	form->dx = 0;
 	form->dy = 0;
 	form->formType = SQUARE;
-	form->red = 255; form->blue = 0;
+	form->red = 253; form->blue = 0;
 	form->green = 0;
 	List[0]->form = form;
+	printf("DrawCheck for enemy\n");
 	draw(List[0]->form);
 
 	container->enemyList = List;
