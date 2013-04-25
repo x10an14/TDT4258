@@ -33,9 +33,9 @@ void insertShot(Objects *container, int startX, int startY, int damage){
 
 void insertFirstEnemy(Objects *container){
 	Enemy **List = malloc(sizeof(Enemy*));
-	List[i] = malloc(sizeof(Enemy));
+	List[1] = malloc(sizeof(Enemy));
 
-	List[i]->health = 75; List[i]->healthMax = 75;
+	List[0]->health = 75; List[i]->healthMax = 75;
 	Form *form = malloc(sizeof(Form));
 	int radius = 10;
 	form->radius = radius;
@@ -44,8 +44,8 @@ void insertFirstEnemy(Objects *container){
 	form->formType = SQUARE;
 	form->red = 255; form->blue = 0;
 	form->green = 0;
-	List[i]->form = form;
-	draw(List[i]->form);
+	List[0]->form = form;
+	draw(List[0]->form);
 
 	container->enemyList = List;
 	container->enemyMax = 1;
