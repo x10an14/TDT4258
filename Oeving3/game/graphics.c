@@ -133,7 +133,9 @@ int draw(Form* form){
 
 int movePlayer(Form *form, int listIndex){
 	if (form->formType == SQUARE){
+		printf("movePlayer segfault check 1\n");
 		if(isPlayerInsideScreen(listIndex)){
+			printf("movePlayer segfault check 2\n");
 			redraw_square(form);
 			incrementCoordinates(PLAYER, listIndex);
 		}
@@ -154,8 +156,10 @@ int movePlayer(Form *form, int listIndex){
 void make_new_frame(Objects* container){ //Supposed to move all objects
 	int i = 0;
 	Form *form;
+	printf("make new frame segfault check 1\n");
 	for(i = 0; i < container->playerMax; i++){
 		form = container->playerList[i]->form;
+		printf("make new frame segfault check 2\n");
 		movePlayer(form, i);
 	}
 }
