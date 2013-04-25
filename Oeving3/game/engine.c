@@ -125,7 +125,7 @@ int checkCollision(Form *form1, Form *form2){
 
 	if(topFormYbot <= botFormYtop &&
 		(topFormXright >= botFormXleft ||
-		topFormXleft <= botFormXright){
+		topFormXleft <= botFormXright)){
 		return 1;
 	} else{
 		return 0;
