@@ -15,7 +15,7 @@ CFLAGS +=$(foreach includedir,$(INCLUDE_DIRS), -I$s(includedir) -g -Wall --std=c
 make: $(gitCmd) $(TARGET)
 
 test: $(compile)
-	scp ./SurvivalGame.out root@129.241.103.186:
+	scp ./SurvivalGame.out root@129.241.103.186:/usr/
 
 #Game C-files
 $(TARGET): $(program_C_OBJS)

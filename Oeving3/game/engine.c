@@ -69,6 +69,12 @@ void computeMove(Type type, int listIndex){
 		if(isButtonDown(5)){
 			// FIRE!
 		}
+		printf("check\n");
+		if (isButtonDown(7) && !isButtonDown(6)){
+			container->playerList[listIndex]->form->dx = -PLAYERSPEED;
+		} else if (isButtonDown(6) && !isButtonDown(7)){
+			container->playerList[listIndex]->form->dx = PLAYERSPEED;
+		}
 		movePlayer(playForm);}
 		break;
 
