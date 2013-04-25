@@ -41,8 +41,8 @@ void loseHealth(Type type, int listIndex, int amount){
 
 int isPlayerInsideScreen(int listIndex){
 	Form *player = container->playerList[listIndex]->form;
-	int rightX = playForm->x + playForm->dx + playForm->radius;
-	int leftX = playForm->x - playForm->dx - playForm->radius;
+	int rightX = player->x + player->dx + player->radius;
+	int leftX = player->x - player->dx - player->radius;
 	if(leftX >= 0 && rightX < SCREEN_WIDTH){
 		return 1;
 	}
