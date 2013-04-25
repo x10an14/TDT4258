@@ -102,29 +102,6 @@ int redraw_square(Form *form){
 	return 1;
 }
 
-// int increment_coordinates(Form* form, int check){
-// 	short successX, successY;
-// 	if (form->x + form->dx + form->radius < SCREEN_WIDTH && form->x + form->dx - form->radius > 0){
-// 		if (!check)
-// 			form->x += form->dx;
-// 		successX = 1;
-// 	} else {
-// 		//form->x += form->dx;
-// 		successX = 0;
-// 	}
-
-// 	if (form->y + form->dy + form->radius < SCREEN_HEIGHT && form->y + form->dy - form->radius > 0){
-// 		if (!check)
-// 			form->y += form->dy;
-// 		successY = 1;
-// 	} else {
-// 		successY = 0;
-// 		//form->y += form->dy;
-// 	}
-// 	return successY && successX;
-// }
-
-
 int draw(Form* form){
 	if (form->formType == SQUARE){
 		draw_square(form->x, form->y, form->radius, form->red, form->green, form->blue);
@@ -134,26 +111,16 @@ int draw(Form* form){
 int movePlayer(Form *form, int listIndex){
 	if (form->formType == SQUARE){
 		if(isPlayerInsideScreen(listIndex)){
-			printf("movePlayer segfault check 1\n");
 			redraw_square(form);
-			printf("movePlayer segfault check 2\n");
 			incrementCoordinates(PLAYER, listIndex);
-			printf("movePlayer segfault check 3\n");
-		}
-		// if (increment_coordinates(thePlayer->form, 1)){
-		// 	redraw_square(thePlayer->form);
-		// 	increment_coordinates(thePlayer->form, 0);
-		// }
-		else {
+		} else{
 			printf("increment_coord returned false, stopping object\n");
 			form->dx = 0;
 			form->dy = 0;
 			draw(form);
 		}
-	printf("movePlayer segfault check 4\n");
 	} else
 		printf("UNIMPLEMENTED?11\n");
-	printf("movePlayer segfault check 5\n");
 }
 
 void make_new_frame(Objects* container){ //Supposed to move all objects
