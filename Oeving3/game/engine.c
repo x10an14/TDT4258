@@ -94,6 +94,16 @@ void incrementCoordinates(Type type, int listIndex){
 		{container->playerList[listIndex]->form->x += container->playerList[listIndex]->form->dx;
 		}
 		break;
+
+		case ENEMY:
+		{container->enemyList[listIndex]->form->x += container->enemyList[listIndex]->form->dx;
+		}
+		break;
+
+		case SHOT:
+		{container->shotList[listIndex]->form->x += container->shotList[listIndex]->form->dx;
+		}
+		break;
 	}
 }
 
