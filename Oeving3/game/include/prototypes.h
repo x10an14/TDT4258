@@ -20,6 +20,7 @@ void killEnemy(Objects *container, int listIndex);
 
 /* Engine prototypes */
 void make_new_frame(void);
+void movePlayer(int listIndex);
 void generateMap(void); //Generate map and put player in the centre.
 void startGame(void);
 Objects* generateObjects(int amountOfPlayers);

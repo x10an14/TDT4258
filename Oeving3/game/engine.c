@@ -98,8 +98,7 @@ void computeMove(Type type, int listIndex){
 			} else if (isButtonDown(PLAYER1_RIGHT_BUTTON) && !isButtonDown(PLAYER1_LEFT_BUTTON)){
 				playForm->dx = PLAYERSPEED;
 			}
-		}
-		movePlayer(playForm, listIndex);}
+		}}
 		break;
 
 		case ENEMY:
@@ -166,9 +165,6 @@ int checkCollision(Form *form1, Form *form2){
 void startGame(){
 	initiateIO();
 
-	printf("Going into a wait...\n");
-	usleep(250000);
-
 	lightLeds(0x5f);
 	if (isButtonDown(PLAYER1_LEFT_BUTTON) && !isButtonDown(PLAYER1_RIGHT_BUTTON))
 		printf("BUTTON DOWN! BUTTON DOWN! %d\n", isButtonDown(PLAYER1_RIGHT_BUTTON));
@@ -182,6 +178,18 @@ void startGame(){
 	}
 }
 
+void movePlayer(int listIndex){
+	Form *form = container->playerList[listIndex]->form;
+	if(isPlayerInsideScreen(listIndex)){
+			redraw_square(form);
+			incrementCoordinates(PLAYER, listIndex);
+		} else{
+			printf("Object hit wall...\n");
+			form->dx = 0;
+			redraw_square(form);
+		}
+}
+
 void make_new_frame(){ //Supposed to move all objects
 	int i;
 	Form *form;
@@ -190,15 +198,6 @@ void make_new_frame(){ //Supposed to move all objects
 		form = container->playerList[i]->form;
 		// printf("Calling computeMove...\n");
 		computeMove(PLAYER, i);
-
-		if(isPlayerInsideScreen(i)){
-			redraw_square(form);
-			incrementCoordinates(PLAYER, i);
-		} else{
-			printf("increment_coord returned false, stopping object\n");
-			form->dx = 0;
-			form->dy = 0;
-			draw(form);
-		}
+		movePlayer(i);		
 	}
 }
