@@ -15,12 +15,12 @@ void insertPlayers(Objects *container, int amountOfPlayers){
 		List[i] = malloc(sizeof(Player));
 		List[i]->health = 250; List[i]->healthMax = 250;
 		List[i]->form = (Form*) malloc(sizeof(Form));
-		int radius = 15;
+		int radius = 16;
 		List[i]->form->radius = radius;
 		List[i]->form->x = 150; List[i]->form->y = SCREEN_HEIGHT-(radius/2)-4;
 		List[i]->form->dx = 0; List[i]->form->dy = -5;
 		List[i]->form->formType = SQUARE;
-		List[i]->form->red = 0; List[i]->form->blue = 255;
+		List[i]->form->red = 0; List[i]->form->blue = 253;
 		List[i]->form->green = 0;
 		printf("going to draw form, yet no segfault\n");
 		draw(List[i]->form);

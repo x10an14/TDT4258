@@ -12,6 +12,7 @@ CFLAGS +=$(foreach includedir,$(INCLUDE_DIRS), -I$s(includedir) -g -Wall --std=c
 ##################### RULES ###########################
 .PHONY : all
 all: $(TARGET)
+	scp ./SurvivalGame.out root@129.241.103.186:/usr/SurvivalGame.out
 
 #Game C-files
 $(TARGET): $(program_C_OBJS)
@@ -20,3 +21,4 @@ $(TARGET): $(program_C_OBJS)
 .PHONY : clean
 clean:
 	rm -rf *.out *.o *.*~
+
