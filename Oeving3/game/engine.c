@@ -97,19 +97,44 @@ void computeMove(Type type, int listIndex){
 void incrementCoordinates(Type type, int listIndex){
 	switch(type){
 		case PLAYER:
-		{container->playerList[listIndex]->form->x += container->playerList[listIndex]->form->dx;
-		}
+		{container->playerList[listIndex]->form->x += container->playerList[listIndex]->form->dx;}
 		break;
 
 		case ENEMY:
-		{container->enemyList[listIndex]->form->x += container->enemyList[listIndex]->form->dx;
-		}
+		{container->enemyList[listIndex]->form->x += container->enemyList[listIndex]->form->dx;}
 		break;
 
 		case SHOT:
-		{container->shotList[listIndex]->form->x += container->shotList[listIndex]->form->dx;
-		}
+		{container->shotList[listIndex]->form->x += container->shotList[listIndex]->form->dx;}
 		break;
+	}
+}
+
+int checkCollision(Form *form1, Form *form2){
+	Form *botForm, *topForm;
+	int topFormXleft, topFormXright, topFormYbot;
+	int botFormXleft, botFormXright, botFormYtop;
+	if(form1->y >= form2->y){
+		botForm = form2;
+		topForm = form1;
+	} else{
+		botForm = form1;
+		topForm = form2;
+	}
+	topFormXleft = topForm->x - topForm->radius;
+	topFormXright = topForm->x + topForm->radius;
+	topFormYbot = topForm->y + topForm->radius;
+
+	botFormXleft = botForm->x - botForm->radius;
+	botFormXright = botForm->x + botForm->radius;
+	botFormYtop = botForm->y - botForm->radius;
+
+	if(topFormYbot <= botFormYtop &&
+		(topFormXright >= botFormXleft ||
+		topFormXleft <= botFormXright)){
+		return 1;
+	} else{
+		return 0;
 	}
 }
 
@@ -128,5 +153,14 @@ void startGame(){
 	while(1){
 		usleep(30000);
 		make_new_frame(container);
+	}
+}
+
+void make_new_frame(){ //Supposed to move all objects
+	int i;
+	Form *form;
+	for(i = 0; i < container->playerMax; i++){
+		form = container->playerList[i]->form;
+		movePlayer(form, i);
 	}
 }
