@@ -39,9 +39,11 @@ void loseHealth(Type type, int listIndex, int amount){
 	}
 }
 
-int isPlayerInsideScreen(int listIndex, int nextX){
+int isPlayerInsideScreen(int listIndex){
 	Form *player = container->playerList[listIndex]->form;
-	if(nextX >= 0 && nextX < SCREEN_WIDTH){
+	int rightX = playForm->x + playForm->dx + playForm->radius;
+	int leftX = playForm->x - playForm->dx - playForm->radius;
+	if(leftX >= 0 && rightX < SCREEN_WIDTH){
 		return 1;
 	}
 	return 0;
@@ -64,22 +66,14 @@ void computeMove(Type type, int listIndex){
 	switch(type){
 		case PLAYER:
 		{Form *playForm = container->playerList[listIndex]->form;
-		int nextX = playForm->x;
-		if(isButtonDown(7) && !isButtonDown(6)){
-			/* Then move left */
-			nextX -= playForm->dx - playForm->radius;
-		} else if(isButtonDown(6) && isButtonDown(7)){
-			nextX += playForm->dx + playForm->radius;
-		}
 		if(isPlayerInsideScreen(listIndex, nextX)){
 			playForm->x = nextX - playForm->radius;
 		}
 
 		if(isButtonDown(5)){
 			// FIRE!
-
 		}
-		redraw_square(playForm);}
+		movePlayer(playForm);}
 		break;
 
 		case ENEMY:
@@ -97,6 +91,14 @@ void computeMove(Type type, int listIndex){
 		break;
 	}
 }
+
+void incrementCoordinates(Type type, int listIndex){
+
+}
+
+// Objects *getContainer(){
+// 	return container;
+// }
 
 void startGame(){
 	/* Infinite loop for now */
