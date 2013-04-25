@@ -6,6 +6,7 @@
 #include "include/listsAndConstants.h"
 #include "include/sampleStructs.h"
 
+/* Graphics's global variables: */
 char background_red = 15;
 char background_green = 225;
 char background_blue = 15;
