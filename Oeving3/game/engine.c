@@ -21,17 +21,7 @@ void move(Objects *object, Type type, int listIndex); //Moves parameter object a
 
 Objects* generateObjects(int amountOfPlayers){
 	Objects* container = malloc(sizeof(Objects));
-	Player **List[amountOfPlayers];
-	int i;
-	for(i = 0; i < amountOfPlayers; i++){
-		List[i] =  malloc(sizeof(Player));
-		List[i]->playerX = 150; List[i]->playerY = 220;
-		List[i]->dx = 6; List[i]->dy = 0;
-		List[i]->radius = 15;
-		List[i]->col_red = 0; List[i]->col_blue = 0;
-		List[i]->col_green = 0;
-	}
-	container = insertPlayers(container, amountOfPlayers, List);
+	container = insertPlayers(container, amountOfPlayers);
 	return container;
 }
 
