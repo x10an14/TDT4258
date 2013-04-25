@@ -198,6 +198,6 @@ void make_new_frame(){ //Supposed to move all objects
 		form = container->playerList[i]->form;
 		// printf("Calling computeMove...\n");
 		computeMove(PLAYER, i);
-		movePlayer(i);		
+		movePlayer(i);
 	}
 }
