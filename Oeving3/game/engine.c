@@ -17,10 +17,15 @@ Objects *container;
 // char LED7 = "80";
 
 Objects* generateObjects(int amountOfPlayers){
+	printf("before start game\n");
 
 	container = (Objects*) malloc(sizeof(Objects));
+	printf("before start game\n");
+
 	insertPlayers(container, amountOfPlayers);
-	insertFirstEnemy(container);
+	printf("before start game\n");
+
+	//insertFirstEnemy(container);
 
 	return container;
 }
@@ -62,18 +67,31 @@ int isShotInsideScreen(int listIndex){
 }
 
 void computeMove(Type type, int listIndex){
+			printf("check\n");
+
 	switch(type){
 		case PLAYER:
 		{Form *playForm = container->playerList[listIndex]->form;
-
-		if(isButtonDown(5)){
-			// FIRE!
-		}
-		printf("check\n");
-		if (isButtonDown(7) && !isButtonDown(6)){
-			container->playerList[listIndex]->form->dx = -PLAYERSPEED;
-		} else if (isButtonDown(6) && !isButtonDown(7)){
-			container->playerList[listIndex]->form->dx = PLAYERSPEED;
+		if (listIndex == 0){
+			if(isButtonDown(PLAYER1_SHOOT_BUTTON)){
+				// FIRE!
+			}
+			printf("check\n");
+			if (isButtonDown(PLAYER1_LEFT_BUTTON) && !isButtonDown(PLAYER1_RIGHT_BUTTON)){
+				playForm->dx = -PLAYERSPEED;
+			} else if (isButtonDown(PLAYER1_RIGHT_BUTTON) && !isButtonDown(PLAYER1_LEFT_BUTTON)){
+				playForm->dx = PLAYERSPEED;
+			}
+		} else if (listIndex == 1){
+			if(isButtonDown(PLAYER1_SHOOT_BUTTON)){
+				// FIRE!
+			}
+			printf("check\n");
+			if (isButtonDown(PLAYER1_LEFT_BUTTON) && !isButtonDown(PLAYER1_RIGHT_BUTTON)){
+				playForm->dx = -PLAYERSPEED;
+			} else if (isButtonDown(PLAYER1_RIGHT_BUTTON) && !isButtonDown(PLAYER1_LEFT_BUTTON)){
+				playForm->dx = PLAYERSPEED;
+			}
 		}
 		movePlayer(playForm);}
 		break;
@@ -148,7 +166,7 @@ void startGame(){
 	printf("lightingleds\n");
 	lightLeds(0x5f);
 
-	printf("leds lighta\n");
+	printf("leds lightaasdw\n");
 	int i;
 	while(1){
 		usleep(30000);
@@ -159,8 +177,11 @@ void startGame(){
 void make_new_frame(){ //Supposed to move all objects
 	int i;
 	Form *form;
+			printf("check\n");
+
 	for(i = 0; i < container->playerMax; i++){
 		form = container->playerList[i]->form;
+		computeMove(PLAYER, i);
 		movePlayer(form, i);
 	}
 }

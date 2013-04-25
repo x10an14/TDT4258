@@ -13,6 +13,8 @@ char background_blue = 15;
 FILE *screen;
 
 void setUpLCDDriver(){
+	printf("before start game\n");
+	
 	screen = (FILE*) fopen("/dev/fb0","r+");
 	printf("Opened screen file: %d errno %s?22\n", screen, strerror(errno));
 	draw_background();

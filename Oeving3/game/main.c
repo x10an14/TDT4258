@@ -15,7 +15,11 @@ int main(){
 
 	/* Initialize structs */
 	setUpLCDDriver();
+	printf("before start game\n");
+	
 	Objects *container = generateObjects(1);
+	
+	printf("before start game\n");
 
 	startGame();
 
