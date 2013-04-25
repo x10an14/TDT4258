@@ -14,7 +14,7 @@ int main(){
 
 	/* Initialize structs */
 	player playerOne;
-
+	setImageStruct();
 	startGame(&playerOne);
 
 
