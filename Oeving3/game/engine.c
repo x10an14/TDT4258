@@ -2,6 +2,7 @@
 
 /* Project includes */
 #include "include/prototypes.h"
+#include "include/listsAndConstants.h"
 #include "include/sampleStructs.h"
 
 Objects *container;
@@ -29,7 +30,7 @@ void loseHealth(Type type, int listIndex, int amount){
 	}
 }
 
-int isPlayerInsideScreen(int, listIndex, int nextX){
+int isPlayerInsideScreen(int listIndex, int nextX){
 	Form *player = container->playerList[listIndex]->form;
 	if(nextX >= 0 && nextX < SCREEN_WIDTH){
 		return 1;
