@@ -43,8 +43,8 @@ typedef struct Shot{
 
 typedef struct Objects{
 	Player **playerList;
-	shot **shotList;
-	enemy **enemyList;
+	Shot **shotList;
+	Enemy **enemyList;
 	int playerSize, enemySize, shotSize;
 } Objects;
 
