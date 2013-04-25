@@ -171,7 +171,7 @@ void startGame(){
 
 //isButtonDown(PLAYER1_LEFT_BUTTON) && !isButtonDown(PLAYER1_RIGHT_BUTTON)
 
-	int i;
+	printf("Entering sleep-while...\n");
 	while(1){
 		usleep(30000);
 		make_new_frame();
@@ -193,7 +193,7 @@ void movePlayer(int listIndex){
 void make_new_frame(){ //Supposed to move all objects
 	int i;
 	Form *form;
-	// printf("I've come into make_new_frame...\n");
+	printf("I've come into make_new_frame...\n");
 	for(i = 0; i < container->playerMax; i++){
 		form = container->playerList[i]->form;
 		// printf("Calling computeMove...\n");
