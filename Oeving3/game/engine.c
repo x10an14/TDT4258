@@ -1,7 +1,7 @@
 #include "include/sampleStructs.h"
 
 /* Prototypes */
-void generateMap(FILE *file); //Generate map and put player in the centre.
+void generateMap(void); //Generate map and put player in the centre.
 
 
 void spawnEnemies(short amount, short type, short difficulty);//Self-explanatory
