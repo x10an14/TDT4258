@@ -128,6 +128,7 @@ int draw(Form* form){
 	printf("radius:%d\nfx:%d y:%d\nblue:%d\n", form->radius, form->x, form->y, form->blue );
 	if (form->formType == SQUARE)
 		draw_square(form->x, form->y, form->radius, form->red, form->green, form->blue);
+	printf("draw_square check\n");
 	return 1;
 }
 
