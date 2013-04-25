@@ -22,7 +22,7 @@ test: $(TARGET)
 	scp ./SurvivalGame.out root@129.241.103.186:
 
 gitCmd:
-	#git pull
+	git pull
 
 .PHONY : clean
 clean:

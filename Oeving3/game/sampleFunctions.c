@@ -31,6 +31,10 @@ void insertShot(Objects *container, int startX, int startY, int damage){
 
 }
 
+void killPlayer(Objects *container, int listIndex){
+
+}
+
 void insertFirstEnemy(Objects *container){
 	Enemy **List = malloc(sizeof(Enemy*));
 	List[0] = malloc(sizeof(Enemy));
