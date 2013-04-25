@@ -42,11 +42,22 @@ void insertFirstEnemy(Objects *container){
 	form->formType = SQUARE;
 	form->red = 253; form->blue = 0;
 	form->green = 0;
+
 	List[0]->form = form;
 	draw(List[0]->form);
+
 	container->enemyList = List;
 	container->enemyMax = 1;
 	container->enemySize = 1;
+}
+
+void insertEnemy(Objects *container, int startX, int startY, int health, int listIndex){
+	if(container->enemySize == container->enemyMax){
+		container->enemyList = (Enemy**) realloc(container->enemyList, 2*container->enemyMax*sizeof(Enemy*));
+	}
+
+
+
 }
 
 void insertShot(Objects *container, int startX, int startY, int damage){
@@ -75,10 +86,3 @@ void killEnemy(Objects *container, int listIndex){
 	}
 }
 
-
-void insertOneEnemy(Objects *container, int startX, int startY, int health){
-	if(container->enemySize == container->enemyMax){
-		container->enemyList = (Enemy**) realloc(container->enemyList, 2*container->enemyMax*sizeof(Enemy*));
-	}
-
-}
