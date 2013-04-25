@@ -17,17 +17,10 @@ Objects *container;
 // char LED7 = "80";
 
 Objects* generateObjects(int amountOfPlayers){
+
 	container = (Objects*) malloc(sizeof(Objects));
-
-	printf("Finished making container\n");
-
 	insertPlayers(container, amountOfPlayers);
-
-	printf("finished making player 1\n");
-
 	insertFirstEnemy(container);
-
-	printf("finished making first enemy\n");
 
 	return container;
 }
@@ -71,9 +64,20 @@ void computeMove(Type type, int listIndex){
 	switch(type){
 		case PLAYER:
 		{Form *playForm = container->playerList[listIndex]->form;
-		int nextX = playForm->x + playForm->dx + playForm->radius;
+		int nextX = playForm->x;
+		if(isButtonDown(7) && !isButtonDown(6)){
+			/* Then move left */
+			nextX -= playForm->dx - playForm->radius;
+		} else if(isButtonDown(6) && isButtonDown(7)){
+			nextX += playForm->dx + playForm->radius;
+		}
 		if(isPlayerInsideScreen(listIndex, nextX)){
 			playForm->x = nextX - playForm->radius;
+		}
+
+		if(isButtonDown(5)){
+			// FIRE!
+
 		}
 		redraw_square(playForm);}
 		break;

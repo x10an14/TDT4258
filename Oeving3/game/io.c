@@ -1,19 +1,10 @@
 //Whatever includes we need to utilize our drivers.
 #include <stdio.h>
 #include <errno.h>
+
 FILE* buttonsDriver;
 FILE* ledDriver;
-int A(void){
-	return 0;
-}
 
-int B(void){
-	return 0;
-}
-
-int C(void){
-	return 0;
-}
 
 int initiateIO(){
 	buttonsDriver = (FILE*) fopen("/dev/swdriver","r+");

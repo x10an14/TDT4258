@@ -11,12 +11,18 @@ CFLAGS +=$(foreach includedir,$(INCLUDE_DIRS), -I$s(includedir) -g -Wall --std=c
 
 ##################### RULES ###########################
 .PHONY : all
-all: $(TARGET)
+
+make: $(gitCmd) $(TARGET)
+
+test: $(compile)
 	scp ./SurvivalGame.out root@129.241.103.186:/usr/SurvivalGame.out
 
 #Game C-files
 $(TARGET): $(program_C_OBJS)
 	$(CC) $(program_C_OBJS) -o $(TARGET)
+
+gitCmd:
+	#git pull
 
 .PHONY : clean
 clean:
