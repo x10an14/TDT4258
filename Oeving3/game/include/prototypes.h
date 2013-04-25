@@ -17,7 +17,7 @@ void insertShot(Objects *container, int startX, int startY, int damage);
 
 
 /* Engine prototypes */
-int make_new_frame(void);
+void make_new_frame(void);
 void generateMap(void); //Generate map and put player in the centre.
 void startGame(void);
 Objects* generateObjects(int amountOfPlayers);
