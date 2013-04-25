@@ -4,12 +4,12 @@
 #include "includ/sampleStructs.h"
 
 /* Prototypes */
-Objects *insertPlayers(Objects *container, int amountOfPlayers);
-Objects *insertEnemies(Objects *container, int amountOfEnemies);
-Objects *insertShot(Objects *container, int x, int y, int damage, int radius);
+Objects* insertPlayers(Objects *container, int amountOfPlayers);
+Objects* insertEnemies(Objects *container, int amountOfEnemies);
+Objects* insertShot(Objects *container, int x, int y, int damage, int radius);
 
 
-Objects *insertPlayers(Objects *container, int amountOfPlayers){
+Objects* insertPlayers(Objects *container, int amountOfPlayers){
 	Player **List[amountOfPlayers] = malloc(sizeof(Player*));
 	int i;
 	for(i = 0; i < amountOfPlayers; i++){
