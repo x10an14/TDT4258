@@ -5,7 +5,7 @@ Objects container;
 
 /* Prototypes */
 void generateMap(void); //Generate map and put player in the centre.
-void startGame(Player *player);
+void startGame(Objects *container);
 Objects* generateObjects(int amountOfPlayers);
 
 void spawnEnemies(short amount, short type, short difficulty);//Self-explanatory
@@ -20,7 +20,7 @@ void move(Objects *object, Type type, int listIndex); //Moves parameter object a
 
 
 Objects* generateObjects(int amountOfPlayers){
-	Objects* container = malloc(sizeof(Objects));
+	Objects* container = (Objects*) malloc(sizeof(Objects));
 	container = insertPlayers(container, amountOfPlayers);
 	return container;
 }
