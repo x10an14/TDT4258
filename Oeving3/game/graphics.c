@@ -22,7 +22,7 @@ int make_new_frame(player *thePlayer);
 void setImageStruct(){
 	screen = (FILE*) fopen("/dev/fb0","r+");
 	printf("Opened screen file: %d errno %s\n", screen, strerror(errno));
-	draw_background(screen);
+	draw_background();
 }
 
 int draw_background(){
@@ -74,7 +74,7 @@ int make_new_frame(player* thePlayer){
 	//	background_red+=dRed;
 	//	background_green+=dGreen;
 	//}
-	redraw_player(screen, thePlayer);
+	redraw_player(thePlayer);
 
 	//draw_background(screen, background_red, background_green, background_blue);
 	return 0;
