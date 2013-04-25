@@ -4,6 +4,7 @@
 // #include <sys/types.h>
 
 /* Project include files */
+#include "include/prototypes.h"
 #include "include/listsAndConstants.h"
 #include "include/sampleStructs.h"
 
