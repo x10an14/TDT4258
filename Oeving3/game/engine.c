@@ -73,7 +73,6 @@ int isShotInsideScreen(int listIndex){
 }
 
 void computeMove(Type type, int listIndex){
-			printf("check\n");
 
 	switch(type){
 		case PLAYER:
@@ -82,7 +81,7 @@ void computeMove(Type type, int listIndex){
 			if(isButtonDown(PLAYER1_SHOOT_BUTTON)){
 				// FIRE!
 			}
-			printf("check\n");
+			
 			if (isButtonDown(PLAYER1_LEFT_BUTTON) && !isButtonDown(PLAYER1_RIGHT_BUTTON)){
 				playForm->dx = -PLAYERSPEED;
 			} else if (isButtonDown(PLAYER1_RIGHT_BUTTON) && !isButtonDown(PLAYER1_LEFT_BUTTON)){
@@ -92,14 +91,13 @@ void computeMove(Type type, int listIndex){
 			if(isButtonDown(PLAYER1_SHOOT_BUTTON)){
 				// FIRE!
 			}
-			printf("check\n");
 			if (isButtonDown(PLAYER1_LEFT_BUTTON) && !isButtonDown(PLAYER1_RIGHT_BUTTON)){
 				playForm->dx = -PLAYERSPEED;
 			} else if (isButtonDown(PLAYER1_RIGHT_BUTTON) && !isButtonDown(PLAYER1_LEFT_BUTTON)){
 				playForm->dx = PLAYERSPEED;
 			}
 		}
-		movePlayer(playForm);}
+		movePlayer(playForm, listIndex);}
 		break;
 
 		case ENEMY:
@@ -110,7 +108,7 @@ void computeMove(Type type, int listIndex){
 			enemForm->x = nextX - enemForm->radius;
 			enemForm->y = nextY - enemForm->radius;
 		}
-		redraw_square(enemForm);}
+		redraw_square(enemForm, listIndex);}
 		break;
 
 		case SHOT:
@@ -167,6 +165,10 @@ void startGame(){
 	initiateIO();
 	printf("lightingleds\n");
 	lightLeds(0x5f);
+	if (isButtonDown(PLAYER1_LEFT_BUTTON) && !isButtonDown(PLAYER1_RIGHT_BUTTON))
+		printf("BUTTON DOWN! BUTTON DOWN! %d\n", isButtonDown(PLAYER1_RIGHT_BUTTON));
+
+//isButtonDown(PLAYER1_LEFT_BUTTON) && !isButtonDown(PLAYER1_RIGHT_BUTTON)
 
 	printf("leds lightaasdw\n");
 	int i;
@@ -179,7 +181,6 @@ void startGame(){
 void make_new_frame(){ //Supposed to move all objects
 	int i;
 	Form *form;
-			printf("check\n");
 
 	for(i = 0; i < container->playerMax; i++){
 		form = container->playerList[i]->form;
