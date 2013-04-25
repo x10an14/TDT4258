@@ -1,7 +1,7 @@
 #include "stdio.h"
 
 /* Project includes */
-#include "includ/sampleStructs.h"
+#include "include/sampleStructs.h"
 
 /* Prototypes */
 Objects* insertPlayers(Objects *container, int amountOfPlayers);
