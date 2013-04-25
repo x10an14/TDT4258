@@ -16,7 +16,7 @@ int main(){
 	/* Initialize structs */
 	Objects *container = generateObjects(1);
 
-	startGame(container);
+	startGame();
 
 	return 0;
 }
