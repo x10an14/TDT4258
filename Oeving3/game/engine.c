@@ -66,9 +66,6 @@ void computeMove(Type type, int listIndex){
 	switch(type){
 		case PLAYER:
 		{Form *playForm = container->playerList[listIndex]->form;
-		if(isPlayerInsideScreen(listIndex, nextX)){
-			playForm->x = nextX - playForm->radius;
-		}
 
 		if(isButtonDown(5)){
 			// FIRE!
