@@ -7,9 +7,11 @@
 
 
 void insertPlayers(Objects *container, int amountOfPlayers){
-	Player **List = malloc(sizeof(Player*)*2);
+	Player **List = (Player**) malloc(sizeof(Player*)*2);
+	printf("no segfault\n");
 	int i;
 	for(i = 0; i < amountOfPlayers; i++){
+		printf("still no segfault\n");
 		List[i] = malloc(sizeof(Player));
 		List[i]->health = 250; List[i]->healthMax = 250;
 		List[i]->form = (Form*) malloc(sizeof(Form));
@@ -20,6 +22,7 @@ void insertPlayers(Objects *container, int amountOfPlayers){
 		List[i]->form->formType = SQUARE;
 		List[i]->form->red = 0; List[i]->form->blue = 255;
 		List[i]->form->green = 0;
+		printf("going to draw form, yet no segfault\n");
 		draw(List[i]->form);
 	}
 	container->playerList = List;
@@ -41,6 +44,8 @@ void insertFirstEnemy(Objects *container){
 	form->radius = radius;
 	form->x = radius + 10;
 	form->y = radius + 10;
+	form->dx = 0;
+	form->dy = 0;
 	form->formType = SQUARE;
 	form->red = 255; form->blue = 0;
 	form->green = 0;
@@ -54,7 +59,7 @@ void insertFirstEnemy(Objects *container){
 
 void insertOneEnemy(Objects *container, int startX, int startY, int health){
 	if(container->enemySize == container->enemyMax){
-		container->enemyList = realloc(container->enemyList, 2*container->enemyMax*sizeof(Enemy*));
+		container->enemyList = (Enemy**) realloc(container->enemyList, 2*container->enemyMax*sizeof(Enemy*));
 	}
 
 }
