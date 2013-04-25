@@ -38,11 +38,14 @@ void loseHealth(Type type, int listIndex, int amount){
 			int dividend = container->playerList[listIndex]->healthMax / 8;
 			int leds = container->playerList[listIndex]->health / dividend;
 			lightLeds(leds);
-		}
-		}
+		}}
 		break;
 
 		case ENEMY:
+		{container->enemyList[listIndex]->health -= amount;
+		if(container->enemyList[listIndex]->health <= 0){
+			killEnemy(container, listIndex);
+		}}
 		break;
 
 		case SHOT:
@@ -73,7 +76,7 @@ int isShotInsideScreen(int listIndex){
 }
 
 void computeMove(Type type, int listIndex){
-			printf("check\n");
+	printf("check\n");
 
 	switch(type){
 		case PLAYER:
@@ -165,10 +168,8 @@ int checkCollision(Form *form1, Form *form2){
 void startGame(){
 	/* Infinite loop for now */
 	initiateIO();
-	printf("lightingleds\n");
 	lightLeds(0x5f);
 
-	printf("leds lightaasdw\n");
 	int i;
 	while(1){
 		usleep(30000);
@@ -179,7 +180,6 @@ void startGame(){
 void make_new_frame(){ //Supposed to move all objects
 	int i;
 	Form *form;
-			printf("check\n");
 
 	for(i = 0; i < container->playerMax; i++){
 		form = container->playerList[i]->form;

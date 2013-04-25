@@ -14,6 +14,8 @@ void setUpLCDDriver(void);
 void insertPlayers(Objects *container, int amountOfPlayers);
 void insertEnemies(Objects *container, int amountOfEnemies);
 void insertShot(Objects *container, int startX, int startY, int damage);
+void killPlayer(Objects *container, int listIndex);
+void killEnemy(Objects *container, int listIndex);
 
 
 /* Engine prototypes */
