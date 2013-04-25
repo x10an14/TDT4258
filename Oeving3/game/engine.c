@@ -76,8 +76,6 @@ int isShotInsideScreen(int listIndex){
 }
 
 void computeMove(Type type, int listIndex){
-	printf("check\n");
-
 	switch(type){
 		case PLAYER:
 		{Form *playForm = container->playerList[listIndex]->form;
@@ -85,7 +83,7 @@ void computeMove(Type type, int listIndex){
 			if(isButtonDown(PLAYER1_SHOOT_BUTTON)){
 				// FIRE!
 			}
-			printf("check\n");
+
 			if (isButtonDown(PLAYER1_LEFT_BUTTON) && !isButtonDown(PLAYER1_RIGHT_BUTTON)){
 				playForm->dx = -PLAYERSPEED;
 			} else if (isButtonDown(PLAYER1_RIGHT_BUTTON) && !isButtonDown(PLAYER1_LEFT_BUTTON)){
@@ -95,14 +93,13 @@ void computeMove(Type type, int listIndex){
 			if(isButtonDown(PLAYER1_SHOOT_BUTTON)){
 				// FIRE!
 			}
-			printf("check\n");
 			if (isButtonDown(PLAYER1_LEFT_BUTTON) && !isButtonDown(PLAYER1_RIGHT_BUTTON)){
 				playForm->dx = -PLAYERSPEED;
 			} else if (isButtonDown(PLAYER1_RIGHT_BUTTON) && !isButtonDown(PLAYER1_LEFT_BUTTON)){
 				playForm->dx = PLAYERSPEED;
 			}
 		}
-		movePlayer(playForm);}
+		movePlayer(playForm, listIndex);}
 		break;
 
 		case ENEMY:
@@ -113,7 +110,7 @@ void computeMove(Type type, int listIndex){
 			enemForm->x = nextX - enemForm->radius;
 			enemForm->y = nextY - enemForm->radius;
 		}
-		redraw_square(enemForm);}
+		redraw_square(enemForm, listIndex);}
 		break;
 
 		case SHOT:
@@ -148,6 +145,7 @@ int checkCollision(Form *form1, Form *form2){
 		botForm = form1;
 		topForm = form2;
 	}
+
 	topFormXleft = topForm->x - topForm->radius;
 	topFormXright = topForm->x + topForm->radius;
 	topFormYbot = topForm->y + topForm->radius;
@@ -169,6 +167,10 @@ void startGame(){
 	/* Infinite loop for now */
 	initiateIO();
 	lightLeds(0x5f);
+	if (isButtonDown(PLAYER1_LEFT_BUTTON) && !isButtonDown(PLAYER1_RIGHT_BUTTON))
+		printf("BUTTON DOWN! BUTTON DOWN! %d\n", isButtonDown(PLAYER1_RIGHT_BUTTON));
+
+//isButtonDown(PLAYER1_LEFT_BUTTON) && !isButtonDown(PLAYER1_RIGHT_BUTTON)
 
 	int i;
 	while(1){
@@ -184,6 +186,14 @@ void make_new_frame(){ //Supposed to move all objects
 	for(i = 0; i < container->playerMax; i++){
 		form = container->playerList[i]->form;
 		computeMove(PLAYER, i);
-		movePlayer(form, i);
+		if(isPlayerInsideScreen(listIndex)){
+			redraw_square(form);
+			incrementCoordinates(PLAYER, listIndex);
+		} else{
+			printf("increment_coord returned false, stopping object\n");
+			form->dx = 0;
+			form->dy = 0;
+			draw(form);
+		}
 	}
 }

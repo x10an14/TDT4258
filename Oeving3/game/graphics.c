@@ -13,8 +13,6 @@ char background_blue = 15;
 FILE *screen;
 
 void setUpLCDDriver(){
-	printf("before start game\n");
-	
 	screen = (FILE*) fopen("/dev/fb0","r+");
 	printf("Opened screen file: %d errno %s?22\n", screen, strerror(errno));
 	draw_background();
@@ -111,7 +109,10 @@ int draw(Form* form){
 }
 
 int movePlayer(Form *form, int listIndex){
+		//printf("check\n");
+
 	if (form->formType == SQUARE){
+
 		if(isPlayerInsideScreen(listIndex)){
 			redraw_square(form);
 			incrementCoordinates(PLAYER, listIndex);
@@ -123,6 +124,9 @@ int movePlayer(Form *form, int listIndex){
 		}
 	} else
 		printf("UNIMPLEMENTED?11\n");
+	//printf("check\n");
+
+	return 1;
 }
 
 
