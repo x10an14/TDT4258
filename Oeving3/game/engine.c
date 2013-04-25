@@ -152,7 +152,7 @@ void startGame(){
 	int i;
 	while(1){
 		usleep(30000);
-		make_new_frame(container);
+		make_new_frame();
 	}
 }
 

@@ -7,7 +7,6 @@ void setImageStruct(void);
 int draw_background(void);
 int draw_square(int x, int y, int radius, char red, char green, char blue);
 int redraw_player(Player *thePlayer);
-int make_new_frame(Player *thePlayer);
 void setUpLCDDriver(void);
 
 
@@ -18,6 +17,7 @@ void insertShot(Objects *container, int startX, int startY, int damage);
 
 
 /* Engine prototypes */
+void make_new_frame(void);
 void generateMap(void); //Generate map and put player in the centre.
 void startGame(void);
 Objects* generateObjects(int amountOfPlayers);
