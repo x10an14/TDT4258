@@ -41,7 +41,7 @@ int isPlayerInsideScreen(int listIndex, int nextX){
 int isEnemyInsideScreen(int listIndex, int nextX, int nextY){
 	Form *enemy = container->enemyList[listIndex]->form;
 	if(nextX >= 0 && nextX < SCREEN_WIDTH &&
-		nextY >= 0 && nextY < SCREEN_HEIGH){
+		nextY >= 0 && nextY < SCREEN_HEIGHT){
 		return 1;
 	}
 	return 0;
