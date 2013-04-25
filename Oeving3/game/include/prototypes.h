@@ -14,7 +14,7 @@ void setUpLCDDriver(void);
 /* SampleFunction prototypes */
 void insertPlayers(Objects *container, int amountOfPlayers);
 void insertEnemies(Objects *container, int amountOfEnemies);
-void insertShot(Objects *container, int x, int y, int damage, int radius);
+void insertShot(Objects *container, int startX, int startY, int damage);
 
 
 /* Engine prototypes */

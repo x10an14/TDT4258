@@ -53,7 +53,7 @@ int draw_square(int x, int y, int radius, char red, char green, char blue){
 int redraw_square(Form* form){
 	if (form->formType == SQUARE){
 		if (form->dx != 0 && form->dy == 0){
-			
+
 		} else if  (form->dx == 0 && form->dy != 0){
 			int file_X, file_Y;
 			if (form->dy > 0){
@@ -91,12 +91,12 @@ int redraw_square(Form* form){
 					}
 				}
 			}
-			
+
 		} else if  (form->dx == 0 && form->dy == 0){
 
 		}else
 			printf("UNIMPLEMENTED?23\n");
-	} else 
+	} else
 		printf("UNIMPLEMENTED?22\n");
 	return 1;
 }
@@ -141,15 +141,11 @@ int movePlayer(Player* thePlayer){
 			thePlayer->form->dy = 0;
 			draw(thePlayer->form);
 		}
-	} else 
+	} else
 		printf("UNIMPLEMENTED?11\n");
 }
 
-int make_new_frame(Objects* container){
-	
-
-
+void make_new_frame(Objects* container){
 	movePlayer(container->playerList[0]);
-	return 0;
 }
 
