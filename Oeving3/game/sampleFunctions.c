@@ -20,7 +20,6 @@ void insertPlayers(Objects *container, int amountOfPlayers){
 		List[i]->form->formType = SQUARE;
 		List[i]->form->red = 0; List[i]->form->blue = 253;
 		List[i]->form->green = 0;
-		printf("going to draw form, yet no segfault\n");
 		draw(List[i]->form);
 	}
 	container->playerList = List;
@@ -35,7 +34,6 @@ void insertShot(Objects *container, int startX, int startY, int damage){
 void insertFirstEnemy(Objects *container){
 	Enemy **List = malloc(sizeof(Enemy*));
 	List[0] = malloc(sizeof(Enemy));
-	printf("no segfault\n");
 
 	List[0]->health = 75; List[0]->healthMax = 75;
 	Form *form = malloc(sizeof(Form));
@@ -45,14 +43,11 @@ void insertFirstEnemy(Objects *container){
 	form->y = radius + 10+5;
 	form->dx = 0;
 	form->dy = 0;
-		printf("still no segfault\n");
 	form->formType = SQUARE;
 	form->red = 253; form->blue = 0;
 	form->green = 0;
 	List[0]->form = form;
-	printf("DrawCheck for enemy\n");
 	draw(List[0]->form);
-
 	container->enemyList = List;
 	container->enemyMax = 1;
 	container->enemySize = 1;
