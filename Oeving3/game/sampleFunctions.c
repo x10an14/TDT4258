@@ -2,11 +2,7 @@
 
 /* Project includes */
 #include "include/sampleStructs.h"
-
-/* Prototypes */
-void insertPlayers(Objects *container, int amountOfPlayers);
-void insertEnemies(Objects *container, int amountOfEnemies);
-void insertShot(Objects *container, int x, int y, int damage, int radius);
+#include "include/prototypes.h"
 
 
 void insertPlayers(Objects *container, int amountOfPlayers){
