@@ -167,9 +167,11 @@ void startGame(){
 
 	initiateIO();
 
-	printf("Done with initiateIO...\n");
 
 	lightLeds(0x5f);
+
+	printf("Done with lightLeds...\n");
+
 	if (isButtonDown(PLAYER1_LEFT_BUTTON) && !isButtonDown(PLAYER1_RIGHT_BUTTON))
 		printf("BUTTON DOWN! BUTTON DOWN! %d\n", isButtonDown(PLAYER1_RIGHT_BUTTON));
 
