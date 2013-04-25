@@ -2,7 +2,7 @@
 #define OEVING_3_H_SAMPLE_STRUCTS
 
 /* Sample structs */
-typedef struct player{
+typedef struct Player{
 	short playerX, playerY; //Current coordinates of player
 	short health, healthMax; //Current amount of Health for player and maximum amount
 	//void *graphics; //Pointer to graphics image that represent player on screen.
@@ -13,7 +13,7 @@ typedef struct player{
 	int col_green;
 	int col_blue;
 //	enum Form form;
-}player;
+}Player;
 
 typedef struct Enemy{
 	short x, y; //Current coordinates of enemy
