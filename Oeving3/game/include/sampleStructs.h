@@ -15,7 +15,7 @@ typedef struct player{
 //	enum Form form;
 }player;
 
-typedef struct enemy{
+typedef struct Enemy{
 	short x, y; //Current coordinates of enemy
 	short health, healthMax; //Current amount of Health for enemy and maximum amount
 	//void *graphics; //Pointer to graphics image that represent enemy on screen.
@@ -26,9 +26,9 @@ typedef struct enemy{
 	int col_green;
 	int col_blue;
 //	enum Form form;
-}enemy;
+}Enemy;
 
-typedef struct shot{
+typedef struct Shot{
 	short x,y;		//Current coordinates of shot
 	short damage;	//Damage current shot does
 	//void *graphics;	//Pointer to graphics image that represents the shot on the screen
@@ -39,7 +39,7 @@ typedef struct shot{
 	int col_green;
 	int col_blue;
 	//enum Form form;
-}shot;
+}Shot;
 
 typedef struct Objects{
 	player **playerList;
@@ -48,10 +48,9 @@ typedef struct Objects{
 	int playerSize, enemySize, shotSize;
 } Objects;
 
-
 typedef enum {
 	PLAYER, SHOT, ENEMY
-} type;
+}Type;
 
 //enum Form{
 //	Circle,

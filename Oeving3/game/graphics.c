@@ -16,8 +16,8 @@ FILE *screen;
 void setImageStruct(void);
 int draw_background(void);
 int draw_square(int x, int y, int radius, char red, char green, char blue);
-int redraw_player(player *thePlayer);
-int make_new_frame(player *thePlayer);
+int redraw_player(Player *thePlayer);
+int make_new_frame(Player *thePlayer);
 
 void setImageStruct(){
 	screen = (FILE*) fopen("/dev/fb0","r+");
@@ -51,7 +51,7 @@ int draw_square(int x, int y, int radius, char red, char green, char blue){
 	}
 }
 
-int redraw_player(player* thePlayer){
+int redraw_player(Player* thePlayer){
 	draw_square(thePlayer->playerX, thePlayer->playerY, thePlayer->radius, background_red, background_green, background_blue);
 	thePlayer->playerX += thePlayer->dx;
 	if ((thePlayer->playerX + thePlayer->dx > SCREEN_WIDTH - thePlayer->radius) || (thePlayer->playerX + thePlayer->dx < 0+thePlayer->radius)){
@@ -61,7 +61,7 @@ int redraw_player(player* thePlayer){
 	draw_square(thePlayer->playerX, thePlayer->playerY, thePlayer->radius, thePlayer->col_red, thePlayer->col_green, thePlayer->col_blue);
 }
 
-int make_new_frame(player* thePlayer){
+int make_new_frame(Player* thePlayer){
 	//int dRed = 2;
 	//int dGreen = -2;
 

@@ -3,8 +3,8 @@
 
 /* Prototypes */
 void generateMap(void); //Generate map and put player in the centre.
-void startGame(player *player);
-player* generatePlayer(player *player);
+void startGame(Player *player);
+Player* generatePlayer(Player *player);
 
 void spawnEnemies(short amount, short type, short difficulty);//Self-explanatory
 void shotHit(void); //When drawing the map (screen), check to see if a player or enemy will get hit by a shot
@@ -18,9 +18,8 @@ void move(void *obj); //Moves parameter object according to its role, if player,
 
 void refreshTick();/* Function which should be called at each "tick", and refresh all sprites on screen after having called move, by first calling move() and then calling function(s) in graphics. */
 
- /*To write to screen, use fbfd, open /dev/fbd0(?), and then use mmap to write to it. */
 
-player* generatePlayer(player *player){
+Player* generatePlayer(Player *player){
 	player->playerX = 150;
 	player->playerY = 220;
 	player->dx = 6;
@@ -32,7 +31,18 @@ player* generatePlayer(player *player){
 	return player;
 }
 
-void startGame(player *player){
+void loseHealth(Objects *objcect, Type type, int listIndex){
+	switch(type){
+		case PLAYER:
+		//doSomething(object->playerList[listIndex]);
+
+		case ENEMY:
+
+		case SHOT:
+	}
+}
+
+void startGame(Player *player){
 	/* Infinite loop for now */
 	while(1){
 		usleep(100000);
