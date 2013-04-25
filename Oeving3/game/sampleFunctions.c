@@ -24,7 +24,7 @@ void insertPlayers(Objects *container, int amountOfPlayers){
 	}
 	container->playerList = List;
 	container->playerSize = amountOfPlayers;
-	container->playerMax = 2;
+	container->playerMax = amountOfPlayers;
 }
 
 void insertShot(Objects *container, int startX, int startY, int damage){
