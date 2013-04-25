@@ -6,29 +6,37 @@
 #include "include/sampleStructs.h"
 
 Objects *container;
-
-// char LED0 = "01";
-// char LED1 = "02";
-// char LED2 = "04";
-// char LED3 = "08";
-// char LED4 = "10";
-// char LED5 = "20";
-// char LED6 = "40";
-// char LED7 = "80";
+int gameOver = 0;
 
 Objects* generateObjects(int amountOfPlayers){
 
 	container = (Objects*) malloc(sizeof(Objects));
+
 	insertPlayers(container, amountOfPlayers);
+	turnOnLEDS();
+
 	insertFirstEnemy(container);
 
 	return container;
 }
 
+void turnOnLEDS(){
+	lightLeds(0xff);
+}
+
 void loseHealth(Type type, int listIndex, int amount){
 	switch(type){
 		case PLAYER:
-		//doSomething(object->playerList[listIndex]);
+		{container->playerList[listIndex]->health -= amount;
+		if(container->playerList[listIndex]->health <= 0){
+			gameOver = 1;
+			killPlayer(container, listIndex);
+		} else{ //Turn off next LED
+			int dividend = container->playerList[listIndex]->healthMax / 8;
+			int leds = container->playerList[listIndex]->health / dividend;
+			lightLeds(leds);
+		}
+		}
 		break;
 
 		case ENEMY:
@@ -131,10 +139,6 @@ int checkCollision(Form *form1, Form *form2){
 		return 0;
 	}
 }
-
-// Objects *getContainer(){
-// 	return container;
-// }
 
 void startGame(){
 	/* Infinite loop for now */
