@@ -34,7 +34,7 @@ void insertShot(Objects *container, int startX, int startY, int damage){
 
 void insertFirstEnemy(Objects *container){
 	Enemy **List = malloc(sizeof(Enemy*));
-	List[1] = malloc(sizeof(Enemy));
+	List[0] = malloc(sizeof(Enemy));
 	printf("no segfault\n");
 
 	List[0]->health = 75; List[0]->healthMax = 75;
