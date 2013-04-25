@@ -149,3 +149,12 @@ void startGame(){
 		make_new_frame(container);
 	}
 }
+
+void make_new_frame(){ //Supposed to move all objects
+	int i;
+	Form *form;
+	for(i = 0; i < container->playerMax; i++){
+		form = container->playerList[i]->form;
+		movePlayer(form, i);
+	}
+}

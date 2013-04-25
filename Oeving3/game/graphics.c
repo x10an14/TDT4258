@@ -123,12 +123,4 @@ int movePlayer(Form *form, int listIndex){
 		printf("UNIMPLEMENTED?11\n");
 }
 
-void make_new_frame(Objects* container){ //Supposed to move all objects
-	int i;
-	Form *form;
-	for(i = 0; i < container->playerMax; i++){
-		form = container->playerList[i]->form;
-		movePlayer(form, i);
-	}
-}
 
