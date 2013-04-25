@@ -134,7 +134,7 @@ int draw(Form* form){
 int movePlayer(Form *form, int listIndex){
 	if (form->formType == SQUARE){
 		if(isPlayerInsideScreen(listIndex)){
-			redraw_square(listIndex);
+			redraw_square(form);
 			incrementCoordinates(PLAYER, listIndex);
 		}
 		// if (increment_coordinates(thePlayer->form, 1)){
@@ -143,8 +143,8 @@ int movePlayer(Form *form, int listIndex){
 		// }
 		else {
 			printf("increment_coord returned false, stopping object\n");
-			thePlayer->form->dx = 0;
-			thePlayer->form->dy = 0;
+			form->dx = 0;
+			form->dy = 0;
 			draw(form);
 		}
 	} else
@@ -153,7 +153,9 @@ int movePlayer(Form *form, int listIndex){
 
 void make_new_frame(Objects* container){ //Supposed to move all objects
 	int i = 0;
+	Form *form;
 	for(i = 0; i < container->playerMax; i++){
+		form = container->playerList[i]->form;
 		movePlayer(i);
 	}
 }
