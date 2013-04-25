@@ -12,9 +12,9 @@ void shotHit(void); //When drawing the map (screen), check to see if a player or
 
 void playSound(/*Pointer to sound to play (we were told that we were given some in the handed out code, no?*/);
 
-void loseHealth(int amount);//Lose health, maybe flash each time? Continously flash when health is <= 3? Called by shotHit, when true. If 0, kill player/enemy.
+void loseHealth(Objects *object, Type type, int listIndex, int amount);//Lose health, maybe flash each time? Continously flash when health is <= 3? Called by shotHit, when true. If 0, kill player/enemy.
 
-void move(void *obj); //Moves parameter object according to its role, if player, then like so, if enemy, then like so, and if shot, then like so.
+void move(Objects *object, Type type, int listIndex); //Moves parameter object according to its role, if player, then like so, if enemy, then like so, and if shot, then like so.
 
 void refreshTick();/* Function which should be called at each "tick", and refresh all sprites on screen after having called move, by first calling move() and then calling function(s) in graphics. */
 
@@ -31,10 +31,20 @@ Player* generatePlayer(Player *player){
 	return player;
 }
 
-void loseHealth(Objects *objcect, Type type, int listIndex){
+void loseHealth(Objects *object, Type type, int listIndex, int amount){
 	switch(type){
 		case PLAYER:
 		//doSomething(object->playerList[listIndex]);
+
+		case ENEMY:
+
+		case SHOT:
+	}
+}
+
+void move(Objects *object, Type type, int listIndex){
+	switch(type){
+		case PLAYER:
 
 		case ENEMY:
 
