@@ -22,7 +22,7 @@ $(TARGET): $(program_C_OBJS)
 	$(CC) $(program_C_OBJS) -o $(TARGET)
 
 gitCmd:
-	git pull
+	#git pull
 
 .PHONY : clean
 clean:
