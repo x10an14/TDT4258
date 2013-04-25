@@ -9,11 +9,10 @@ char background_green = 225;
 char background_blue = 15;
 FILE *lcdDriver;
 
-FILE setImageStruct(void){
+void setImageStruct(void){
 	lcdDriver = (FILE*) fopen("/dev/fb0","r+");
 	printf("Opened lcdDriver file: %d errno %s\n", lcdDriver, strerror(errno));
 	draw_background(lcdDriver);
-	return lcdDriver;
 }
 
 int draw_background(FILE* screen){
@@ -52,7 +51,7 @@ int redraw_player(FILE* screen, player* thePlayer){
 	draw_square(screen, thePlayer->playerX, thePlayer->playerY, thePlayer->radius, thePlayer->col_red, thePlayer->col_green, thePlayer->col_blue);
 }
 
-int make_new_frame(FILE* screen, player* thePlayer){
+int make_new_frame(player* thePlayer){
 	//int dRed = 2;
 	//int dGreen = -2;
 
@@ -65,7 +64,7 @@ int make_new_frame(FILE* screen, player* thePlayer){
 	//	background_red+=dRed;
 	//	background_green+=dGreen;
 	//}
-	redraw_player(screen, thePlayer);
+	redraw_player(lcdDriver, thePlayer);
 
 	//draw_background(screen, background_red, background_green, background_blue);
 	return 0;
