@@ -4,13 +4,13 @@ static char background_red = 15;
 static char background_green = 225;
 static char background_blue = 15;
 
-int draw_background(FILE* screen, char red, char green, char blue){
+int draw_background(FILE* screen){
 	int addr = 0;
 	fseek(screen, 0, 0);
 	while(addr < SCREEN_WIDTH*SCREEN_HEIGHT*3){
-		fputc(blue, screen);
-		fputc(green, screen);
-		fputc(red, screen);
+		fputc(background_blue, screen);
+		fputc(background_green, screen);
+		fputc(background_red, screen);
 		addr+=3;
 	}
 	return 1;
@@ -57,4 +57,8 @@ int make_new_frame(FILE* screen, player* thePlayer){
 
 	//draw_background(screen, background_red, background_green, background_blue);
 	return 0;
+}
+
+void generateMap(FILE *lcdDriver){
+
 }

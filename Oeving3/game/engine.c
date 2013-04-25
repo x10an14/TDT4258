@@ -1,7 +1,7 @@
 #include "include/sampleStructs.h"
 
 /* Prototypes */
-void generateMap(void); //Generate map and put player in the centre.
+void generateMap(FILE* lcdDriver); //Generate map and put player in the centre.
 
 
 void spawnEnemies(short amount, short type, short difficulty);//Self-explanatory
@@ -14,6 +14,6 @@ void loseHealth(int amount);//Lose health, maybe flash each time? Continously fl
 
 void move(void *obj); //Moves parameter object according to its role, if player, then like so, if enemy, then like so, and if shot, then like so.
 
-void refreshTick();/* Function which should be called at each "tick", and refresh all sprites on screen after having called move, by first calling move() and then calling function(s) in graphics. */
+void refreshTick();/* Function which should be called at each "tick", and refresh all sprites on screen after having called move, by first calling move() and then calling function(s) in graphics. */z
 
  /*To write to screen, use fbfd, open /dev/fbd0(?), and then use mmap to write to it. */
