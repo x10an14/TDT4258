@@ -42,7 +42,7 @@ typedef struct Shot{
 }Shot;
 
 typedef struct Objects{
-	player **playerList;
+	Player **playerList;
 	shot **shotList;
 	enemy **enemyList;
 	int playerSize, enemySize, shotSize;

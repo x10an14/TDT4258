@@ -35,20 +35,26 @@ void loseHealth(Objects *object, Type type, int listIndex, int amount){
 	switch(type){
 		case PLAYER:
 		//doSomething(object->playerList[listIndex]);
+		break;
 
 		case ENEMY:
+		break;
 
 		case SHOT:
+		break;
 	}
 }
 
 void move(Objects *object, Type type, int listIndex){
 	switch(type){
 		case PLAYER:
+		break;
 
 		case ENEMY:
+		break;
 
 		case SHOT:
+		break;
 	}
 }
 
