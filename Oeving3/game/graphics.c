@@ -107,26 +107,3 @@ int draw(Form* form){
 		draw_square(form->x, form->y, form->radius, form->red, form->green, form->blue);
 	} //Else if other forms
 }
-
-int movePlayer(Form *form, int listIndex){
-		//printf("check\n");
-
-	if (form->formType == SQUARE){
-
-		if(isPlayerInsideScreen(listIndex)){
-			redraw_square(form);
-			incrementCoordinates(PLAYER, listIndex);
-		} else{
-			printf("increment_coord returned false, stopping object\n");
-			form->dx = 0;
-			form->dy = 0;
-			draw(form);
-		}
-	} else
-		printf("UNIMPLEMENTED?11\n");
-	//printf("check\n");
-
-	return 1;
-}
-
-
