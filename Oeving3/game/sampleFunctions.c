@@ -8,10 +8,8 @@
 
 void insertPlayers(Objects *container, int amountOfPlayers){
 	Player **List = (Player**) malloc(sizeof(Player*)*2);
-	printf("no segfault\n");
 	int i;
 	for(i = 0; i < amountOfPlayers; i++){
-		printf("still no segfault\n");
 		List[i] = malloc(sizeof(Player));
 		List[i]->health = 250; List[i]->healthMax = 250;
 		List[i]->form = (Form*) malloc(sizeof(Form));
@@ -37,6 +35,7 @@ void insertShot(Objects *container, int startX, int startY, int damage){
 void insertFirstEnemy(Objects *container){
 	Enemy **List = malloc(sizeof(Enemy*));
 	List[1] = malloc(sizeof(Enemy));
+	printf("no segfault\n");
 
 	List[0]->health = 75; List[0]->healthMax = 75;
 	Form *form = malloc(sizeof(Form));
@@ -46,6 +45,7 @@ void insertFirstEnemy(Objects *container){
 	form->y = radius + 10+5;
 	form->dx = 0;
 	form->dy = 0;
+		printf("still no segfault\n");
 	form->formType = SQUARE;
 	form->red = 253; form->blue = 0;
 	form->green = 0;
