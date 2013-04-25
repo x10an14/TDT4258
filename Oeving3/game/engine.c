@@ -7,14 +7,14 @@
 
 Objects *container;
 
-char LED0 = "01";
-char LED1 = "02";
-char LED2 = "04";
-char LED3 = "08";
-char LED4 = "10";
-char LED5 = "20";
-char LED6 = "40";
-char LED7 = "80";
+// char LED0 = "01";
+// char LED1 = "02";
+// char LED2 = "04";
+// char LED3 = "08";
+// char LED4 = "10";
+// char LED5 = "20";
+// char LED6 = "40";
+// char LED7 = "80";
 
 Objects* generateObjects(int amountOfPlayers){
 	container = (Objects*) malloc(sizeof(Objects));
