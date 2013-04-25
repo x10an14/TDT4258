@@ -125,6 +125,7 @@ int increment_coordinates(Form* form, int check){
 
 
 int draw(Form* form){
+	printf("radius:%d\nfx:%d y:%d\nblue:%d\n", form->radius, form->x, form->y, form->blue );
 	if (form->formType == SQUARE)
 		draw_square(form->x, form->y, form->radius, form->red, form->green, form->blue);
 	return 1;
