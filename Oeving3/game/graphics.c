@@ -156,7 +156,7 @@ void make_new_frame(Objects* container){ //Supposed to move all objects
 	Form *form;
 	for(i = 0; i < container->playerMax; i++){
 		form = container->playerList[i]->form;
-		movePlayer(i);
+		movePlayer(form, i);
 	}
 }
 
