@@ -22,7 +22,8 @@ void move(Objects *object, Type type, int listIndex); //Moves parameter object a
 Objects* generateObjects(int amountOfPlayers){
 	Objects* container = malloc(sizeof(Objects));
 	Player **List[amountOfPlayers];
-	for(int i = 0; i < amountOfPlayers; i++){
+	int i;
+	for(i = 0; i < amountOfPlayers; i++){
 		List[i] =  malloc(sizeof(Player));
 		List[i]->playerX = 150; List[i]->playerY = 220;
 		List[i]->dx = 6; List[i]->dy = 0;
@@ -63,6 +64,7 @@ void move(Objects *object, Type type, int listIndex){
 
 void startGame(Objects *container){
 	/* Infinite loop for now */
+	int i;
 	while(1){
 		usleep(100000);
 		for(i = 0; i < container->playerSize; i++){
