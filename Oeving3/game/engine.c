@@ -38,8 +38,7 @@ void loseHealth(Type type, int listIndex, int amount){
 			int dividend = container->playerList[listIndex]->healthMax / 8;
 			int leds = container->playerList[listIndex]->health / dividend;
 			lightLeds(leds);
-		}
-		}
+		}}
 		break;
 
 		case ENEMY:
@@ -81,11 +80,13 @@ void computeMove(Type type, int listIndex){
 			if(isButtonDown(PLAYER1_SHOOT_BUTTON)){
 				// FIRE!
 			}
-			
 			if (isButtonDown(PLAYER1_LEFT_BUTTON) && !isButtonDown(PLAYER1_RIGHT_BUTTON)){
-				playForm->dx = -PLAYERSPEED;
+
+				playForm->dy = -PLAYERSPEED;
 			} else if (isButtonDown(PLAYER1_RIGHT_BUTTON) && !isButtonDown(PLAYER1_LEFT_BUTTON)){
-				playForm->dx = PLAYERSPEED;
+				playForm->dy = PLAYERSPEED;
+			} else {
+				playForm->dy = 0;
 			}
 		} else if (listIndex == 1){
 			if(isButtonDown(PLAYER1_SHOOT_BUTTON)){

@@ -2,7 +2,7 @@
 #define OEVING_3_H_LISTS_AND_CONSTANTS
 
 /* Defines on stack */
-#define PLAYERSPEED 4
+#define PLAYERSPEED 2
 #define ENEMYSPEED 4
 #define SHOTSPEED 8
 

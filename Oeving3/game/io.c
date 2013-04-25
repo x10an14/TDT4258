@@ -7,7 +7,6 @@ FILE* ledDriver;
 
 
 int initiateIO(){
-	buttonsDriver = (FILE*) fopen("/dev/swdriver","r+");
 	
 	printf("Opened buttons-driver  file: %d errno %s?22\n", buttonsDriver, strerror(errno));
 
@@ -23,8 +22,10 @@ char getButtonsState(){
 	return buttonStatus;
 }
 int isButtonDown(int buttonNumber){
+	buttonsDriver = (FILE*) fopen("/dev/swdriver","r+");
 	char* buff[3];
 	fgets(buff, 3, buttonsDriver);
+	close(buttonsDriver);
 	int buttonStatus;
 	sscanf(buff, "%x\n", &buttonStatus);
 	buttonStatus = (buttonStatus >> buttonNumber) & 1;
