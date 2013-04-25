@@ -16,6 +16,7 @@ int main(){
 	/* Initialize structs */
 	setUpLCDDriver();
 	Objects *container = generateObjects(1);
+	printf("Main is about to call startGame()\n");
 	startGame();
 
 	return 0;

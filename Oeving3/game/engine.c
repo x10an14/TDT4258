@@ -9,16 +9,13 @@ Objects *container;
 int gameOver = 0;
 
 Objects* generateObjects(int amountOfPlayers){
-	printf("before start game\n");
 
 	container = (Objects*) malloc(sizeof(Objects));
-	printf("before start game\n");
 
 	insertPlayers(container, amountOfPlayers);
 	turnOnLEDS();
-	printf("before start game\n");
 
-	//insertFirstEnemy(container);
+	insertFirstEnemy(container);
 
 	return container;
 }
@@ -162,16 +159,15 @@ int checkCollision(Form *form1, Form *form2){
 }
 
 void startGame(){
-	/* Infinite loop for now */
 	initiateIO();
-	printf("lightingleds\n");
+	printf("Going into a wait...\n");
+	usleep(250000);
 	lightLeds(0x5f);
 	if (isButtonDown(PLAYER1_LEFT_BUTTON) && !isButtonDown(PLAYER1_RIGHT_BUTTON))
 		printf("BUTTON DOWN! BUTTON DOWN! %d\n", isButtonDown(PLAYER1_RIGHT_BUTTON));
 
 //isButtonDown(PLAYER1_LEFT_BUTTON) && !isButtonDown(PLAYER1_RIGHT_BUTTON)
 
-	printf("leds lightaasdw\n");
 	int i;
 	while(1){
 		usleep(30000);
@@ -182,10 +178,12 @@ void startGame(){
 void make_new_frame(){ //Supposed to move all objects
 	int i;
 	Form *form;
-
+	// printf("I've come into make_new_frame...\n");
 	for(i = 0; i < container->playerMax; i++){
 		form = container->playerList[i]->form;
+		// printf("Calling computeMove...\n");
 		computeMove(PLAYER, i);
+		// printf("Calling movePlayer...\n");
 		movePlayer(form, i);
 	}
 }

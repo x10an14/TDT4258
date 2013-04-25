@@ -16,6 +16,7 @@ void setUpLCDDriver(){
 	screen = (FILE*) fopen("/dev/fb0","r+");
 	printf("Opened screen file: %d errno %s?22\n", screen, strerror(errno));
 	draw_background();
+	printf("finished with setUpLCDDriver\n");
 }
 
 int draw_background(){
