@@ -1,5 +1,4 @@
-#include "stdio.h"
-#include "linux/soundcard.h" //For sound
+#include <linux/soundcard.h> //For sound
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/types.h>
