@@ -163,7 +163,11 @@ int checkCollision(Form *form1, Form *form2){
 }
 
 void startGame(){
+	printf("Entered startGame...\n");
+
 	initiateIO();
+
+	printf("Done with initiateIO...\n");
 
 	lightLeds(0x5f);
 	if (isButtonDown(PLAYER1_LEFT_BUTTON) && !isButtonDown(PLAYER1_RIGHT_BUTTON))
