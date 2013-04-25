@@ -1,16 +1,15 @@
 #include "stdio.h"
 
 /* Project includes */
-#include "include/listsAndConstants.h"
 #include "include/sampleStructs.h"
 
 /* Prototypes */
-Objects* insertPlayers(Objects *container, int amountOfPlayers);
-Objects* insertEnemies(Objects *container, int amountOfEnemies);
-Objects* insertShot(Objects *container, int x, int y, int damage, int radius);
+void insertPlayers(Objects *container, int amountOfPlayers);
+void insertEnemies(Objects *container, int amountOfEnemies);
+void insertShot(Objects *container, int x, int y, int damage, int radius);
 
 
-Objects* insertPlayers(Objects *container, int amountOfPlayers){
+void insertPlayers(Objects *container, int amountOfPlayers){
 	Player **List = malloc(sizeof(Player*) * amountOfPlayers);
 	int i;
 	for(i = 0; i < amountOfPlayers; i++){
@@ -23,7 +22,6 @@ Objects* insertPlayers(Objects *container, int amountOfPlayers){
 	}
 	container->playerList = List;
 	container->playerSize = amountOfPlayers;
-	return container;
 }
 
 

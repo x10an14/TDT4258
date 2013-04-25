@@ -21,7 +21,7 @@ void move(Objects *object, Type type, int listIndex); //Moves parameter object a
 
 Objects* generateObjects(int amountOfPlayers){
 	Objects* container = (Objects*) malloc(sizeof(Objects));
-	container = insertPlayers(container, amountOfPlayers);
+	insertPlayers(container, amountOfPlayers);
 	return container;
 }
 
