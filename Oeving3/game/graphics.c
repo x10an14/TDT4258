@@ -1,7 +1,7 @@
 //Whatever includes we need to utilize our screen...
 #include <stdio.h>
-#include "listsAndConstants.h"
-#include "sampleStructs.h"
+#include "include/listsAndConstants.h"
+#include "include/sampleStructs.h"
 
 static char background_red = 15;
 static char background_green = 225;
