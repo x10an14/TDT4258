@@ -92,32 +92,37 @@ int redraw_square(Form* form){
 				}
 			}
 			
-		} else
+		} else if  (form->dx == 0 && form->dy == 0){
+
+		}else
 			printf("UNIMPLEMENTED?23\n");
 	} else 
 		printf("UNIMPLEMENTED?22\n");
 	return 1;
 }
 
-int increment_coordinates(Form* form){
+int increment_coordinates(Form* form, int check){
 	short successX, successY;
 	if (form->x + form->dx + form->radius < SCREEN_WIDTH && form->x + form->dx - form->radius > 0){
-		form->x += form->dx;
+		if (!check)
+			form->x += form->dx;
 		successX = 1;
 	} else {
-		form->x += form->dx;
+		//form->x += form->dx;
 		successX = 0;
 	}
 
 	if (form->y + form->dy + form->radius < SCREEN_HEIGHT && form->y + form->dy - form->radius > 0){
-		form->y += form->dy;
+		if (!check)
+			form->y += form->dy;
 		successY = 1;
 	} else {
 		successY = 0;
-		form->y += form->dy;
+		//form->y += form->dy;
 	}
 	return successY && successX;
 }
+
 
 int draw(Form* form){
 	if (form->formType == SQUARE)
@@ -125,53 +130,27 @@ int draw(Form* form){
 	return 1;
 }
 
-int move(Player* thePlayer){
-	/*draw_square(thePlayer->playerX, thePlayer->playerY, thePlayer->radius, background_red, background_green, background_blue);
-	thePlayer->playerX += thePlayer->dx;
-	if ((thePlayer->playerX + thePlayer->dx > SCREEN_WIDTH - thePlayer->radius) || (thePlayer->playerX + thePlayer->dx < 0+thePlayer->radius)){
-		thePlayer->dx = -thePlayer->dx;
-	} else
-		thePlayer->playerX += thePlayer->dx;
-	draw_square(thePlayer->playerX, thePlayer->playerY, thePlayer->radius, thePlayer->red, thePlayer->green, thePlayer->blue);
-	*/
-	//if ((thePlayer->form->x + thePlayer->form->dx > SCREEN_WIDTH - thePlayer->form->radius) || (thePlayer->form->x + thePlayer->form->dx < 0+thePlayer->form->radius))
-	//	thePlayer->form->dx = -thePlayer->form->dx;
-	//if ((thePlayer->form->y + thePlayer->form->dy > SCREEN_HEIGHT - thePlayer->form->radius) || (thePlayer->form->y + thePlayer->form->dy < 0+thePlayer->form->radius))
-	//	thePlayer->form->dy = -thePlayer->form->dy;
-
+int movePlayer(Player* thePlayer){
 	if (thePlayer->form->formType == SQUARE){
-		redraw_square(thePlayer->form);
-		if (!increment_coordinates(thePlayer->form)){
-			printf("increment_coord returned false, reversing dx dy\n");
-			thePlayer->form->dx = -thePlayer->form->dx;
-			thePlayer->form->dy = -thePlayer->form->dy;
+		if (increment_coordinates(thePlayer->form, 1)){
+			redraw_square(thePlayer->form);
+			increment_coordinates(thePlayer->form, 0);
+		} else {
+			printf("increment_coord returned false, stopping object\n");
+			thePlayer->form->dx = 0;
+			thePlayer->form->dy = 0;
 			draw(thePlayer->form);
-			//if (!increment_coordinates(thePlayer->form))
-			//	printf("increment_coord returned false second time, something is wrong\n");
 		}
 	} else 
 		printf("UNIMPLEMENTED?11\n");
-
-
 }
 
-int make_new_frame(Player* thePlayer){
-	//int dRed = 2;
-	//int dGreen = -2;
+int make_new_frame(Objects* container){
+	
+	draw(container->playerList[0]->form);
 
-	//if ((background_red < 240) && (background_red > 5) && (background_green < 240) && (background_green > 5)){
-	//	background_red+=dRed;
-	//	background_green+=dGreen;
-	//} else {
-	//	dRed = -dRed;
-	//	dGreen = -dGreen;
-	//	background_red+=dRed;
-	//	background_green+=dGreen;
-	//}
-	draw(thePlayer->form);
-	move(thePlayer);
 
-	//draw_background(screen, background_red, background_green, background_blue);
+	move(container->playerList[0]);
 	return 0;
 }
 

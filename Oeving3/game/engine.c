@@ -26,7 +26,7 @@ void loseHealth(Type type, int listIndex, int amount){
 	}
 }
 
-void move(Type type, int listIndex){
+void computeMoves(Type type, int listIndex){
 	switch(type){
 		case PLAYER:
 		break;
@@ -44,8 +44,6 @@ void startGame(){
 	int i;
 	while(1){
 		usleep(30000);
-		for(i = 0; i < container->playerSize; i++){
-			make_new_frame(container->playerList[i]);
-		}
+		make_new_frame(container);
 	}
 }

@@ -10,11 +10,13 @@ void insertPlayers(Objects *container, int amountOfPlayers){
 	int i;
 	for(i = 0; i < amountOfPlayers; i++){
 		List[i] = malloc(sizeof(Player));
-		List[i]->playerX = 150; List[i]->playerY = 220;
-		List[i]->dx = 6; List[i]->dy = 0;
-		List[i]->radius = 15;
-		List[i]->col_red = 0; List[i]->col_blue = 0;
-		List[i]->col_green = 0;
+		List[i]->form = (Form*) malloc(sizeof(Form));
+		List[i]->form->x = 150; List[i]->form->y = 150;
+		List[i]->form->dx = 0; List[i]->form->dy = -5;
+		List[i]->form->radius = 15;
+		List[i]->form->formType = SQUARE;
+		List[i]->form->red = 0; List[i]->form->blue = 0;
+		List[i]->form->green = 0;
 	}
 	container->playerList = List;
 	container->playerSize = amountOfPlayers;
