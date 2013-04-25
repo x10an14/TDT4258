@@ -20,11 +20,11 @@ void refreshTick();/* Function which should be called at each "tick", and refres
  /*To write to screen, use fbfd, open /dev/fbd0(?), and then use mmap to write to it. */
 
 void startGame(player *player){
-
+	FILE *screen = setImageStrcut();
 	/* Infinite loop for now */
 	while(1){
 		usleep(100000);
 
-		make_new_frame(lcdDriver, player);
+		make_new_frame(screen, player);
 	}
 }

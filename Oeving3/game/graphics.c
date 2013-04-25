@@ -8,10 +8,11 @@ char background_green = 225;
 char background_blue = 15;
 FILE *lcdDriver;
 
-void setImageStruct(void){
+FILE setImageStruct(void){
 	lcdDriver = fopen("/dev/fb0","r+");
 	printf("Opened lcdDriver file: %d errno %s\n", lcdDriver, strerror(errno));
 	draw_background(lcdDriver);
+	return lcdDriver;
 }
 
 int draw_background(FILE* screen){
