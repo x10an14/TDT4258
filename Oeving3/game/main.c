@@ -14,10 +14,10 @@ int main(){
 	printf("Initializing game...\n");
 
 	/* Initialize structs */
-	Objects *container = generateObjects(1);
 	setUpLCDDriver();
+	Objects *container = generateObjects(1);
 
 	startGame();
-	
+
 	return 0;
 }
