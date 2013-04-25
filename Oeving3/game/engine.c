@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include "include/sampleStructs.h"
 
+Objects container;
+
 /* Prototypes */
 void generateMap(void); //Generate map and put player in the centre.
 void startGame(Player *player);
-Player* generatePlayer(Player *player);
+Objects* generateObjects(int amountOfPlayers);
 
 void spawnEnemies(short amount, short type, short difficulty);//Self-explanatory
 void shotHit(void); //When drawing the map (screen), check to see if a player or enemy will get hit by a shot
@@ -16,19 +18,20 @@ void loseHealth(Objects *object, Type type, int listIndex, int amount);//Lose he
 
 void move(Objects *object, Type type, int listIndex); //Moves parameter object according to its role, if player, then like so, if enemy, then like so, and if shot, then like so.
 
-void refreshTick();/* Function which should be called at each "tick", and refresh all sprites on screen after having called move, by first calling move() and then calling function(s) in graphics. */
 
-
-Player* generatePlayer(Player *player){
-	player->playerX = 150;
-	player->playerY = 220;
-	player->dx = 6;
-	player->dy = 0;
-	player->radius = 15;
-	player->col_red = 0;
-	player->col_blue = 0;
-	player->col_green = 0;
-	return player;
+Objects* generateObjects(int amountOfPlayers){
+	Objects* container = malloc(sizeof(Objects));
+	Player **List[amountOfPlayers];
+	for(int i = 0; i < amountOfPlayers; i++){
+		List[i] =  malloc(sizeof(Player));
+		List[i]->playerX = 150; List[i]->playerY = 220;
+		List[i]->dx = 6; List[i]->dy = 0;
+		List[i]->radius = 15;
+		List[i]->col_red = 0; List[i]->col_blue = 0;
+		List[i]->col_green = 0;
+	}
+	container = insertPlayers(container, amountOfPlayers, List);
+	return container;
 }
 
 void loseHealth(Objects *object, Type type, int listIndex, int amount){
@@ -58,10 +61,12 @@ void move(Objects *object, Type type, int listIndex){
 	}
 }
 
-void startGame(Player *player){
+void startGame(Objects *container){
 	/* Infinite loop for now */
 	while(1){
 		usleep(100000);
-		make_new_frame(player);
+		for(i = 0; i < container->playerSize; i++){
+			make_new_frame(container->playerList[i]);
+		}
 	}
 }

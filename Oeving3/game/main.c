@@ -13,9 +13,9 @@ int main(){
 	printf("Initializing game...\n");
 
 	/* Initialize structs */
-	Player playerOne;
-	setImageStruct();
-	startGame(&playerOne);
+	Objects *container = generateObjects(1);
+
+	startGame(container);
 
 	return 0;
 }
