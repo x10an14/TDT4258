@@ -157,9 +157,10 @@ int movePlayer(Form *form, int listIndex){
 }
 
 void make_new_frame(Objects* container){ //Supposed to move all objects
-	int i = 0;
+	int i;
 	Form *form;
 	for(i = 0; i < container->playerMax; i++){
+		printf("Getting playerList[%d] and sending it to movePlayer\n", i);
 		form = container->playerList[i]->form;
 		movePlayer(form, i);
 	}
