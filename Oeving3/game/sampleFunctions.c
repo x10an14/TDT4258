@@ -27,14 +27,6 @@ void insertPlayers(Objects *container, int amountOfPlayers){
 	container->playerMax = amountOfPlayers;
 }
 
-void insertShot(Objects *container, int startX, int startY, int damage){
-
-}
-
-void killPlayer(Objects *container, int listIndex){
-
-}
-
 void insertFirstEnemy(Objects *container){
 	Enemy **List = malloc(sizeof(Enemy*));
 	List[0] = malloc(sizeof(Enemy));
@@ -50,16 +42,47 @@ void insertFirstEnemy(Objects *container){
 	form->formType = SQUARE;
 	form->red = 253; form->blue = 0;
 	form->green = 0;
+
 	List[0]->form = form;
 	draw(List[0]->form);
+
 	container->enemyList = List;
 	container->enemyMax = 1;
 	container->enemySize = 1;
 }
 
-void insertOneEnemy(Objects *container, int startX, int startY, int health){
+void insertEnemy(Objects *container, int startX, int startY, int health, int listIndex){
 	if(container->enemySize == container->enemyMax){
 		container->enemyList = (Enemy**) realloc(container->enemyList, 2*container->enemyMax*sizeof(Enemy*));
 	}
 
+
+
 }
+
+void insertShot(Objects *container, int startX, int startY, int damage){
+
+}
+
+void killPlayer(Objects *container, int listIndex){
+	free(container->playerList[listIndex]->form);
+	free(container->playerList[listIndex]);
+	if(listIndex != container->playerMax){
+		int i;
+		for(i = listIndex+1; i < container->playerMax; i++){
+			container->playerList[i-1] = container->playerList[i];
+		}
+	}
+}
+
+void killEnemy(Objects *container, int listIndex){
+	free(container->enemyList[listIndex]->form);
+	free(container->enemyList[listIndex]);
+	if(listIndex != container->playerMax){
+		int i;
+		for (i = listIndex+1; i < container->enemyMax; i++){
+			container->enemyList[i-1] = container->enemyList[i];
+		}
+	}
+}
+

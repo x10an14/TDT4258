@@ -39,6 +39,10 @@ void loseHealth(Type type, int listIndex, int amount){
 		break;
 
 		case ENEMY:
+		{container->enemyList[listIndex]->health -= amount;
+		if(container->enemyList[listIndex]->health <= 0){
+			killEnemy(container, listIndex);
+		}}
 		break;
 
 		case SHOT:
@@ -69,7 +73,6 @@ int isShotInsideScreen(int listIndex){
 }
 
 void computeMove(Type type, int listIndex){
-
 	switch(type){
 		case PLAYER:
 		{Form *playForm = container->playerList[listIndex]->form;
@@ -77,6 +80,7 @@ void computeMove(Type type, int listIndex){
 			if(isButtonDown(PLAYER1_SHOOT_BUTTON)){
 				// FIRE!
 			}
+
 			if (isButtonDown(PLAYER1_LEFT_BUTTON) && !isButtonDown(PLAYER1_RIGHT_BUTTON)){
 
 				playForm->dy = -PLAYERSPEED;
@@ -141,6 +145,7 @@ int checkCollision(Form *form1, Form *form2){
 		botForm = form1;
 		topForm = form2;
 	}
+
 	topFormXleft = topForm->x - topForm->radius;
 	topFormXright = topForm->x + topForm->radius;
 	topFormYbot = topForm->y + topForm->radius;
@@ -160,8 +165,10 @@ int checkCollision(Form *form1, Form *form2){
 
 void startGame(){
 	initiateIO();
+
 	printf("Going into a wait...\n");
 	usleep(250000);
+
 	lightLeds(0x5f);
 	if (isButtonDown(PLAYER1_LEFT_BUTTON) && !isButtonDown(PLAYER1_RIGHT_BUTTON))
 		printf("BUTTON DOWN! BUTTON DOWN! %d\n", isButtonDown(PLAYER1_RIGHT_BUTTON));
@@ -183,7 +190,15 @@ void make_new_frame(){ //Supposed to move all objects
 		form = container->playerList[i]->form;
 		// printf("Calling computeMove...\n");
 		computeMove(PLAYER, i);
-		// printf("Calling movePlayer...\n");
-		movePlayer(form, i);
+		
+		if(isPlayerInsideScreen(listIndex)){
+			redraw_square(form);
+			incrementCoordinates(PLAYER, listIndex);
+		} else{
+			printf("increment_coord returned false, stopping object\n");
+			form->dx = 0;
+			form->dy = 0;
+			draw(form);
+		}
 	}
 }
