@@ -3,6 +3,7 @@
 /* Prototypes */
 void generateMap(void); //Generate map and put player in the centre.
 
+void startGame(player *player);
 
 void spawnEnemies(short amount, short type, short difficulty);//Self-explanatory
 void shotHit(void); //When drawing the map (screen), check to see if a player or enemy will get hit by a shot
@@ -17,3 +18,13 @@ void move(void *obj); //Moves parameter object according to its role, if player,
 void refreshTick();/* Function which should be called at each "tick", and refresh all sprites on screen after having called move, by first calling move() and then calling function(s) in graphics. */
 
  /*To write to screen, use fbfd, open /dev/fbd0(?), and then use mmap to write to it. */
+
+void startGame(player *player){
+
+	/* Infinite loop for now */
+	while(1){
+		usleep(100000);
+
+		make_new_frame(lcdDriver, player);
+	}
+}

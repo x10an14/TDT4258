@@ -3,9 +3,16 @@
 #include "include/listsAndConstants.h"
 #include "include/sampleStructs.h"
 
-static char background_red = 15;
-static char background_green = 225;
-static char background_blue = 15;
+char background_red = 15;
+char background_green = 225;
+char background_blue = 15;
+FILE *lcdDriver;
+
+void setImageStruct(void){
+	lcdDriver = fopen("/dev/fb0","r+");
+	printf("Opened lcdDriver file: %d errno %s\n", lcdDriver, strerror(errno));
+	draw_background(lcdDriver);
+}
 
 int draw_background(FILE* screen){
 	int addr = 0;
