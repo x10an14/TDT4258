@@ -193,7 +193,7 @@ void make_new_frame(){ //Supposed to move all objects
 
 		if(isPlayerInsideScreen(i)){
 			redraw_square(form);
-			incrementCoordinates(PLAYER, listIndex);
+			incrementCoordinates(PLAYER, i);
 		} else{
 			printf("increment_coord returned false, stopping object\n");
 			form->dx = 0;
