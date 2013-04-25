@@ -1,8 +1,7 @@
 // #include <linux/soundcard.h> //For sound (Not currently in use)
 #include <stdio.h>
 #include <unistd.h>
-#include <sys/types.h>
-#include <errno.h>
+// #include <sys/types.h>
 
 /* Project include files */
 #include "include/listsAndConstants.h"

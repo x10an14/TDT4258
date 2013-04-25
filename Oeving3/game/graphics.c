@@ -1,5 +1,6 @@
 //Whatever includes we need to utilize our screen...
 #include <stdio.h>
+#include <errno.h>
 #include "include/listsAndConstants.h"
 #include "include/sampleStructs.h"
 
