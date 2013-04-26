@@ -110,7 +110,10 @@ void computeMove(Type type, int listIndex){
 		break;
 
 		case ENEMY:
-		{Form *enemForm = container->enemyList[listIndex]->form;
+		{Form *enemyForm = container->enemyList[listIndex]->form;
+			int check;
+			check = checkEnemyToPlayerOrGround(enemyForm);
+			printf("check is %d\n", check);
 		//Below code is outdated and plain wrong
 		// int nextX = enemForm->x + enemForm->dx + enemForm->radius;
 		// int nextY = enemForm->y + enemForm->dy + enemForm->radius;
@@ -222,13 +225,23 @@ void movePlayer(int listIndex){
 		redraw_square(form);
 	}
 }
+void moveEnemy(int listIndex){
+	Form *form = container->enemyList[listIndex]->form;
+	redraw_square(form);
+}
 
 void make_new_frame(){ //Supposed to move all objects
 	int i;
 	Form *form;
-	for(i = 0; i < container->playerMax; i++){
+	for(i = 0; i < container->playerSize; i++){
 		form = container->playerList[i]->form;
 		computeMove(PLAYER, i);
 		movePlayer(i);
 	}
+
+	for(i = 0; i < container->enemySize; i++){
+		computeMove(ENEMY, i);
+		moveEnemy(i);
+	}
+
 }
