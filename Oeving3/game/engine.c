@@ -21,7 +21,7 @@ Objects* generateObjects(int amountOfPlayers){
 }
 
 void turnOnLEDS(){
-	lightLeds(0xff);
+	//lightLeds(0xff);
 }
 
 void loseHealth(Type type, int listIndex, int amount){
@@ -34,7 +34,7 @@ void loseHealth(Type type, int listIndex, int amount){
 		} else{ //Turn off next LED
 			int dividend = container->playerList[listIndex]->healthMax / 8;
 			int leds = container->playerList[listIndex]->health / dividend;
-			lightLeds(leds);
+			//lightLeds(leds);
 		}}
 		break;
 
@@ -73,7 +73,7 @@ int isShotInsideScreen(int listIndex){
 }
 
 void computeMove(Type type, int listIndex){
-	printf("Entered compute moves...\n");
+	//printf("Entered compute moves...\n");
 
 	switch(type){
 		case PLAYER:
@@ -83,7 +83,7 @@ void computeMove(Type type, int listIndex){
 		printf("setting playform...\n");
 
 			Form *playForm = container->playerList[listIndex]->form;
-		printf("passed playform...\n");
+		//printf("passed playform...\n");
 
 			int playerLeftButDown, playerRightButDown, playerShootButDown;
 			if (listIndex == 0){
@@ -176,7 +176,7 @@ int checkCollision(Form *form1, Form *form2){
 void startGame(){
 	initiateIO();
 
-	lightLeds(0x5f);
+	//lightLeds(0x5f);
 	if (isButtonDown(PLAYER1_LEFT_BUTTON) && !isButtonDown(PLAYER1_RIGHT_BUTTON))
 		printf("BUTTON DOWN! BUTTON DOWN! %d\n", isButtonDown(PLAYER1_RIGHT_BUTTON));
 

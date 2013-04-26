@@ -17,10 +17,17 @@ int initiateIO(){
 
 char pullButtonsState(){
 	buttonsDriver = (FILE*) fopen("/dev/swdriver","r+");
-	char buff[2];
-	fgets(buff, 2, buttonsDriver);
-	close(buttonsDriver);
-	sscanf(buff, "%x", &buttonStatus);
+
+	char buff[3];
+	printf("running fgets\n");
+
+	fgets(buff, 3, buttonsDriver);
+	printf("running close\n");
+
+	fclose(buttonsDriver);
+
+	sscanf(buff, "%x\n", &buttonStatus);
+	printf("%s\n", buff);
 	return buttonStatus;
 }
 int isButtonDown(int buttonNumber){
