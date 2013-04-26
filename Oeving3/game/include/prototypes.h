@@ -7,7 +7,7 @@
 void playBeep(void);
 void playCash(void);
 void playBomb(void);
-void playCurrent(void);
+int playCurrent(void);
 void initializeSound(void);
 void closeSound(void);
 
@@ -37,4 +37,4 @@ void playSound(/*Pointer to sound to play (we were told that we were given some 
 void loseHealth(Type type, int listIndex, int amount);//Lose health, maybe flash each time? Continously flash when health is <= 3? Called by shotHit, when true. If 0, kill player/enemy.
 void computeMove(Type type, int listIndex); //Moves parameter object according to its role, if player, then like so, if enemy, then like so, and if shot, then like so.
 
-#endif
+#endif 

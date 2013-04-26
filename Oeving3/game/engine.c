@@ -102,7 +102,7 @@ void computeMove(Type type, int listIndex){
 			moveEnemy(listIndex);
 			enemyForm->y += enemyForm->dy;
 		} else  if(check == 1){ // collision with player
-			playCash();
+			//playCash(); //This function call goes to slow since it's called in the middle of more heavy-weight functions. Therefore commented away.
 			draw_square_background_color(enemyForm->x, enemyForm->y, enemyForm->radius);
 			killEnemy(container, listIndex);
 			playerPoints+=10;
@@ -160,7 +160,7 @@ int checkEnemyToPlayerOrGround(Form* form){
 
 void startGame(){
 	srand(time(NULL));
-	printf("enter startGame\n");
+	printf("Entered startGame...\n");
 
 	playBeep();
 	int tick = 0;
@@ -185,6 +185,9 @@ void startGame(){
 	}
 	//Game over
 	playBomb();
+	while(playCurrent != 0){
+		playCurrent();
+	}
 }
 
 void movePlayer(int listIndex){
@@ -211,7 +214,6 @@ void make_new_frame(){
 		computeMove(PLAYER, i);
 		movePlayer(i);
 	}
-
 	for(i = 0; i < container->enemySize; i++){
 		form = container->enemyList[i]->form;
 		computeMove(ENEMY, i);

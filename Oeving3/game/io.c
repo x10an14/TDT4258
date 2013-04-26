@@ -13,14 +13,21 @@ FILE *soundDriver;
 FILE *currentWav;
 
 char read[BUFFER_SIZE];
+int wavSize;
 int buttonStatus;
 
-void playCurrent(){
-	int progress = fread(&read, sizeof(char), BUFFER_SIZE, currentWav);
-	fwrite(&read, sizeof(char), BUFFER_SIZE, soundDriver);
-	if(progress < BUFFER_SIZE){
+int playCurrent(){
+	if(wavSize >= BUFFER_SIZE){
+		fread(&read, sizeof(char), BUFFER_SIZE, currentWav);
+		fwrite(&read, sizeof(char), BUFFER_SIZE, soundDriver);
+		wavSize -= BUFFER_SIZE;
+	} else if(wavSize > 0){
+		fread(&read, sizeof(char), wavSize, currentWav);
+		fwrite(&read, sizeof(char), wavSize, soundDriver);
+		wavSize = 0;
 		fclose(currentWav);
 	}
+	return wavSize;
 }
 
 void initializeSound(void){
@@ -44,6 +51,9 @@ void playBeep(){
 
 	//read header (ignore it)
 	input = fread(&read, sizeof(char), 16, currentWav);
+
+	//Play first run of sample
+	wavSize = 5434-37;
 	playCurrent();
 }
 
@@ -60,6 +70,9 @@ void playCash(){
 
 	//read header (ignore it)
 	input = fread(&read, sizeof(char), 16, currentWav);
+	
+	//Play first run of sample
+	wavSize = 13796-37;
 	playCurrent();
 }
 
@@ -76,6 +89,9 @@ void playBomb(){
 
 	//read header (ignore it)
 	input = fread(&read, sizeof(char), 16, currentWav);
+	
+	//Play first run of sample
+	wavSize = 13827-37;
 	playCurrent();
 }
 
