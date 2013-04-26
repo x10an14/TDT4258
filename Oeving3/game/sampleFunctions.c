@@ -38,7 +38,7 @@ void insertFirstEnemy(Objects *container){
 	form->x = radius + 10+5;
 	form->y = radius + 10+5;
 	form->dx = 0;
-	form->dy = 0;
+	form->dy = ENEMYSPEED;
 	form->formType = SQUARE;
 	form->red = 253; form->blue = 0;
 	form->green = 0;
@@ -72,7 +72,7 @@ void insertEnemy(Objects *container, int startX, int startY, int health, int lis
 	container->enemyList[i]->form->y = startY;
 	container->enemyList[i]->form->dy = 0;
 	container->enemyList[i]->form->dx = 0;
-	container->enemyList[i]->form->radius = 16;
+	container->enemyList[i]->form->radius = 10;
 	container->enemyList[i]->form->formType = SQUARE;
 	container->enemyList[i]->form->red = 253; container->enemyList[i]->form->blue = 0;
 	container->enemyList[i]->form->green = 0;
