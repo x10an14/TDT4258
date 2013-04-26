@@ -9,6 +9,7 @@ FILE* ledDriver;
 FILE *soundDriver;
 
 //Used in the dynamically playing function
+#include "include/listsAndConstants.h"
 FILE *currentWav;
 
 char read[BUFFER_SIZE];
@@ -42,7 +43,7 @@ void playBeep(){
 	ioctl(soundDriver, SOUND_PCM_WRITE_CHANNELS, &input);
 
 	//read header (ignore it)
-	input = fread(&read, sizeof(char), 16, cash);
+	input = fread(&read, sizeof(char), 16, currentWav);
 	playCurrent();
 }
 
@@ -74,7 +75,7 @@ void playBomb(){
 	ioctl(soundDriver, SOUND_PCM_WRITE_CHANNELS, &input);
 
 	//read header (ignore it)
-	input = fread(&read, sizeof(char), 16, bomb);
+	input = fread(&read, sizeof(char), 16, currentWav);
 	playCurrent();
 }
 
