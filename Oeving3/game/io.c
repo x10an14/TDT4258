@@ -6,19 +6,18 @@
 #define BUFFER_SIZE 1024
 FILE* buttonsDriver;
 FILE* ledDriver;
-FILE *soundDriver;
-FILE *cash;
-FILE *beep;
-FILE *bomb;
+FILE soundDriver;
+FILE cash;
+FILE beep;
+FILE bomb;
 char read[BUFFER_SIZE];
 
 int buttonStatus;
 
 
 void playBeep(){
-	printf("\nPLAYING SOUND!\n\n\n");
-	soundDriver = (FILE*) fopen("dev/dsp", "r+");
-	beep = (FILE*) fopen("/usr/beep.wav", "r");
+	&soundDriver = (FILE*) fopen("dev/dsp", "r+");
+	&beep = (FILE*) fopen("/usr/beep.wav", "r");
 
 	/* beep.wav setup for soundDriver */
 	int input = 11025; /* Fix samplerate */
@@ -30,23 +29,18 @@ void playBeep(){
 
 	//Set counter
 	int progress = 0;
-	printf("Calling fread next...\n");
 	//read header (ignore)
-	progress += fread(read, sizeof(char), 20, &beep);
+	progress += fread(&read, sizeof(char), 20, &beep);
 
-	printf("Starting while-loop...\n");
 	int oldProgress;
 	while(progress - oldProgress == BUFFER_SIZE){
 		oldProgress = progress;
 		progress += fread(read, sizeof(char), BUFFER_SIZE, &beep);
-		fwrite(read, sizeof(char), BUFFER_SIZE, &soundDriver);
+		fwrite(&read, sizeof(char), BUFFER_SIZE, &soundDriver);
 	}
-
-	printf("Done with while-loop and freeing files...\n");
 
 	fclose(&beep);
 	fclose(&soundDriver);
-	printf("\nDONE PLAYING SOUND!\n\n\n");
 }
 
 // void playCash(){
