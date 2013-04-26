@@ -19,7 +19,7 @@ $(TARGET): $(program_C_OBJS)
 all: gitCmd $(TARGET)
 
 test: $(TARGET)
-	scp ./SurvivalGame.out root@129.241.103.212:
+	scp ./SpaceInvaders.out root@129.241.103.212:
 
 gitCmd:
 	git pull

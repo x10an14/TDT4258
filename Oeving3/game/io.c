@@ -16,7 +16,6 @@ int buttonStatus;
 
 
 void playBeep(){
-	printf("Entering playBeep...\n");
 	soundDriver = (FILE*) fopen("dev/dsp", "r+");
 	beep = (FILE*) fopen("/root/beep.wav", "r");
 
@@ -31,11 +30,7 @@ void playBeep(){
 	//Set counter
 	int progress = 0;
 	//read header (ignore)
-	printf("Testy...\n");
-	printf("&read = %d, sizeof(char) = %d, BUFFER_SIZE = %d, and beep = %d\n", &read, sizeof(char), BUFFER_SIZE, beep);
 	progress += fread(&read, sizeof(char), 20, beep);
-
-	printf("Entering while loop...\n");
 
 	int oldProgress = -1004;
 	while(progress - oldProgress == BUFFER_SIZE){
@@ -43,10 +38,9 @@ void playBeep(){
 		progress += fread(&read, sizeof(char), BUFFER_SIZE, beep);
 		fwrite(&read, sizeof(char), BUFFER_SIZE, soundDriver);
 	}
-	printf("Exiting while-loop...\n");
+
 	fclose(beep);
 	fclose(soundDriver);
-	printf("Exiting playBeep...\n");
 }
 
 // void playCash(){
