@@ -75,7 +75,8 @@ int isShotInsideScreen(int listIndex){
 void computeMove(Type type, int listIndex){
 	switch(type){
 		case PLAYER:
-		{Form *playForm = container->playerList[listIndex]->form;
+		{printf("ENTERING computeMove...\n");
+		Form *playForm = container->playerList[listIndex]->form;
 		if (listIndex == 0){
 			if(isButtonDown(PLAYER1_SHOOT_BUTTON)){
 				// FIRE!
