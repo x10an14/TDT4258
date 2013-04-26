@@ -187,9 +187,9 @@ void startGame(){
 	while(!gameOver){
 		usleep(30000);
 		make_new_frame();
-	} else{ //Game over (Draw RED SCREEN with blinking light/arrow above reset button)
-
 	}
+	//Game over (Draw RED SCREEN with blinking light/arrow above reset button)
+
 }
 
 void movePlayer(int listIndex){
