@@ -54,10 +54,32 @@ void insertFirstEnemy(Objects *container){
 void insertEnemy(Objects *container, int startX, int startY, int health, int listIndex){
 	if(container->enemySize == container->enemyMax){
 		container->enemyList = (Enemy**) realloc(container->enemyList, 2*container->enemyMax*sizeof(Enemy*));
+		container->enemyMax *= 2;
 	}
 
+	int i = listIndex;
+	if(container->enemyMax == 1){
+		i = 1;
+	}
 
+	container->enemyList[i] = malloc(sizeof(Enemy));
+	container->enemyList[i]->form = malloc(sizeof(Form));
 
+	container->enemyList[i]->health = health;
+	container->enemyList[i]->healthMax = health;
+
+	container->enemyList[i]->form->x = startX;
+	container->enemyList[i]->form->y = startY;
+	container->enemyList[i]->form->dy = 0;
+	container->enemyList[i]->form->dx = 0;
+	container->enemyList[i]->form->radius = 16;
+	container->enemyList[i]->form->formType = SQUARE;
+	container->enemyList[i]->form->red = 253; container->enemyList[i]->form->blue = 0;
+	container->enemyList[i]->form->green = 0;
+
+	container->enemySize += 1;
+
+	draw(container->enemyList[i]->form);
 }
 
 void insertShot(Objects *container, int startX, int startY, int damage){

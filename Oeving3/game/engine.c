@@ -112,13 +112,15 @@ void computeMove(Type type, int listIndex){
 
 		case ENEMY:
 		{Form *enemForm = container->enemyList[listIndex]->form;
-		int nextX = enemForm->x + enemForm->dx + enemForm->radius;
-		int nextY = enemForm->y + enemForm->dy + enemForm->radius;
-		if(isEnemyInsideScreen(listIndex, nextX, nextY)){
-			enemForm->x = nextX - enemForm->radius;
-			enemForm->y = nextY - enemForm->radius;
+		//Below code is outdated and plain wrong
+		// int nextX = enemForm->x + enemForm->dx + enemForm->radius;
+		// int nextY = enemForm->y + enemForm->dy + enemForm->radius;
+		// if(isEnemyInsideScreen(listIndex, nextX, nextY)){
+		// 	enemForm->x = nextX - enemForm->radius;
+		// 	enemForm->y = nextY - enemForm->radius;
+		// }
+		// redraw_square(enemForm, listIndex);
 		}
-		redraw_square(enemForm, listIndex);}
 		break;
 
 		case SHOT:
@@ -175,14 +177,6 @@ int checkCollision(Form *form1, Form *form2){
 
 void startGame(){
 	initiateIO();
-
-	//lightLeds(0x5f);
-	if (isButtonDown(PLAYER1_LEFT_BUTTON) && !isButtonDown(PLAYER1_RIGHT_BUTTON))
-		printf("BUTTON DOWN! BUTTON DOWN! %d\n", isButtonDown(PLAYER1_RIGHT_BUTTON));
-
-//isButtonDown(PLAYER1_LEFT_BUTTON) && !isButtonDown(PLAYER1_RIGHT_BUTTON)
-
-	int i;
 	while(1){
 		usleep(30000);
 		make_new_frame();
@@ -192,23 +186,21 @@ void startGame(){
 void movePlayer(int listIndex){
 	Form *form = container->playerList[listIndex]->form;
 	if(isPlayerInsideScreen(listIndex)){
-			redraw_square(form);
-			incrementCoordinates(PLAYER, listIndex);
-		} else{
-			printf("Object hit wall...\n");
-			form->dx = 0;
-			redraw_square(form);
-		}
+		redraw_square(form);
+		incrementCoordinates(PLAYER, listIndex);
+	} else{
+		printf("Object hit wall...\n");
+		form->dx = 0;
+		redraw_square(form);
+	}
 }
 
 void make_new_frame(){ //Supposed to move all objects
 	int i;
 	Form *form;
-	// printf("I've come into make_new_frame...\n");
 	for(i = 0; i < container->playerMax; i++){
 		form = container->playerList[i]->form;
-		// printf("Calling computeMove...\n");
 		computeMove(PLAYER, i);
-		movePlayer(i);		
+		movePlayer(i);
 	}
 }
