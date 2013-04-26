@@ -14,10 +14,15 @@ char read[1028];
 int buttonStatus;
 
 int fileSize(FILE *file){
+	printf("Entered fileSize()...\n");
 	int size;
+	printf("Calling lseek...\n");
 	fseek(file, 0, SEEK_END);
+	printf("Done with lseek, calling ftell...\n");
 	size = ftell(file);
+	printf("Done with ftell, rewinding file...\n");
 	rewind(file);
+	printf("Done with fileSize(), calling return...\n");
 	return size;
 }
 
@@ -25,23 +30,18 @@ int fileSize(FILE *file){
 void playBeep(){
 	printf("\nPLAYING SOUND!\n\n\n");
 	soundDriver = (FILE*) fopen("dev/dsp", "r+");
-	printf("Finished opening soundDriver...\n");
 	beep = (FILE*) fopen("/usr/beep.wav", "r");
-
-	printf("Finished opening files...\n");
 
 	/* beep.wav setup for soundDriver */
 	int input = 11025; /* Fix samplerate */
 	ioctl(soundDriver, SOUND_PCM_WRITE_RATE, &input);
-	printf("First ioctl call done...\n");
 	input = 8; /* Fix bits/sample */
 	ioctl(soundDriver, SOUND_PCM_WRITE_BITS, &input);
-	printf("Second ioctl call done...\n");
 	input = 1; /* Fix amount of channels */
 	ioctl(soundDriver, SOUND_PCM_WRITE_CHANNELS, &input);
-	printf("Third ioctl call done...\n");
 
 	//Find size of file
+	printf("Calling fileSize()...\n");
 	int size = fileSize(beep);
 	//Set counter
 	int progress = 0;
