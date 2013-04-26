@@ -23,6 +23,7 @@ int fileSize(FILE *file){
 
 
 void playBeep(){
+	printf("\nPLAYING SOUND!\n\n\n");
 	soundDriver = (FILE*) fopen("dev/dsp", "r+");
 	beep = (FILE*) fopen("/usr/beep.wav", "r");
 
@@ -55,6 +56,7 @@ void playBeep(){
 
 	fclose(beep);
 	fclose(soundDriver);
+	printf("\nDONE PLAYING SOUND!\n\n\n");
 }
 
 // void playCash(){
