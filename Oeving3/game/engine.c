@@ -171,12 +171,6 @@ void startGame(){
 
 	printf("Done with lightLeds...\n");
 
-	if (isButtonDown(PLAYER1_LEFT_BUTTON) && !isButtonDown(PLAYER1_RIGHT_BUTTON))
-		printf("BUTTON DOWN! BUTTON DOWN! %d\n", isButtonDown(PLAYER1_RIGHT_BUTTON));
-
-	printf("Done with ifcheck in startGame...\n");
-//isButtonDown(PLAYER1_LEFT_BUTTON) && !isButtonDown(PLAYER1_RIGHT_BUTTON)
-
 	printf("Entering sleep-while...\n");
 	while(1){
 		usleep(30000);
