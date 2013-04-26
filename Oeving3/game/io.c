@@ -106,11 +106,14 @@ void playBomb(){
 }
 
 char pullButtonsState(){
+	printf("enter pullButtonsState\n");
 	buttonsDriver = (FILE*) fopen("/dev/swdriver","r+");
 	char buff[3];
 	fgets(buff, 3, buttonsDriver);
 	fclose(buttonsDriver);
 	sscanf(buff, "%x\n", &buttonStatus);
+	printf("leave pullButtonsState\n");
+
 	return buttonStatus;
 }
 
