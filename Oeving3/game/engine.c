@@ -76,18 +76,20 @@ void computeMove(Type type, int listIndex){
 	switch(type){
 		case PLAYER:
 		{Form *playForm = container->playerList[listIndex]->form;
+		if(playForm == NULL){
+			printf("Playform is NULL...\n");
+		}
 		if (listIndex == 0){
 			if(isButtonDown(PLAYER1_SHOOT_BUTTON)){
 				// FIRE!
 			}
 
 			if (isButtonDown(PLAYER1_LEFT_BUTTON) && !isButtonDown(PLAYER1_RIGHT_BUTTON)){
-
-				playForm->dy = -PLAYERSPEED;
+				playForm->dx = -PLAYERSPEED;
 			} else if (isButtonDown(PLAYER1_RIGHT_BUTTON) && !isButtonDown(PLAYER1_LEFT_BUTTON)){
-				playForm->dy = PLAYERSPEED;
+				playForm->dx = PLAYERSPEED;
 			} else {
-				playForm->dy = 0;
+				playForm->dx = 0;
 			}
 		} else if (listIndex == 1){
 			if(isButtonDown(PLAYER1_SHOOT_BUTTON)){
