@@ -30,7 +30,7 @@ void playBeep(){
 	//Set counter
 	int progress = 0;
 	//read header (ignore)
-	progress += fread(&read, sizeof(char), 20, beep);
+	progress += fread(&read, sizeof(char), 16, beep);
 
 	int oldProgress = -(BUFFER_SIZE-progress);
 	while(progress - oldProgress == BUFFER_SIZE){
@@ -44,9 +44,11 @@ void playBeep(){
 }
 
 void playCash(){
+	printf("Entered playCash()...\n");
 	soundDriver = (FILE*) fopen("dev/dsp", "r+");
 	cash = (FILE*) fopen("/root/cash.wav", "r");
 
+	printf("Opened playCash files...\n");
 	/* cash.wav setup for soundDriver */
 	int input = 22050; /* Fix samplerate */
 	ioctl(soundDriver, SOUND_PCM_WRITE_RATE, &input);
@@ -55,17 +57,21 @@ void playCash(){
 	input = 1; /* Fix amount of channels */
 	ioctl(soundDriver, SOUND_PCM_WRITE_CHANNELS, &input);
 
+	printf("Done with ioctl calls, setting counters and skipping header...\n");
 	//Set counter
 	int progress = 0;
 	//read header (ignore)
-	progress += fread(&read, sizeof(char), 20, cash);
+	progress += fread(&read, sizeof(char), 16, cash);
 
+	printf("Entering while-loop...\n", );
 	int oldProgress = -(BUFFER_SIZE-progress);
 	while(progress - oldProgress == BUFFER_SIZE){
 		oldProgress = progress;
 		progress += fread(&read, sizeof(char), BUFFER_SIZE, cash);
 		fwrite(&read, sizeof(char), BUFFER_SIZE, soundDriver);
 	}
+
+	printf("Exiting while-loop...\n");
 
 	fclose(cash);
 	fclose(soundDriver);

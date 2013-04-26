@@ -12,6 +12,8 @@ Objects* generateObjects(int amountOfPlayers){
 
 	playBeep();
 	playCash();
+	playBomb();
+	printf("Done playing sounds...\n\n\n");
 
 	container = (Objects*) malloc(sizeof(Objects));
 
