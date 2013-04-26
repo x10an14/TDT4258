@@ -174,6 +174,32 @@ int checkCollision(Form *form1, Form *form2){
 	}
 }
 
+int checkEnemyToPlayerOrGround(Form* form){
+	printf("beginning checkEnemyToPlayerOrGround\n");
+	int ex, ey, edy, er, px, pr, py;
+	int output;
+
+	ex = form->x; ey = form->y; edy = form->dy; er = form->radius;
+	px = container->playerList[0]->form->x; py = container->playerList[0]->form->y;
+	pr = container->playerList[0]->form->radius;
+	if (ey+edy >= py){
+		output = 2;
+	} else if(er+pr+edy >= py-ey){
+		if((ex >= px) && (ex-px < er+pr)){
+			output = 1;
+		} else if ((px > ex) && (px-ex < er+pr)){
+			output = 1;
+		} else {
+			output = 0;
+		}
+	} else {
+		output = 0;
+	}
+	printf("ex %d ey %d px %d py %d out=%d\n", ex, ey, px, py, output);
+	return output;
+
+}
+
 void startGame(){
 	playBeep();
 	while(!gameOver){
