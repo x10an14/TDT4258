@@ -37,7 +37,7 @@ void playBeep(){
 
 	printf("Entering while loop...\n");
 
-	int oldProgress;
+	int oldProgress = -1004;
 	while(progress - oldProgress == BUFFER_SIZE){
 		oldProgress = progress;
 		progress += fread(&read, sizeof(char), BUFFER_SIZE, beep);
