@@ -78,9 +78,7 @@ void computeMove(Type type, int listIndex){
 	switch(type){
 		case PLAYER:
 		{
-			printf("compute but state next \n");
 		pullButtonsState();
-		printf("setting playform...\n");
 
 			Form *playForm = container->playerList[listIndex]->form;
 		//printf("passed playform...\n");
@@ -126,7 +124,6 @@ void computeMove(Type type, int listIndex){
 		case SHOT:
 		break;
 	}
-	printf("leaving compute moves...\n");
 
 }
 
@@ -176,7 +173,6 @@ int checkCollision(Form *form1, Form *form2){
 }
 
 void startGame(){
-	initiateIO();
 	while(1){
 		usleep(30000);
 		make_new_frame();
