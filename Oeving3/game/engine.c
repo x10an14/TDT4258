@@ -163,7 +163,6 @@ int checkCollision(Form *form1, Form *form2){
 }
 
 void startGame(){
-	printf("Entered startGame...\n");
 
 	initiateIO();
 
@@ -175,6 +174,7 @@ void startGame(){
 	if (isButtonDown(PLAYER1_LEFT_BUTTON) && !isButtonDown(PLAYER1_RIGHT_BUTTON))
 		printf("BUTTON DOWN! BUTTON DOWN! %d\n", isButtonDown(PLAYER1_RIGHT_BUTTON));
 
+	printf("Done with ifcheck in startGame...\n");
 //isButtonDown(PLAYER1_LEFT_BUTTON) && !isButtonDown(PLAYER1_RIGHT_BUTTON)
 
 	printf("Entering sleep-while...\n");
