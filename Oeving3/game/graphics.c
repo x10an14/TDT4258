@@ -54,11 +54,7 @@ int draw_square(int x, int y, int radius, char red, char green, char blue){
 }
 
 int redraw_square(Form *form){
-<<<<<<< HEAD
 	printf("Entered redraw_square...dx%d dy%d\n", form->dx, form->dy);
-=======
-	// printf("Entered redraw_square...\n");
->>>>>>> e3b05445107831e9d0430f8ff73956ee70d23fcd
 	if (form->formType == SQUARE){
 		if (form->dx != 0 && form->dy == 0){
 			//printf("Entered dxredraw...dx%d dy%d\n", form->dx, form->dy);
