@@ -2,7 +2,6 @@
 
 
 /* IO prototypes */
-void fileSize(FILE *file);
 void playBeep(void);
 void playCash(void);
 void playBomp(void);

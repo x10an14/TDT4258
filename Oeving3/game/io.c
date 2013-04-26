@@ -33,8 +33,9 @@ void playBeep(){
 	progress += fread(read, sizeof(char), 20, beep);
 
 	printf("Starting while-loop...\n");
-
-	while(progress < size){
+	int oldProgress;
+	while(oldProgress < progress){
+		oldProgress = progress;
 		progress += fread(read, sizeof(char), 1024, beep);
 		fwrite(read, sizeof(char), 1024, soundDriver);
 	}
