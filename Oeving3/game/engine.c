@@ -137,6 +137,7 @@ int checkCollision(Form *form1, Form *form2){
 	Form *botForm, *topForm;
 	int topFormXleft, topFormXright, topFormYbot;
 	int botFormXleft, botFormXright, botFormYtop;
+
 	if(form1->y >= form2->y){
 		botForm = form2;
 		topForm = form1;
@@ -163,9 +164,11 @@ int checkCollision(Form *form1, Form *form2){
 }
 
 void startGame(){
-	while(1){
+	while(!gameOver){
 		usleep(30000);
 		make_new_frame();
+	} else{ //Game over (Draw RED SCREEN with blinking light/arrow above reset button)
+
 	}
 }
 
