@@ -76,14 +76,11 @@ void computeMove(Type type, int listIndex){
 	switch(type){
 		case PLAYER:
 		{Form *playForm = container->playerList[listIndex]->form;
-		if(playForm == NULL){
-			printf("Playform is NULL...\n");
-		}
 		if (listIndex == 0){
 			if(isButtonDown(PLAYER1_SHOOT_BUTTON)){
 				// FIRE!
 			}
-
+			printf("PRINT!!!\n");
 			if (isButtonDown(PLAYER1_LEFT_BUTTON) && !isButtonDown(PLAYER1_RIGHT_BUTTON)){
 				playForm->dx = -PLAYERSPEED;
 			} else if (isButtonDown(PLAYER1_RIGHT_BUTTON) && !isButtonDown(PLAYER1_LEFT_BUTTON)){
@@ -105,13 +102,15 @@ void computeMove(Type type, int listIndex){
 
 		case ENEMY:
 		{Form *enemForm = container->enemyList[listIndex]->form;
-		int nextX = enemForm->x + enemForm->dx + enemForm->radius;
-		int nextY = enemForm->y + enemForm->dy + enemForm->radius;
-		if(isEnemyInsideScreen(listIndex, nextX, nextY)){
-			enemForm->x = nextX - enemForm->radius;
-			enemForm->y = nextY - enemForm->radius;
+		//Below code is outdated and plain wrong
+		// int nextX = enemForm->x + enemForm->dx + enemForm->radius;
+		// int nextY = enemForm->y + enemForm->dy + enemForm->radius;
+		// if(isEnemyInsideScreen(listIndex, nextX, nextY)){
+		// 	enemForm->x = nextX - enemForm->radius;
+		// 	enemForm->y = nextY - enemForm->radius;
+		// }
+		// redraw_square(enemForm, listIndex);
 		}
-		redraw_square(enemForm, listIndex);}
 		break;
 
 		case SHOT:
