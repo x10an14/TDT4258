@@ -97,9 +97,16 @@ static int driver_release (struct inode *inode, struct file *filp) {
 
 static ssize_t driver_read (struct file *filp, char __user *buff,
               size_t count, loff_t *offp) {
+  printk(KERN_ALERT "entering read in driver");
   size_t out;
-  sprintf(buff, "%x", read_SW());
+  char kernel_space_buffer[2];
+  
+  sprintf(kernel_space_buffer, "%x", read_SW());
+
+  //sprintf(buff, "%x\n", read_SW());
+  copy_to_user(buff, kernel_space_buffer, 2);
   out = count;
+  printk(KERN_ALERT "returning from read in driver %x", read_SW());
 
   //printk(KERN_ALERT "read called, ouputting %x, out = %d\n", currentLedStatus, out);
   return out;

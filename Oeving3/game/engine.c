@@ -52,8 +52,8 @@ void loseHealth(Type type, int listIndex, int amount){
 
 int isPlayerInsideScreen(int listIndex){
 	Form *player = container->playerList[listIndex]->form;
-	int nextX = player->x + player->dx + player->radius;
-	if(nextX >= 0 && nextX < SCREEN_WIDTH){
+	int nextX = player->x + player->dx;
+	if((nextX - player->radius) >= 0 && (nextX + player->radius) < SCREEN_WIDTH){
 		return 1;
 	}
 	return 0;
@@ -73,32 +73,41 @@ int isShotInsideScreen(int listIndex){
 }
 
 void computeMove(Type type, int listIndex){
+	printf("Entered compute moves...\n");
+
 	switch(type){
 		case PLAYER:
-		{Form *playForm = container->playerList[listIndex]->form;
-		if (listIndex == 0){
-			if(isButtonDown(PLAYER1_SHOOT_BUTTON)){
-				// FIRE!
-			}
+		{
+			printf("compute but state next \n");
+		pullButtonsState();
+		printf("setting playform...\n");
 
-			if (isButtonDown(PLAYER1_LEFT_BUTTON) && !isButtonDown(PLAYER1_RIGHT_BUTTON)){
+			Form *playForm = container->playerList[listIndex]->form;
+		printf("passed playform...\n");
 
-				playForm->dy = -PLAYERSPEED;
-			} else if (isButtonDown(PLAYER1_RIGHT_BUTTON) && !isButtonDown(PLAYER1_LEFT_BUTTON)){
-				playForm->dy = PLAYERSPEED;
+			int playerLeftButDown, playerRightButDown, playerShootButDown;
+			if (listIndex == 0){
+				playerLeftButDown = isButtonDown(PLAYER1_LEFT_BUTTON);
+				playerRightButDown = isButtonDown(PLAYER1_RIGHT_BUTTON);
+				playerShootButDown = isButtonDown(PLAYER1_SHOOT_BUTTON);
 			} else {
-				playForm->dy = 0;
+				playerLeftButDown = isButtonDown(PLAYER2_LEFT_BUTTON);
+				playerRightButDown = isButtonDown(PLAYER2_RIGHT_BUTTON);
+				playerShootButDown = isButtonDown(PLAYER2_SHOOT_BUTTON);
 			}
-		} else if (listIndex == 1){
-			if(isButtonDown(PLAYER1_SHOOT_BUTTON)){
-				// FIRE!
+
+			if(playerShootButDown){
+					// FIRE!
 			}
-			if (isButtonDown(PLAYER1_LEFT_BUTTON) && !isButtonDown(PLAYER1_RIGHT_BUTTON)){
+			if ((playerLeftButDown == 1) && (playerRightButDown == 0)){
 				playForm->dx = -PLAYERSPEED;
-			} else if (isButtonDown(PLAYER1_RIGHT_BUTTON) && !isButtonDown(PLAYER1_LEFT_BUTTON)){
+			} else if ((playerLeftButDown == 0) && (playerRightButDown == 1)){
 				playForm->dx = PLAYERSPEED;
+			} else {
+				playForm->dx = 0;
 			}
-		}}
+		} 
+		
 		break;
 
 		case ENEMY:
@@ -115,6 +124,8 @@ void computeMove(Type type, int listIndex){
 		case SHOT:
 		break;
 	}
+	printf("leaving compute moves...\n");
+
 }
 
 void incrementCoordinates(Type type, int listIndex){

@@ -39,6 +39,7 @@ int putPixel(FILE* screen, char red, char green, char blue){
 }
 
 int draw_square(int x, int y, int radius, char red, char green, char blue){
+	printf("Entered draw_square...\n");
 	int file_Y, file_X;
 	for (file_Y = (y-radius)*SCREEN_WIDTH*3 ; file_Y < (y+radius)*SCREEN_WIDTH*3 ; file_Y+=SCREEN_WIDTH*3){
 		file_X = (x-radius)*3;
@@ -53,10 +54,52 @@ int draw_square(int x, int y, int radius, char red, char green, char blue){
 }
 
 int redraw_square(Form *form){
-	printf("Entered redraw_square...\n");
+	printf("Entered redraw_square...dx%d dy%d\n", form->dx, form->dy);
 	if (form->formType == SQUARE){
 		if (form->dx != 0 && form->dy == 0){
+			//printf("Entered dxredraw...dx%d dy%d\n", form->dx, form->dy);
 
+			int file_X, file_Y;
+			if (form->dx > 0){
+				//printf("Entered dxredraw dx>0...dx%d dy%d\n", form->dx, form->dy);
+
+				for (file_Y = SCREEN_WIDTH*3*(form->y - form->radius) ; file_Y < SCREEN_WIDTH*3*(form->y + form->radius) ; file_Y += SCREEN_WIDTH*3){
+					file_X = (form->x - form->radius)*3;
+					fseek(screen, file_Y + file_X, 0);
+					while (file_X < (form->x - form->radius + form->dx)*3)				{
+						putPixel(screen, background_red, background_green, background_blue);
+						file_X+=3;
+					}
+				}
+				for (file_Y = SCREEN_WIDTH*3*(form->y - form->radius) ; file_Y < SCREEN_WIDTH*3*(form->y + form->radius) ; file_Y += SCREEN_WIDTH*3){
+					file_X = (form->x + form->radius)*3;
+					fseek(screen, file_Y + file_X, 0);
+					while (file_X < (form->x + form->radius + form->dx)*3)				{
+						putPixel(screen, form->red, form->green, form->blue);
+						file_X+=3;
+					}
+				}
+			} else {
+					//printf("Entered dxredraw dx<0...dx%d dy%d\n", form->dx, form->dy);
+
+					for (file_Y = SCREEN_WIDTH*3*(form->y - form->radius) ; file_Y < SCREEN_WIDTH*3*(form->y + form->radius) ; file_Y += SCREEN_WIDTH*3){
+						file_X = (form->x + form->radius + form->dx)*3;
+						fseek(screen, file_Y + file_X, 0);
+						while (file_X < (form->x + form->radius)*3)				{
+							putPixel(screen, background_red, background_green, background_blue);
+							file_X+=3;
+						}
+					}
+					for (file_Y = SCREEN_WIDTH*3*(form->y - form->radius) ; file_Y < SCREEN_WIDTH*3*(form->y + form->radius) ; file_Y += SCREEN_WIDTH*3){
+						file_X = (form->x - form->radius + form->dx)*3;
+						fseek(screen, file_Y + file_X, 0);
+						while (file_X < (form->x - form->radius)*3)				{
+							putPixel(screen, form->red, form->green, form->blue);
+							file_X+=3;
+						}
+					}
+				 
+			}
 		} else if  (form->dx == 0 && form->dy != 0){
 			int file_X, file_Y;
 			if (form->dy > 0){
@@ -101,6 +144,9 @@ int redraw_square(Form *form){
 			printf("UNIMPLEMENTED?23\n");
 	} else
 		printf("UNIMPLEMENTED?22\n");
+
+	printf("leaving redraw_square...dx%d dy%d\n", form->dx, form->dy);
+
 	return 1;
 }
 
