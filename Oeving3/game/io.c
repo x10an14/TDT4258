@@ -4,8 +4,64 @@
 
 FILE* buttonsDriver;
 FILE* ledDriver;
+FILE *soundDriver;
+FILE *cash;
+FILE *beep;
+FILE *bomb;
+char read[1028];
 
 int buttonStatus;
+
+int fileSize(FILE *file){
+	int size;
+	fseek(file, 0, SEEK_END);
+	size = ftell(file);
+	rewind(file);
+	return size;
+}
+
+
+void playBeep(){
+	soundDriver = (FILE*) fopen("dev/dsp", "r+");
+	beep = (FILE*) fopen("/usr/beep.wav", "r");
+
+	/* beep.wav setup for soundDriver */
+	int input = 11025; /* Fix samplerate */
+	ioctl(soundDriver, SOUND_PCM_WRITE_RATE, &input);
+	input = 8; /* Fix bits/sample */
+	ioctl(soundDriver, SOUND_PCM_WRITE_BITS, &input);
+	input = 1; /* Fix amount of channels */
+	ioctl(soundDriver, SOUND_PCM_WRITE_CHANNELS, &input);
+
+	//Find size of file
+	int size = fileSize(beep);
+	//Set counter
+	int progress = 0;
+
+	//read header (ignore)
+	progress += fread(read, sizeof(char), 20, beep);
+
+	while(progress < size){
+		if(size - progress < 1028){
+			int temp = size - progress;
+			progress += fread(read, sizeof(char), temp, beep);
+			fwrite(read, sizeof(char), temp, soundDriver);
+		} else{
+			progress += fread(read, sizeof(char), 1028, beep);
+			fwrite(read, sizeof(char), 1024, soundDriver);
+		}
+	}
+
+	fclose(beep);
+	fclose(soundDriver);
+}
+
+// void playCash(){
+// 	soundDriver = (FILE*) fopen("/dev/dsp","r+");
+
+// 	cash = (FILE*) fopen("/usr/beep.wav","r");
+// }
+
 
 char pullButtonsState(){
 	buttonsDriver = (FILE*) fopen("/dev/swdriver","r+");
