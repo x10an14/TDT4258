@@ -18,7 +18,7 @@ int buttonStatus;
 void playBeep(){
 	printf("Entering playBeep...\n");
 	soundDriver = (FILE*) fopen("dev/dsp", "r+");
-	beep = (FILE*) fopen("/usr/beep.wav", "r");
+	beep = (FILE*) fopen("/root/beep.wav", "r");
 
 	/* beep.wav setup for soundDriver */
 	int input = 11025; /* Fix samplerate */
