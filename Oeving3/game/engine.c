@@ -9,6 +9,7 @@ Objects *container;
 int gameOver = 0;
 
 Objects* generateObjects(int amountOfPlayers){
+	printf("Done playing sounds...\n\n\n");
 
 	container = (Objects*) malloc(sizeof(Objects));
 
@@ -104,8 +105,8 @@ void computeMove(Type type, int listIndex){
 			} else {
 				playForm->dx = 0;
 			}
-		} 
-		
+		}
+
 		break;
 
 		case ENEMY:
@@ -147,6 +148,7 @@ int checkCollision(Form *form1, Form *form2){
 	Form *botForm, *topForm;
 	int topFormXleft, topFormXright, topFormYbot;
 	int botFormXleft, botFormXright, botFormYtop;
+
 	if(form1->y >= form2->y){
 		botForm = form2;
 		topForm = form1;
@@ -173,10 +175,14 @@ int checkCollision(Form *form1, Form *form2){
 }
 
 void startGame(){
-	while(1){
+	playBeep();
+	while(!gameOver){
 		usleep(30000);
 		make_new_frame();
 	}
+	//Game over (Draw RED SCREEN with blinking light/arrow above reset button)
+	playBomb();
+
 }
 
 void movePlayer(int listIndex){

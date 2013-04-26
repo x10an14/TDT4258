@@ -1,7 +1,7 @@
 #Empty..
 #For now...
 CC := avr32-linux-gcc
-TARGET := SurvivalGame.out
+TARGET := SpaceInvaders.out
 PROGRAM_C_FILES := $(wildcard *.c)
 program_C_OBJS  := ${PROGRAM_C_FILES:.c=.o}
 INCLUDE_DIRS :=
@@ -19,7 +19,7 @@ $(TARGET): $(program_C_OBJS)
 all: gitCmd $(TARGET)
 
 test: $(TARGET)
-	scp ./SurvivalGame.out root@129.241.103.186:/usr/SurvivalGame.out
+	scp ./SpaceInvaders.out root@129.241.103.212:
 
 gitCmd:
 	git pull

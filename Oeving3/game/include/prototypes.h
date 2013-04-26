@@ -1,6 +1,12 @@
 #include "sampleStructs.h"
 
 
+/* IO prototypes */
+void playBeep(void);
+void playCash(void);
+void playBomb(void);
+
+
 
 /* Graphics prototypes */
 void setImageStruct(void);
