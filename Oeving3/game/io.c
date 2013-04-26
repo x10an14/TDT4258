@@ -16,9 +16,9 @@ int buttonStatus;
 
 
 void playBeep(){
-	soundDriver = (FILE*) fopen("dev/dsp", "r+");
+	soundDriver = (FILE*) fopen("/dev/dsp", "r+");
+	printf("soundDriver = %d\n", soundDriver);
 	beep = (FILE*) fopen("/root/beep.wav", "r");
-
 	/* beep.wav setup for soundDriver */
 	int input = 11025; /* Fix samplerate */
 	ioctl(soundDriver, SOUND_PCM_WRITE_RATE, &input);
@@ -26,25 +26,26 @@ void playBeep(){
 	ioctl(soundDriver, SOUND_PCM_WRITE_BITS, &input);
 	input = 1; /* Fix amount of channels */
 	ioctl(soundDriver, SOUND_PCM_WRITE_CHANNELS, &input);
-
 	//Set counter
 	int progress = 0;
 	//read header (ignore)
 	progress += fread(&read, sizeof(char), 16, beep);
-
+	printf("%s\n", read);
 	int oldProgress = -(BUFFER_SIZE-progress);
 	while(progress - oldProgress == BUFFER_SIZE){
 		oldProgress = progress;
 		progress += fread(&read, sizeof(char), BUFFER_SIZE, beep);
+		printf("Finished reading, starting writing...\n");
 		fwrite(&read, sizeof(char), BUFFER_SIZE, soundDriver);
+		printf("Done with loop iteration...\n");
 	}
-
+	printf("Done with while-loop \n");
 	fclose(beep);
 	fclose(soundDriver);
 }
 
 void playCash(){
-	soundDriver = (FILE*) fopen("dev/dsp", "r+");
+	soundDriver = (FILE*) fopen("/dev/dsp", "r+");
 	cash = (FILE*) fopen("/root/cash.wav", "r");
 
 	/* cash.wav setup for soundDriver */
@@ -73,7 +74,7 @@ void playCash(){
 
 void playBomb(){
 	printf("Entered playBomb()...\n");
-	soundDriver = (FILE*) fopen("dev/dsp", "r+");
+	soundDriver = (FILE*) fopen("/dev/dsp", "r+");
 	bomb = (FILE*) fopen("/root/bomb.wav", "r");
 
 	printf("Opened playBomb files...\n");
@@ -106,13 +107,13 @@ void playBomb(){
 }
 
 char pullButtonsState(){
-	printf("enter pullButtonsState\n");
+	//printf("enter pullButtonsState\n");
 	buttonsDriver = (FILE*) fopen("/dev/swdriver","r+");
 	char buff[3];
 	fgets(buff, 3, buttonsDriver);
 	fclose(buttonsDriver);
 	sscanf(buff, "%x\n", &buttonStatus);
-	printf("leave pullButtonsState\n");
+	//printf("leave pullButtonsState\n");
 
 	return buttonStatus;
 }

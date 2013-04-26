@@ -18,13 +18,14 @@ void setUpLCDDriver(void);
 
 /* SampleFunction prototypes */
 void insertPlayers(Objects *container, int amountOfPlayers);
-void insertEnemy(Objects *container, int startX, int startY, int health, int listIndex);
+void insertEnemy(Objects *container, int startX, int startY, int health, int speed);
 void insertShot(Objects *container, int startX, int startY, int damage);
 void killPlayer(Objects *container, int listIndex);
 void killEnemy(Objects *container, int listIndex);
 
 
 /* Engine prototypes */
+void moveEnemy(int listIndex);
 void make_new_frame(void);
 void movePlayer(int listIndex);
 void generateMap(void); //Generate map and put player in the centre.

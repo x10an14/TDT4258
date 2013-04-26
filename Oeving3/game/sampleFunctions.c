@@ -28,7 +28,7 @@ void insertPlayers(Objects *container, int amountOfPlayers){
 }
 
 void insertFirstEnemy(Objects *container){
-	Enemy **List = malloc(sizeof(Enemy*));
+	Enemy **List = calloc(2, sizeof(Enemy*));
 	List[0] = malloc(sizeof(Enemy));
 
 	List[0]->health = 75; List[0]->healthMax = 75;
@@ -47,13 +47,15 @@ void insertFirstEnemy(Objects *container){
 	draw(List[0]->form);
 
 	container->enemyList = List;
-	container->enemyMax = 1;
+	container->enemyMax = 2;
 	container->enemySize = 1;
 }
 
-void insertEnemy(Objects *container, int startX, int startY, int health, int listIndex){
-	if(container->enemySize == container->enemyMax){
+void insertEnemy(Objects *container, int startX, int startY, int health, int speed){
+	int listIndex = container->enemySize;
+	while(container->enemySize + 1 >= container->enemyMax){
 		container->enemyList = (Enemy**) realloc(container->enemyList, 2*container->enemyMax*sizeof(Enemy*));
+		printf("\n##################expanding maxenemy from %d to %d\n\n\n", container->enemyMax, container->enemyMax*2);
 		container->enemyMax *= 2;
 	}
 
@@ -64,13 +66,13 @@ void insertEnemy(Objects *container, int startX, int startY, int health, int lis
 
 	container->enemyList[i] = malloc(sizeof(Enemy));
 	container->enemyList[i]->form = malloc(sizeof(Form));
-
+	printf("\n##################form is %d\n",container->enemyList[i]->form);
 	container->enemyList[i]->health = health;
 	container->enemyList[i]->healthMax = health;
 
 	container->enemyList[i]->form->x = startX;
 	container->enemyList[i]->form->y = startY;
-	container->enemyList[i]->form->dy = 0;
+	container->enemyList[i]->form->dy = speed;
 	container->enemyList[i]->form->dx = 0;
 	container->enemyList[i]->form->radius = 10;
 	container->enemyList[i]->form->formType = SQUARE;

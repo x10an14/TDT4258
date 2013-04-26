@@ -37,7 +37,22 @@ int putPixel(FILE* screen, char red, char green, char blue){
 	fputc(red, screen);
 	return 1;
 }
+int draw_square_background_color (int x, int y, int radius){
+	printf("Entered draw_square_color...\n");
+	int file_Y, file_X;
+	for (file_Y = (y-radius)*SCREEN_WIDTH*3 ; file_Y < (y+radius)*SCREEN_WIDTH*3 ; file_Y+=SCREEN_WIDTH*3){
+		file_X = (x-radius)*3;
+		fseek(screen, file_Y+file_X, 0);
 
+		while (file_X < (x+radius)*3){
+			putPixel(screen, background_red, background_green, background_blue);
+			file_X+=3;
+		}
+	}
+	printf("left draw_square_color...\n");
+
+	return 1;
+}
 int draw_square(int x, int y, int radius, char red, char green, char blue){
 	printf("Entered draw_square...\n");
 	int file_Y, file_X;
@@ -50,6 +65,8 @@ int draw_square(int x, int y, int radius, char red, char green, char blue){
 			file_X+=3;
 		}
 	}
+	printf("left draw_square...\n");
+
 	return 1;
 }
 

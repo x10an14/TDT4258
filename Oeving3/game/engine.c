@@ -1,12 +1,20 @@
 #include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
 
 /* Project includes */
 #include "include/prototypes.h"
 #include "include/listsAndConstants.h"
 #include "include/sampleStructs.h"
 
+
 Objects *container;
 int gameOver = 0;
+int playerPoints = 0;
+int maxEnemies = 2;
+int tickAction = 16;
+int addEnemySpeed = 0;
+
 
 Objects* generateObjects(int amountOfPlayers){
 	printf("Done playing sounds...\n\n\n");
@@ -22,7 +30,16 @@ Objects* generateObjects(int amountOfPlayers){
 }
 
 void turnOnLEDS(){
-	//lightLeds(0xff);
+	lightLeds(0xff);
+}
+void updateLeds(int health){
+	int i;
+	char ledStatus;
+	ledStatus = 0;
+	for (i = health-1 ; i >= 0 ; i-- ){
+		ledStatus |= 1 << i;
+	} 
+	lightLeds(ledStatus);
 }
 
 void loseHealth(Type type, int listIndex, int amount){
@@ -110,7 +127,38 @@ void computeMove(Type type, int listIndex){
 		break;
 
 		case ENEMY:
-		{Form *enemForm = container->enemyList[listIndex]->form;
+		{Form *enemyForm = container->enemyList[listIndex]->form;
+			int check;
+      	check = checkEnemyToPlayerOrGround(enemyForm);
+      	if (check == 0){ // no collision whatsoever
+      		printf("---check0, moving %d %d\n", listIndex, container->enemySize);
+
+      		moveEnemy(listIndex);
+      		enemyForm->y += enemyForm->dy;
+
+      	} else  if(check == 1){ // collision with player
+      		//playCash();
+      		draw_square_background_color(enemyForm->x, enemyForm->y, enemyForm->radius);
+      		killEnemy(container, listIndex);
+      		playerPoints+=10;
+      		if ((playerPoints % 50 == 0) && (container->playerList[0]->health < 8)){
+      			container->playerList[0]->health++;
+      		}
+      		printf("------->player points %d\n", playerPoints);
+      	} else { // collision with ground with no player around
+      		draw_square_background_color(enemyForm->x, enemyForm->y, enemyForm->radius);
+      		killEnemy(container, listIndex);
+      		//playerPoints-=10;
+      		
+      		if (--container->playerList[0]->health == 0){
+      			updateLeds(container->playerList[0]->health);
+      			gameOver = 1;
+      			drawBackground();
+      		}
+      		updateLeds(container->playerList[0]->health);
+      		printf("------->player healthpoints %d\n", container->playerList[0]->health);
+      	}
+	      //printf("check is %d\n", check); 
 		//Below code is outdated and plain wrong
 		// int nextX = enemForm->x + enemForm->dx + enemForm->radius;
 		// int nextY = enemForm->y + enemForm->dy + enemForm->radius;
@@ -182,7 +230,7 @@ int checkEnemyToPlayerOrGround(Form* form){
 	ex = form->x; ey = form->y; edy = form->dy; er = form->radius;
 	px = container->playerList[0]->form->x; py = container->playerList[0]->form->y;
 	pr = container->playerList[0]->form->radius;
-	if (ey+edy >= py){
+	if (ey + edy >= py+pr){
 		output = 2;
 	} else if(er+pr+edy >= py-ey){
 		if((ex >= px) && (ex-px < er+pr)){
@@ -201,13 +249,31 @@ int checkEnemyToPlayerOrGround(Form* form){
 }
 
 void startGame(){
+	srand(time(NULL));
 	printf("enter startGame\n");
 
 	playBeep();
 	printf("enter pstartGame, played beep\n");
-
+	int tick = 0;
 	while(!gameOver){
 		usleep(30000);
+		tick++;
+		if(tick % tickAction == 0){
+			if (container->enemySize < maxEnemies){
+				int r = rand() % 280;
+				int enemyStartX = 15 + r;
+				printf("startinsert enemy\n");
+				insertEnemy(container, enemyStartX, 12, 60, ENEMYSPEED + addEnemySpeed);
+				printf("end insert enemy printf form \n");
+			}
+			if (tickAction>15){
+				tickAction--;
+				if (maxEnemies < 6){
+					maxEnemies++;
+					addEnemySpeed++;
+				}
+			}
+		}
 		make_new_frame();
 	}
 	//Game over (Draw RED SCREEN with blinking light/arrow above reset button)
@@ -227,6 +293,12 @@ void movePlayer(int listIndex){
 	}
 }
 
+void moveEnemy(int listIndex){
+
+  Form *form = container->enemyList[listIndex]->form;
+  redraw_square(form);
+}
+
 void make_new_frame(){ //Supposed to move all objects
 	int i;
 	Form *form;
@@ -235,4 +307,13 @@ void make_new_frame(){ //Supposed to move all objects
 		computeMove(PLAYER, i);
 		movePlayer(i);
 	}
+	printf("enemy size %d\n", container->enemySize);
+	
+	for(i = 0; i < container->enemySize; i++){
+		printf("in loop enemy %d dy \n", i);
+
+		form = container->enemyList[i]->form;
+		printf("enemy dy %d\n", form->dy);
+    	computeMove(ENEMY, i);
+  	} 
 }
