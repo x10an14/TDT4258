@@ -32,6 +32,7 @@ void playBeep(){
 	int progress = 0;
 	//read header (ignore)
 	printf("Testy...\n");
+	printf("&read = %d, sizeof(char) = %d, BUFFER_SIZE = %d, and beep = %d\n", &read, sizeof(char), BUFFER_SIZE, beep);
 	progress += fread(&read, sizeof(char), 20, beep);
 
 	printf("Entering while loop...\n");
