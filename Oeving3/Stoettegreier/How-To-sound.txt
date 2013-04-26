@@ -1,0 +1,8 @@
+Skriv inn i /dev/dsp
+
+ioctl() til  forandre instillinger
+
+alsamixxer (m for mute, disable høyttaller på brett, piltaster for outputs/lydninvå)
+
+.wav filer!!!!
+
