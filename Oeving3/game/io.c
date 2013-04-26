@@ -63,7 +63,7 @@ void playCash(){
 	//read header (ignore)
 	progress += fread(&read, sizeof(char), 16, cash);
 
-	printf("Entering while-loop...\n", );
+	printf("Entering while-loop...\n");
 	int oldProgress = -(BUFFER_SIZE-progress);
 	while(progress - oldProgress == BUFFER_SIZE){
 		oldProgress = progress;
