@@ -7,29 +7,15 @@ FILE* ledDriver;
 
 int buttonStatus;
 
-int initiateIO(){
-	
-	printf("Opened buttons-driver  file: %d errno %s?22\n", buttonsDriver, strerror(errno));
-
-
-}
-
-
 char pullButtonsState(){
 	buttonsDriver = (FILE*) fopen("/dev/swdriver","r+");
-
 	char buff[3];
-	printf("running fgets\n");
-
 	fgets(buff, 3, buttonsDriver);
-	printf("running close\n");
-
 	fclose(buttonsDriver);
-
 	sscanf(buff, "%x\n", &buttonStatus);
-	printf("%s\n", buff);
 	return buttonStatus;
 }
+
 int isButtonDown(int buttonNumber){
 	int button;
 	button = (buttonStatus >> buttonNumber) & 1;
@@ -38,6 +24,7 @@ int isButtonDown(int buttonNumber){
 	else
 		return 1;
 }
+
 int lightLeds(int leds){
 	ledDriver = (FILE*) fopen("/dev/leddriver","w");
 	char buff[3];

@@ -69,7 +69,7 @@ static int __init driver_init (void) {
   printk(KERN_ALERT "reg success: %d\n", reg_succeded);
 
   int readSW = read_SW();
-  printk(KERN_ALERT "read buttons are: %x +10 = %x\n", readSW, readSW+10);
+  //printk(KERN_ALERT "read buttons are: %x +10 = %x\n", readSW, readSW+10);
   return 0;
 }
 
@@ -84,14 +84,14 @@ static void __exit driver_exit (void) {
 /* fops-funksjoner */
 
 static int driver_open (struct inode *inode, struct file *filp) {
-  printk(KERN_ALERT "SW driver loaded successfully\n");
+  //printk(KERN_ALERT "SW driver loaded successfully\n");
   return 0;
 }
 
 /*---------------------------------------------------------------------------*/
 
 static int driver_release (struct inode *inode, struct file *filp) {
-  printk(KERN_ALERT "SW driver unloaded successfully\n");
+  //printk(KERN_ALERT "SW driver unloaded successfully\n");
   return 0;
 }
 
@@ -99,16 +99,16 @@ static int driver_release (struct inode *inode, struct file *filp) {
 
 static ssize_t driver_read (struct file *filp, char __user *buff,
               size_t count, loff_t *offp) {
-  printk(KERN_ALERT "entering read in driver\n");
+  //printk(KERN_ALERT "entering read in driver\n");
   size_t out;
-  char kernel_space_buffer[3];
+  char kernel_space_buffer[2];
   
   sprintf(kernel_space_buffer, "%x\n", read_SW());
 
   //sprintf(buff, "%x\n", read_SW());
   copy_to_user(buff, kernel_space_buffer, 2);
   out = count;
-  printk(KERN_ALERT "returning from read in driver %x\n", read_SW());
+  //printk(KERN_ALERT "returning from read in driver %x\n", read_SW());
 
   //printk(KERN_ALERT "read called, ouputting %x, out = %d\n", currentLedStatus, out);
   return out;
