@@ -25,15 +25,21 @@ int fileSize(FILE *file){
 void playBeep(){
 	printf("\nPLAYING SOUND!\n\n\n");
 	soundDriver = (FILE*) fopen("dev/dsp", "r+");
+	printf("Finished opening soundDriver...\n");
 	beep = (FILE*) fopen("/usr/beep.wav", "r");
+
+	printf("Finished opening files...\n");
 
 	/* beep.wav setup for soundDriver */
 	int input = 11025; /* Fix samplerate */
 	ioctl(soundDriver, SOUND_PCM_WRITE_RATE, &input);
+	printf("First ioctl call done...\n");
 	input = 8; /* Fix bits/sample */
 	ioctl(soundDriver, SOUND_PCM_WRITE_BITS, &input);
+	printf("Second ioctl call done...\n");
 	input = 1; /* Fix amount of channels */
 	ioctl(soundDriver, SOUND_PCM_WRITE_CHANNELS, &input);
+	printf("Third ioctl call done...\n");
 
 	//Find size of file
 	int size = fileSize(beep);
@@ -42,6 +48,8 @@ void playBeep(){
 
 	//read header (ignore)
 	progress += fread(read, sizeof(char), 20, beep);
+
+	printf("Starting while-loop...\n");
 
 	while(progress < size){
 		if(size - progress < 1028){
@@ -53,6 +61,8 @@ void playBeep(){
 			fwrite(read, sizeof(char), 1024, soundDriver);
 		}
 	}
+
+	printf("Done with while-loop and freeing files...\n");
 
 	fclose(beep);
 	fclose(soundDriver);
