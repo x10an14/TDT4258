@@ -75,13 +75,11 @@ int isShotInsideScreen(int listIndex){
 void computeMove(Type type, int listIndex){
 	switch(type){
 		case PLAYER:
-		{printf("ENTERING computeMove...\n");
-		Form *playForm = container->playerList[listIndex]->form;
+		{Form *playForm = container->playerList[listIndex]->form;
 		if (listIndex == 0){
 			if(isButtonDown(PLAYER1_SHOOT_BUTTON)){
 				// FIRE!
 			}
-			printf("PRINT!!!\n");
 			if (isButtonDown(PLAYER1_LEFT_BUTTON) && !isButtonDown(PLAYER1_RIGHT_BUTTON)){
 				playForm->dx = -PLAYERSPEED;
 			} else if (isButtonDown(PLAYER1_RIGHT_BUTTON) && !isButtonDown(PLAYER1_LEFT_BUTTON)){
@@ -186,13 +184,9 @@ void movePlayer(int listIndex){
 void make_new_frame(){ //Supposed to move all objects
 	int i;
 	Form *form;
-	printf("I've come into make_new_frame...\n");
 	for(i = 0; i < container->playerMax; i++){
 		form = container->playerList[i]->form;
-		printf("Calling computeMove...\n");
 		computeMove(PLAYER, i);
-		printf("Done calling computeMove, calling movePlayer...\n");
 		movePlayer(i);
-		printf("Done with movePlayer...\n");
 	}
 }

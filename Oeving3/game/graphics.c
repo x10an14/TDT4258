@@ -63,7 +63,7 @@ int redraw_square(Form *form){
 				for (file_Y = SCREEN_WIDTH*3*(form->y - form->radius) ; file_Y < SCREEN_WIDTH*3*(form->y - form->radius + form->dy) ; file_Y += SCREEN_WIDTH*3){
 					file_X = (form->x - form->radius)*3;
 					fseek(screen, file_Y + file_X, 0);
-					while (file_X < (form->x+form->radius)*3)				{
+					while (file_X < (form->x+form->radius)*3){
 						putPixel(screen, background_red, background_green, background_blue);
 						file_X+=3;
 					}
@@ -71,7 +71,7 @@ int redraw_square(Form *form){
 				for (file_Y = SCREEN_WIDTH*3*(form->y + form->radius) ; file_Y < SCREEN_WIDTH*3*(form->y + form->radius + form->dy) ; file_Y += SCREEN_WIDTH*3){
 					file_X = (form->x - form->radius)*3;
 					fseek(screen, file_Y + file_X, 0);
-					while (file_X < (form->x+form->radius)*3)				{
+					while (file_X < (form->x+form->radius)*3){
 						putPixel(screen, form->red, form->green, form->blue);
 						file_X+=3;
 					}
@@ -80,7 +80,7 @@ int redraw_square(Form *form){
 				for (file_Y = SCREEN_WIDTH*3*(form->y + form->radius) ; file_Y > SCREEN_WIDTH*3*(form->y + form->radius + form->dy) ; file_Y -= SCREEN_WIDTH*3){
 					file_X = (form->x - form->radius)*3;
 					fseek(screen, file_Y + file_X, 0);
-					while (file_X < (form->x+form->radius)*3)				{
+					while (file_X < (form->x+form->radius)*3){
 						putPixel(screen, background_red, background_green, background_blue);
 						file_X+=3;
 					}
@@ -88,7 +88,7 @@ int redraw_square(Form *form){
 				for (file_Y = SCREEN_WIDTH*3*(form->y - form->radius) ; file_Y > SCREEN_WIDTH*3*(form->y - form->radius + form->dy) ; file_Y -= SCREEN_WIDTH*3){
 					file_X = (form->x - form->radius)*3;
 					fseek(screen, file_Y + file_X, 0);
-					while (file_X < (form->x+form->radius)*3)				{
+					while (file_X < (form->x+form->radius)*3){
 						putPixel(screen, form->red, form->green, form->blue);
 						file_X+=3;
 					}
