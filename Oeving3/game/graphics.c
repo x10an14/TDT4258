@@ -5,7 +5,7 @@
 /* Project includes */
 #include "include/listsAndConstants.h"
 #include "include/sampleStructs.h"
-
+#include <unistd.h>
 /* Graphics's global variables: */
 char background_red = 15;
 char background_green = 225;
@@ -38,8 +38,25 @@ int putPixel(FILE* screen, char red, char green, char blue){
 	return 1;
 }
 
+int draw_square_bckg_colored(int x, int y, int radius){
+	//printf("Entered draw_square...\n");
+	int file_Y, file_X;
+	for (file_Y = (y-radius)*SCREEN_WIDTH*3 ; file_Y < (y+radius)*SCREEN_WIDTH*3 ; file_Y+=SCREEN_WIDTH*3){
+		file_X = (x-radius)*3;
+		fseek(screen, file_Y+file_X, 0);
+
+		while (file_X < (x+radius)*3){
+			putPixel(screen, background_red, background_green, background_blue);
+			file_X+=3;
+		}
+	}
+	return 1;
+}
+
 int draw_square(int x, int y, int radius, char red, char green, char blue){
-	printf("Entered draw_square...\n");
+	printf("segdault check 6\n");
+				usleep(100000);
+	//printf("Entered draw_square...\n");
 	int file_Y, file_X;
 	for (file_Y = (y-radius)*SCREEN_WIDTH*3 ; file_Y < (y+radius)*SCREEN_WIDTH*3 ; file_Y+=SCREEN_WIDTH*3){
 		file_X = (x-radius)*3;
@@ -54,16 +71,24 @@ int draw_square(int x, int y, int radius, char red, char green, char blue){
 }
 
 int redraw_square(Form *form){
+	//if(form->formType ==NULL)
+	//		printf("formtype=NULL\n");
+	printf("segdault check 7\n");
+				usleep(100000);
 	if (form->formType == SQUARE){
+
+
 		if (form->dx != 0 && form->dy == 0){
 			//printf("Entered dxredraw...dx%d dy%d\n", form->dx, form->dy);
-
 			int file_X, file_Y;
+
 			if (form->dx > 0){
 				//printf("Entered dxredraw dx>0...dx%d dy%d\n", form->dx, form->dy);
 
 				for (file_Y = SCREEN_WIDTH*3*(form->y - form->radius) ; file_Y < SCREEN_WIDTH*3*(form->y + form->radius) ; file_Y += SCREEN_WIDTH*3){
 					file_X = (form->x - form->radius)*3;
+
+
 					fseek(screen, file_Y + file_X, 0);
 					while (file_X < (form->x - form->radius + form->dx)*3)				{
 						putPixel(screen, background_red, background_green, background_blue);
@@ -100,6 +125,7 @@ int redraw_square(Form *form){
 				 
 			}
 		} else if  (form->dx == 0 && form->dy != 0){
+
 			int file_X, file_Y;
 			if (form->dy > 0){
 				for (file_Y = SCREEN_WIDTH*3*(form->y - form->radius) ; file_Y < SCREEN_WIDTH*3*(form->y - form->radius + form->dy) ; file_Y += SCREEN_WIDTH*3){
@@ -142,7 +168,8 @@ int redraw_square(Form *form){
 		}else
 			printf("UNIMPLEMENTED?23\n");
 	} else
-		printf("UNIMPLEMENTED?22\n");
+		printf("UNIMPLEMENTED?22%d\n", form->formType);
+
 
 
 	return 1;

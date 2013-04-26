@@ -33,8 +33,8 @@ static struct file_operations driver_fops = {
   .owner = THIS_MODULE,
   .read = driver_read,
   .write = driver_write,
-  .open = driver_open,
-  .release = driver_release
+  .open = NULL,
+  .release = NULL
 };
 
 /* major & minor numre */
@@ -99,19 +99,28 @@ static int driver_release (struct inode *inode, struct file *filp) {
 
 static ssize_t driver_read (struct file *filp, char __user *buff,
               size_t count, loff_t *offp) {
-  //printk(KERN_ALERT "entering read in driver\n");
+  /*printk(KERN_ALERT "entering read in driver\n");
   size_t out;
   char kernel_space_buffer[2];
   
-  sprintf(kernel_space_buffer, "%x\n", read_SW());
+  sprintf(kernel_space_buffer, "%x", read_SW());
 
   //sprintf(buff, "%x\n", read_SW());
   copy_to_user(buff, kernel_space_buffer, 2);
+  out = 2;
+  printk(KERN_ALERT "returning from read in driver %x\n", read_SW());
+
+  */
+  char myBuff[2];
+  sprintf(myBuff, "%x", read_SW());
+
+  size_t out;
+
+  copy_to_user(buff, myBuff, 2);
   out = count;
-  //printk(KERN_ALERT "returning from read in driver %x\n", read_SW());
 
   //printk(KERN_ALERT "read called, ouputting %x, out = %d\n", currentLedStatus, out);
-  return out;
+  return out; 
 }
 
 /*---------------------------------------------------------------------------*/
