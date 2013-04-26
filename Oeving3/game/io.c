@@ -1,6 +1,7 @@
 //Whatever includes we need to utilize our drivers.
 #include <stdio.h>
 #include <errno.h>
+#include <linux/soundcard.h>
 
 FILE* buttonsDriver;
 FILE* ledDriver;
