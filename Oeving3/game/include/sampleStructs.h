@@ -31,12 +31,6 @@ typedef struct Enemy{
 	Form* form;
 }Enemy;
 
-typedef struct Shot{
-	short damage;	//Damage current shot does
-	//void *graphics;	//Pointer to graphics image that represents the shot on the screen
-	Form* form;
-}Shot;
-
 typedef struct Objects{
 	Player **playerList;
 	Shot **shotList;
@@ -46,7 +40,7 @@ typedef struct Objects{
 } Objects;
 
 typedef enum {
-	PLAYER, SHOT, ENEMY
+	PLAYER, ENEMY
 }Type;
 
 #endif

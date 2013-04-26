@@ -17,30 +17,24 @@ int addEnemySpeed = 0;
 
 
 Objects* generateObjects(int amountOfPlayers){
-	printf("Done playing sounds...\n\n\n");
 
 	container = (Objects*) malloc(sizeof(Objects));
 
 	insertPlayers(container, amountOfPlayers);
-	turnOnLEDS();
+	lightLeds(0xff);
 
 	insertFirstEnemy(container);
 
 	return container;
 }
 
-void turnOnLEDS(){
-	lightLeds(0xff);
-}
 void updateLeds(int health){
-	printf("updating leds with %x\n", health);
 	int i;
 	char ledStatus;
 	ledStatus = 0;
 	for (i = health-1 ; i >= 0 ; i-- ){
 		ledStatus |= 1 << i;
-	} 
-	printf("setting led status to %x\n", ledStatus);
+	}
 	lightLeds(ledStatus);
 }
 
@@ -54,7 +48,6 @@ void loseHealth(Type type, int listIndex, int amount){
 		} else{ //Turn off next LED
 			int dividend = container->playerList[listIndex]->healthMax / 8;
 			int leds = container->playerList[listIndex]->health / dividend;
-			//lightLeds(leds);
 		}}
 		break;
 
@@ -79,101 +72,56 @@ int isPlayerInsideScreen(int listIndex){
 	return 0;
 }
 
-int isEnemyInsideScreen(int listIndex, int nextX, int nextY){
-	Form *enemy = container->enemyList[listIndex]->form;
-	if(nextX >= 0 && nextX < SCREEN_WIDTH &&
-		nextY >= 0 && nextY < SCREEN_HEIGHT){
-		return 1;
-	}
-	return 0;
-}
-
-int isShotInsideScreen(int listIndex){
-
-}
-
 void computeMove(Type type, int listIndex){
-	//printf("Entered compute moves...\n");
-
 	switch(type){
 		case PLAYER:
-		{
-		pullButtonsState();
-
-			Form *playForm = container->playerList[listIndex]->form;
-		//printf("passed playform...\n");
-
-			int playerLeftButDown, playerRightButDown, playerShootButDown;
-			if (listIndex == 0){
-				playerLeftButDown = isButtonDown(PLAYER1_LEFT_BUTTON);
-				playerRightButDown = isButtonDown(PLAYER1_RIGHT_BUTTON);
-				playerShootButDown = isButtonDown(PLAYER1_SHOOT_BUTTON);
-			} else {
-				playerLeftButDown = isButtonDown(PLAYER2_LEFT_BUTTON);
-				playerRightButDown = isButtonDown(PLAYER2_RIGHT_BUTTON);
-				playerShootButDown = isButtonDown(PLAYER2_SHOOT_BUTTON);
-			}
-
-			if(playerShootButDown){
-					// FIRE!
-			}
-			if ((playerLeftButDown == 1) && (playerRightButDown == 0)){
-				playForm->dx = -PLAYERSPEED;
-			} else if ((playerLeftButDown == 0) && (playerRightButDown == 1)){
-				playForm->dx = PLAYERSPEED;
-			} else {
-				playForm->dx = 0;
-			}
+		{pullButtonsState();
+		Form *playForm = container->playerList[listIndex]->form;
+		int playerLeftButDown, playerRightButDown, playerShootButDown;
+		if (listIndex == 0){
+			playerLeftButDown = isButtonDown(PLAYER1_LEFT_BUTTON);
+			playerRightButDown = isButtonDown(PLAYER1_RIGHT_BUTTON);
+			playerShootButDown = isButtonDown(PLAYER1_SHOOT_BUTTON);
+		} else {
+			playerLeftButDown = isButtonDown(PLAYER2_LEFT_BUTTON);
+			playerRightButDown = isButtonDown(PLAYER2_RIGHT_BUTTON);
+			playerShootButDown = isButtonDown(PLAYER2_SHOOT_BUTTON);
 		}
 
+		if ((playerLeftButDown == 1) && (playerRightButDown == 0)){
+			playForm->dx = -PLAYERSPEED;
+		} else if ((playerLeftButDown == 0) && (playerRightButDown == 1)){
+			playForm->dx = PLAYERSPEED;
+		} else {
+			playForm->dx = 0;
+		}}
 		break;
 
 		case ENEMY:
 		{Form *enemyForm = container->enemyList[listIndex]->form;
 			int check;
-      	check = checkEnemyToPlayerOrGround(enemyForm);
-      	if (check == 0){ // no collision whatsoever
-      		//printf("---check0, moving %d %d\n", listIndex, container->enemySize);
-
-      		moveEnemy(listIndex);
-      		enemyForm->y += enemyForm->dy;
-
-      	} else  if(check == 1){ // collision with player
-      		//playCash();
-      		draw_square_background_color(enemyForm->x, enemyForm->y, enemyForm->radius);
-      		killEnemy(container, listIndex);
-      		playerPoints+=10;
-      		if ((playerPoints % 50 == 0) && (container->playerList[0]->health < 8)){
-      			container->playerList[0]->health++;
-      			updateLeds(container->playerList[0]->health);
-      		}
-      		printf("------->player points %d\n", playerPoints);
-      	} else { // collision with ground with no player around
-      		draw_square_background_color(enemyForm->x, enemyForm->y, enemyForm->radius);
-      		killEnemy(container, listIndex);
-      		//playerPoints-=10;
-      		
-      		if (--container->playerList[0]->health == 0){
-      			updateLeds(container->playerList[0]->health);
-      			gameOver = 1;
-      			//draw_background();
-      		}
-      		updateLeds(container->playerList[0]->health);
-      		printf("------->player healthpoints %d\n", container->playerList[0]->health);
-      	}
-	      //printf("check is %d\n", check); 
-		//Below code is outdated and plain wrong
-		// int nextX = enemForm->x + enemForm->dx + enemForm->radius;
-		// int nextY = enemForm->y + enemForm->dy + enemForm->radius;
-		// if(isEnemyInsideScreen(listIndex, nextX, nextY)){
-		// 	enemForm->x = nextX - enemForm->radius;
-		// 	enemForm->y = nextY - enemForm->radius;
-		// }
-		// redraw_square(enemForm, listIndex);
-		}
-		break;
-
-		case SHOT:
+		check = checkEnemyToPlayerOrGround(enemyForm);
+		if (check == 0){ // no collision whatsoever
+			moveEnemy(listIndex);
+			enemyForm->y += enemyForm->dy;
+		} else  if(check == 1){ // collision with player
+			playCash();
+			draw_square_background_color(enemyForm->x, enemyForm->y, enemyForm->radius);
+			killEnemy(container, listIndex);
+			playerPoints+=10;
+			if ((playerPoints % 50 == 0) && (container->playerList[0]->health < 8)){
+				container->playerList[0]->health++;
+				updateLeds(container->playerList[0]->health);
+			}
+		} else { // collision with ground with no player around
+			draw_square_background_color(enemyForm->x, enemyForm->y, enemyForm->radius);
+			killEnemy(container, listIndex);
+			if (--container->playerList[0]->health == 0){
+				updateLeds(container->playerList[0]->health);
+				gameOver = 1;
+			}
+			updateLeds(container->playerList[0]->health);
+		}}
 		break;
 	}
 }
@@ -194,38 +142,7 @@ void incrementCoordinates(Type type, int listIndex){
 	}
 }
 
-int checkCollision(Form *form1, Form *form2){
-	Form *botForm, *topForm;
-	int topFormXleft, topFormXright, topFormYbot;
-	int botFormXleft, botFormXright, botFormYtop;
-
-	if(form1->y >= form2->y){
-		botForm = form2;
-		topForm = form1;
-	} else{
-		botForm = form1;
-		topForm = form2;
-	}
-
-	topFormXleft = topForm->x - topForm->radius;
-	topFormXright = topForm->x + topForm->radius;
-	topFormYbot = topForm->y + topForm->radius;
-
-	botFormXleft = botForm->x - botForm->radius;
-	botFormXright = botForm->x + botForm->radius;
-	botFormYtop = botForm->y - botForm->radius;
-
-	if(topFormYbot <= botFormYtop &&
-		(topFormXright >= botFormXleft ||
-		topFormXleft <= botFormXright)){
-		return 1;
-	} else{
-		return 0;
-	}
-}
-
 int checkEnemyToPlayerOrGround(Form* form){
-	//printf("beginning checkEnemyToPlayerOrGround\n");
 	int ex, ey, edy, er, px, pr, py;
 	int output;
 
@@ -245,9 +162,7 @@ int checkEnemyToPlayerOrGround(Form* form){
 	} else {
 		output = 0;
 	}
-	//printf("ex %d ey %d px %d py %d out=%d\n", ex, ey, px, py, output);
 	return output;
-
 }
 
 void startGame(){
@@ -255,7 +170,6 @@ void startGame(){
 	printf("enter startGame\n");
 
 	playBeep();
-	printf("enter pstartGame, played beep\n");
 	int tick = 0;
 	while(!gameOver){
 		usleep(30000);
@@ -264,9 +178,7 @@ void startGame(){
 			if (container->enemySize < maxEnemies){
 				int r = rand() % 280;
 				int enemyStartX = 15 + r;
-				//printf("startinsert enemy\n");
 				insertEnemy(container, enemyStartX, 12, 60, ENEMYSPEED + addEnemySpeed);
-				//printf("end insert enemy printf form \n");
 			}
 			if (tickAction>15){
 				tickAction--;
@@ -278,9 +190,8 @@ void startGame(){
 		}
 		make_new_frame();
 	}
-	//Game over (Draw RED SCREEN with blinking light/arrow above reset button)
+	//Game over
 	playBomb();
-
 }
 
 void movePlayer(int listIndex){
@@ -289,19 +200,17 @@ void movePlayer(int listIndex){
 		redraw_square(form);
 		incrementCoordinates(PLAYER, listIndex);
 	} else{
-		printf("Object hit wall...\n");
 		form->dx = 0;
 		redraw_square(form);
 	}
 }
 
 void moveEnemy(int listIndex){
-
-  Form *form = container->enemyList[listIndex]->form;
-  redraw_square(form);
+	Form *form = container->enemyList[listIndex]->form;
+	redraw_square(form);
 }
 
-void make_new_frame(){ //Supposed to move all objects
+void make_new_frame(){
 	int i;
 	Form *form;
 	for(i = 0; i < container->playerMax; i++){
@@ -309,13 +218,10 @@ void make_new_frame(){ //Supposed to move all objects
 		computeMove(PLAYER, i);
 		movePlayer(i);
 	}
-	//printf("enemy size %d\n", container->enemySize);
-	
-	for(i = 0; i < container->enemySize; i++){
-		//printf("in loop enemy %d dy \n", i);
 
+	for(i = 0; i < container->enemySize; i++){
 		form = container->enemyList[i]->form;
-		//printf("enemy dy %d\n", form->dy);
-    	computeMove(ENEMY, i);
-  	} 
+		computeMove(ENEMY, i);
+	}
+	playCurrent();
 }

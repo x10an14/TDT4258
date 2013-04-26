@@ -9,12 +9,12 @@
 #include "include/sampleStructs.h"
 
 
-
 int main(){
 	printf("Initializing game...\n");
 
 	/* Initialize structs */
 	setUpLCDDriver();
+	initializeSound();
 	Objects *container = generateObjects(1);
 	printf("Main is about to call startGame()\n");
 	startGame();

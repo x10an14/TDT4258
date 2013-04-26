@@ -7,6 +7,9 @@
 void playBeep(void);
 void playCash(void);
 void playBomb(void);
+void playCurrent(void);
+void initializeSound(void);
+void closeSound(void);
 
 /* Graphics prototypes */
 void setImageStruct(void);

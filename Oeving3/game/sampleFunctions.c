@@ -55,7 +55,6 @@ void insertEnemy(Objects *container, int startX, int startY, int health, int spe
 	int listIndex = container->enemySize;
 	while(container->enemySize + 1 >= container->enemyMax){
 		container->enemyList = (Enemy**) realloc(container->enemyList, 2*container->enemyMax*sizeof(Enemy*));
-		//printf("\n##################expanding maxenemy from %d to %d\n\n\n", container->enemyMax, container->enemyMax*2);
 		container->enemyMax *= 2;
 	}
 
@@ -66,7 +65,6 @@ void insertEnemy(Objects *container, int startX, int startY, int health, int spe
 
 	container->enemyList[i] = malloc(sizeof(Enemy));
 	container->enemyList[i]->form = malloc(sizeof(Form));
-	//printf("\n##################form is %d\n",container->enemyList[i]->form);
 	container->enemyList[i]->health = health;
 	container->enemyList[i]->healthMax = health;
 
@@ -88,7 +86,7 @@ void insertShot(Objects *container, int startX, int startY, int damage){
 
 }
 
-void killPlayer(Objects *container, int listIndex){ //Not tested, but should work (?)
+void killPlayer(Objects *container, int listIndex){
 	free(container->playerList[listIndex]->form);
 	free(container->playerList[listIndex]);
 	if(listIndex != container->playerSize - 1){
@@ -100,7 +98,7 @@ void killPlayer(Objects *container, int listIndex){ //Not tested, but should wor
 	container->playerSize -= 1;
 }
 
-void killEnemy(Objects *container, int listIndex){ //Not tested, but should work (?)
+void killEnemy(Objects *container, int listIndex){
 	free(container->enemyList[listIndex]->form);
 	free(container->enemyList[listIndex]);
 	if(listIndex != container->enemySize - 1){
