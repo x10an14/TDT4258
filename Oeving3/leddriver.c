@@ -55,7 +55,7 @@ int say_hello(void){
 }
 
 int setup_LEDs(void){
-  piob->per |= 0xfffffff & ledBitmask;
+  piob->per |= 0xffffffff & ledBitmask;
   piob->oer = 0xffffffff & ledBitmask;
   piob->codr = 0xffffffff & ledBitmask;
   piob->sodr = 0x00000000 & ledBitmask;
@@ -63,11 +63,11 @@ int setup_LEDs(void){
 }
 
 int light_LEDs(int newState){ //outside this function LED state vars always appear in "normal" 0xXX format
-//printk(KERN_ALERT "new state is %x +10 is %x\n", newState, newState+10);
+  //printk(KERN_ALERT "new state is %x +10 is %x\n", newState, newState+10);
   int encodedState = 0x0000 | (0x07 & newState) | (0x1e0 & (newState << 2)) | (0x400000 & (newState << 15));
   //printk(KERN_ALERT "encodedState is %x", encodedState);
   currentLedStatus = newState;
-  piob->codr = (0xffff << 8) & ledBitmask;
+  piob->codr = (0xffffff << 8) & ledBitmask;
   piob->sodr = (encodedState << 8) & ledBitmask; 
   //printk(KERN_ALERT "written to sodr: %x", (encodedState << 8) & ledBitmask);
   return 0; 
@@ -87,7 +87,7 @@ static int __init driver_init (void) {
   
 
   say_hello();
-  reg_succeded = register_chrdev(0, "ledDriver", &driver_fops);
+  reg_succeded = register_chrdev(0, "leddriver", &driver_fops);
   //int reg_region_succeded = register_chrdev(65, "driver", &driver_fops);
   //printk(KERN_ALERT "reg success: %d\n", reg_succeded);
   //printk(KERN_ALERT "regregion: %d\n", reg_region_succeded);
@@ -105,6 +105,8 @@ static void __exit driver_exit (void) {
 /* fops-funksjoner */
 
 static int driver_open (struct inode *inode, struct file *filp) {
+  printk(KERN_ALERT "LEDdriver loaded successfully \n");
+
   return 0;
 }
 
@@ -134,7 +136,7 @@ static ssize_t driver_read (struct file *filp, char __user *buff,
 static ssize_t driver_write (struct file *filp, const char __user *buff,
                size_t count, loff_t *offp) {
   int newLedStatus;
-  printk(KERN_ALERT "write called with param = %s ,", buff);
+  //printk(KERN_ALERT "write called with param = %s ,", buff);
   sscanf(buff, "%X", &newLedStatus);
   //printk(KERN_ALERT "parsed ledStatus is %x +10 = %x\n", newLedStatus, newLedStatus+10);
   light_LEDs(newLedStatus);
