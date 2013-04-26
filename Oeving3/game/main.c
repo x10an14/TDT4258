@@ -14,7 +14,6 @@ int main(){
 	printf("Initializing game...\n");
 
 	/* Initialize structs */
-	initButtons();
 	setUpLCDDriver();
 	Objects *container = generateObjects(1);
 	printf("Main is about to call startGame()\n");

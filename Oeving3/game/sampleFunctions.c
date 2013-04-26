@@ -38,7 +38,7 @@ void insertFirstEnemy(Objects *container){
 	form->x = radius + 10+5;
 	form->y = radius + 10+5;
 	form->dx = 0;
-	form->dy = ENEMYSPEED;
+	form->dy = 0;
 	form->formType = SQUARE;
 	form->red = 253; form->blue = 0;
 	form->green = 0;
@@ -51,7 +51,7 @@ void insertFirstEnemy(Objects *container){
 	container->enemySize = 1;
 }
 
-void insertEnemy(Objects *container, int startX, int startY, int health, int speed, int listIndex){
+void insertEnemy(Objects *container, int startX, int startY, int health, int listIndex){
 	if(container->enemySize == container->enemyMax){
 		container->enemyList = (Enemy**) realloc(container->enemyList, 2*container->enemyMax*sizeof(Enemy*));
 		container->enemyMax *= 2;
@@ -70,9 +70,9 @@ void insertEnemy(Objects *container, int startX, int startY, int health, int spe
 
 	container->enemyList[i]->form->x = startX;
 	container->enemyList[i]->form->y = startY;
-	container->enemyList[i]->form->dy = speed;
+	container->enemyList[i]->form->dy = 0;
 	container->enemyList[i]->form->dx = 0;
-	container->enemyList[i]->form->radius = 10;
+	container->enemyList[i]->form->radius = 16;
 	container->enemyList[i]->form->formType = SQUARE;
 	container->enemyList[i]->form->red = 253; container->enemyList[i]->form->blue = 0;
 	container->enemyList[i]->form->green = 0;
@@ -89,7 +89,7 @@ void insertShot(Objects *container, int startX, int startY, int damage){
 void killPlayer(Objects *container, int listIndex){
 	free(container->playerList[listIndex]->form);
 	free(container->playerList[listIndex]);
-	if(listIndex != container->playerSize - 1){
+	if(listIndex != container->playerMax){
 		int i;
 		for(i = listIndex+1; i < container->playerMax; i++){
 			container->playerList[i-1] = container->playerList[i];
@@ -100,12 +100,11 @@ void killPlayer(Objects *container, int listIndex){
 void killEnemy(Objects *container, int listIndex){
 	free(container->enemyList[listIndex]->form);
 	free(container->enemyList[listIndex]);
-	if(listIndex != container->enemySize - 1){
+	if(listIndex != container->playerMax){
 		int i;
-		for (i = listIndex+1; i < container->enemySize - 1; i++){
+		for (i = listIndex+1; i < container->enemyMax; i++){
 			container->enemyList[i-1] = container->enemyList[i];
 		}
 	}
-	container->enemySize--;
 }
 
