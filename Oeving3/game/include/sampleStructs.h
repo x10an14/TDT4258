@@ -33,10 +33,9 @@ typedef struct Enemy{
 
 typedef struct Objects{
 	Player **playerList;
-	Shot **shotList;
 	Enemy **enemyList;
-	int playerSize, enemySize, shotSize;
-	int playerMax, enemyMax, shotMax;
+	int playerSize, enemySize;
+	int playerMax, enemyMax;
 } Objects;
 
 typedef enum {

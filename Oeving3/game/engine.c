@@ -57,9 +57,6 @@ void loseHealth(Type type, int listIndex, int amount){
 			killEnemy(container, listIndex);
 		}}
 		break;
-
-		case SHOT:
-		break;
 	}
 }
 
@@ -134,10 +131,6 @@ void incrementCoordinates(Type type, int listIndex){
 
 		case ENEMY:
 		{container->enemyList[listIndex]->form->x += container->enemyList[listIndex]->form->dx;}
-		break;
-
-		case SHOT:
-		{container->shotList[listIndex]->form->x += container->shotList[listIndex]->form->dx;}
 		break;
 	}
 }
