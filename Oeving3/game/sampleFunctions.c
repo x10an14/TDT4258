@@ -86,25 +86,26 @@ void insertShot(Objects *container, int startX, int startY, int damage){
 
 }
 
-void killPlayer(Objects *container, int listIndex){
+void killPlayer(Objects *container, int listIndex){ //Not tested, but should work (?)
 	free(container->playerList[listIndex]->form);
 	free(container->playerList[listIndex]);
-	if(listIndex != container->playerMax){
+	if(listIndex != container->playerSize - 1){
 		int i;
-		for(i = listIndex+1; i < container->playerMax; i++){
+		for(i = listIndex+1; i < container->playerSize; i++){
 			container->playerList[i-1] = container->playerList[i];
 		}
 	}
+	container->playerSize -= 1;
 }
 
-void killEnemy(Objects *container, int listIndex){
+void killEnemy(Objects *container, int listIndex){ //Not tested, but should work (?)
 	free(container->enemyList[listIndex]->form);
 	free(container->enemyList[listIndex]);
-	if(listIndex != container->playerMax){
+	if(listIndex != container->enemySize - 1){
 		int i;
-		for (i = listIndex+1; i < container->enemyMax; i++){
+		for (i = listIndex+1; i < container->enemySize; i++){
 			container->enemyList[i-1] = container->enemyList[i];
 		}
 	}
+	container->enemySize -= 1;
 }
-

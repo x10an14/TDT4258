@@ -105,7 +105,6 @@ void playBomb(){
 	fclose(soundDriver);
 }
 
-
 char pullButtonsState(){
 	buttonsDriver = (FILE*) fopen("/dev/swdriver","r+");
 	char buff[3];
