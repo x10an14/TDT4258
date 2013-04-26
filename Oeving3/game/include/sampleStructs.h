@@ -37,9 +37,6 @@ typedef struct Shot{
 	Form* form;
 }Shot;
 
-
-
-
 typedef struct Objects{
 	Player **playerList;
 	Shot **shotList;

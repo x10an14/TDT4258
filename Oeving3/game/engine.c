@@ -128,7 +128,6 @@ void computeMove(Type type, int listIndex){
 		case SHOT:
 		break;
 	}
-
 }
 
 void incrementCoordinates(Type type, int listIndex){
