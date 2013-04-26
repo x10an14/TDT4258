@@ -38,14 +38,14 @@ void playBeep(){
 	int oldProgress;
 	while(progress - oldProgress == BUFFER_SIZE){
 		oldProgress = progress;
-		progress += fread(read, sizeof(char), BUFFER_SIZE, beep);
-		fwrite(read, sizeof(char), BUFFER_SIZE, soundDriver);
+		progress += fread(read, sizeof(char), BUFFER_SIZE, &beep);
+		fwrite(read, sizeof(char), BUFFER_SIZE, &soundDriver);
 	}
 
 	printf("Done with while-loop and freeing files...\n");
 
-	fclose(beep);
-	fclose(soundDriver);
+	fclose(&beep);
+	fclose(&soundDriver);
 	printf("\nDONE PLAYING SOUND!\n\n\n");
 }
 
