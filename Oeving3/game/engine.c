@@ -11,6 +11,7 @@ int gameOver = 0;
 Objects* generateObjects(int amountOfPlayers){
 
 	playBeep();
+	playCash();
 
 	container = (Objects*) malloc(sizeof(Objects));
 
