@@ -128,11 +128,17 @@ int isButtonDown(int buttonNumber){
 }
 
 int lightLeds(int leds){
-	ledDriver = (FILE*) fopen("/dev/leddriver","w");
+	ledDriver = (FILE*) fopen("/dev/leddriver","r+");
 	char buff[3];
-	sprintf(buff, "%x\0", leds);
-	fprintf(ledDriver, "%x", leds);
-	printf("%s", buff);
+	sprintf(buff, "%x", leds);
+
+	fprintf(ledDriver, "%s", buff);
+
+	int num1 = leds % 0x10;
+	int num2 = leds - num1;
+	fputc(num2, ledDriver);
+	fputc(num1, ledDriver);
+
 	fclose(ledDriver);
 	//printf("print to leddriver returns %d\n", fputs(buff, ledDriver));
 	//fputc(leds, ledDriver);

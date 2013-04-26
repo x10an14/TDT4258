@@ -33,12 +33,14 @@ void turnOnLEDS(){
 	lightLeds(0xff);
 }
 void updateLeds(int health){
+	printf("updating leds with %x\n", health);
 	int i;
 	char ledStatus;
 	ledStatus = 0;
 	for (i = health-1 ; i >= 0 ; i-- ){
 		ledStatus |= 1 << i;
 	} 
+	printf("setting led status to %x\n", ledStatus);
 	lightLeds(ledStatus);
 }
 
@@ -131,7 +133,7 @@ void computeMove(Type type, int listIndex){
 			int check;
       	check = checkEnemyToPlayerOrGround(enemyForm);
       	if (check == 0){ // no collision whatsoever
-      		printf("---check0, moving %d %d\n", listIndex, container->enemySize);
+      		//printf("---check0, moving %d %d\n", listIndex, container->enemySize);
 
       		moveEnemy(listIndex);
       		enemyForm->y += enemyForm->dy;
@@ -143,6 +145,7 @@ void computeMove(Type type, int listIndex){
       		playerPoints+=10;
       		if ((playerPoints % 50 == 0) && (container->playerList[0]->health < 8)){
       			container->playerList[0]->health++;
+      			updateLeds(container->playerList[0]->health);
       		}
       		printf("------->player points %d\n", playerPoints);
       	} else { // collision with ground with no player around
@@ -153,7 +156,7 @@ void computeMove(Type type, int listIndex){
       		if (--container->playerList[0]->health == 0){
       			updateLeds(container->playerList[0]->health);
       			gameOver = 1;
-      			drawBackground();
+      			//draw_background();
       		}
       		updateLeds(container->playerList[0]->health);
       		printf("------->player healthpoints %d\n", container->playerList[0]->health);
@@ -222,7 +225,7 @@ int checkCollision(Form *form1, Form *form2){
 }
 
 int checkEnemyToPlayerOrGround(Form* form){
-	printf("beginning checkEnemyToPlayerOrGround\n");
+	//printf("beginning checkEnemyToPlayerOrGround\n");
 	int ex, ey, edy, er, px, pr, py;
 	int output;
 
@@ -242,7 +245,7 @@ int checkEnemyToPlayerOrGround(Form* form){
 	} else {
 		output = 0;
 	}
-	printf("ex %d ey %d px %d py %d out=%d\n", ex, ey, px, py, output);
+	//printf("ex %d ey %d px %d py %d out=%d\n", ex, ey, px, py, output);
 	return output;
 
 }
@@ -261,13 +264,13 @@ void startGame(){
 			if (container->enemySize < maxEnemies){
 				int r = rand() % 280;
 				int enemyStartX = 15 + r;
-				printf("startinsert enemy\n");
+				//printf("startinsert enemy\n");
 				insertEnemy(container, enemyStartX, 12, 60, ENEMYSPEED + addEnemySpeed);
-				printf("end insert enemy printf form \n");
+				//printf("end insert enemy printf form \n");
 			}
 			if (tickAction>15){
 				tickAction--;
-				if (maxEnemies < 6){
+				if (maxEnemies < 5){
 					maxEnemies++;
 					addEnemySpeed++;
 				}
@@ -306,13 +309,13 @@ void make_new_frame(){ //Supposed to move all objects
 		computeMove(PLAYER, i);
 		movePlayer(i);
 	}
-	printf("enemy size %d\n", container->enemySize);
+	//printf("enemy size %d\n", container->enemySize);
 	
 	for(i = 0; i < container->enemySize; i++){
-		printf("in loop enemy %d dy \n", i);
+		//printf("in loop enemy %d dy \n", i);
 
 		form = container->enemyList[i]->form;
-		printf("enemy dy %d\n", form->dy);
+		//printf("enemy dy %d\n", form->dy);
     	computeMove(ENEMY, i);
   	} 
 }
