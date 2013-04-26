@@ -48,7 +48,7 @@ volatile avr32_pio_t *piob = &AVR32_PIOB;  // LED
 /* init-funksjon (kalles når modul lastes) */
 
 int say_hello(void){
-    printk(KERN_ALERT "SW driver initiated!\n");
+    printk(KERN_ALERT "SW driver initiated! ?22\n");
   return 0;
 }
 
@@ -84,12 +84,14 @@ static void __exit driver_exit (void) {
 /* fops-funksjoner */
 
 static int driver_open (struct inode *inode, struct file *filp) {
+  printk(KERN_ALERT "SW driver loaded successfully\n");
   return 0;
 }
 
 /*---------------------------------------------------------------------------*/
 
 static int driver_release (struct inode *inode, struct file *filp) {
+  printk(KERN_ALERT "SW driver unloaded successfully\n");
   return 0;
 }
 
@@ -97,9 +99,16 @@ static int driver_release (struct inode *inode, struct file *filp) {
 
 static ssize_t driver_read (struct file *filp, char __user *buff,
               size_t count, loff_t *offp) {
+  printk(KERN_ALERT "entering read in driver\n");
   size_t out;
-  sprintf(buff, "%x", read_SW());
+  char kernel_space_buffer[3];
+  
+  sprintf(kernel_space_buffer, "%x\n", read_SW());
+
+  //sprintf(buff, "%x\n", read_SW());
+  copy_to_user(buff, kernel_space_buffer, 2);
   out = count;
+  printk(KERN_ALERT "returning from read in driver %x\n", read_SW());
 
   //printk(KERN_ALERT "read called, ouputting %x, out = %d\n", currentLedStatus, out);
   return out;

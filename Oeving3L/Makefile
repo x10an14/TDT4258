@@ -5,7 +5,7 @@
 ###############################################################################
 
 # navn på kjernemodul (navnet på C-fila men uten ".c")
-MODULE = leddriver
+MODULE = swdriver
 
 ifneq ($(KERNELRELEASE),)
 obj-m := ${MODULE}.o
