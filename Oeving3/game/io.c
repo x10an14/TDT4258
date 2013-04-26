@@ -20,7 +20,7 @@ void playBeep(){
 	beep = (FILE*) fopen("/root/beep.wav", "r");
 
 	/* beep.wav setup for soundDriver */
-	int input = 11025; /* Fix samplerate */
+	int input = 12000; /* Fix samplerate */
 	ioctl(soundDriver, SOUND_PCM_WRITE_RATE, &input);
 	input = 8; /* Fix bits/sample */
 	ioctl(soundDriver, SOUND_PCM_WRITE_BITS, &input);
