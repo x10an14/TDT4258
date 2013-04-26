@@ -1,7 +1,7 @@
 #Empty..
 #For now...
 CC := avr32-linux-gcc
-TARGET := SurvivalGame.out
+TARGET := SpaceInvaders.out
 PROGRAM_C_FILES := $(wildcard *.c)
 program_C_OBJS  := ${PROGRAM_C_FILES:.c=.o}
 INCLUDE_DIRS :=
