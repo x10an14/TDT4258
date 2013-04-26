@@ -4,7 +4,7 @@
 /* IO prototypes */
 void playBeep(void);
 void playCash(void);
-void playBomp(void);
+void playBomb(void);
 
 
 

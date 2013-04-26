@@ -9,10 +9,6 @@ Objects *container;
 int gameOver = 0;
 
 Objects* generateObjects(int amountOfPlayers){
-
-	playBeep();
-	playCash();
-	playBomb();
 	printf("Done playing sounds...\n\n\n");
 
 	container = (Objects*) malloc(sizeof(Objects));
@@ -179,11 +175,13 @@ int checkCollision(Form *form1, Form *form2){
 }
 
 void startGame(){
+	playBeep();
 	while(!gameOver){
 		usleep(30000);
 		make_new_frame();
 	}
 	//Game over (Draw RED SCREEN with blinking light/arrow above reset button)
+	playBomb();
 
 }
 
