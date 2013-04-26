@@ -13,19 +13,6 @@ char read[1028];
 
 int buttonStatus;
 
-int fileSize(FILE *file){
-	printf("Entered fileSize()...\n");
-	int size;
-	printf("Calling lseek...\n");
-	fseek(file, 0, SEEK_END);
-	printf("Done with lseek, calling ftell...\n");
-	size = ftell(file);
-	printf("Done with ftell, rewinding file...\n");
-	rewind(file);
-	printf("Done with fileSize(), calling return...\n");
-	return size;
-}
-
 
 void playBeep(){
 	printf("\nPLAYING SOUND!\n\n\n");
@@ -40,26 +27,16 @@ void playBeep(){
 	input = 1; /* Fix amount of channels */
 	ioctl(soundDriver, SOUND_PCM_WRITE_CHANNELS, &input);
 
-	//Find size of file
-	printf("Calling fileSize()...\n");
-	int size = fileSize(beep);
 	//Set counter
 	int progress = 0;
-
 	//read header (ignore)
 	progress += fread(read, sizeof(char), 20, beep);
 
 	printf("Starting while-loop...\n");
 
 	while(progress < size){
-		if(size - progress < 1028){
-			int temp = size - progress;
-			progress += fread(read, sizeof(char), temp, beep);
-			fwrite(read, sizeof(char), temp, soundDriver);
-		} else{
-			progress += fread(read, sizeof(char), 1028, beep);
-			fwrite(read, sizeof(char), 1024, soundDriver);
-		}
+		progress += fread(read, sizeof(char), 1024, beep);
+		fwrite(read, sizeof(char), 1024, soundDriver);
 	}
 
 	printf("Done with while-loop and freeing files...\n");
