@@ -3,13 +3,14 @@
 #include <errno.h>
 #include <linux/soundcard.h>
 
+#define BUFFER_SIZE 1024
 FILE* buttonsDriver;
 FILE* ledDriver;
 FILE *soundDriver;
 FILE *cash;
 FILE *beep;
 FILE *bomb;
-char read[1028];
+char read[BUFFER_SIZE];
 
 int buttonStatus;
 
@@ -29,15 +30,16 @@ void playBeep(){
 
 	//Set counter
 	int progress = 0;
+	printf("Calling fread next...\n");
 	//read header (ignore)
-	progress += fread(read, sizeof(char), 20, beep);
+	progress += fread(read, sizeof(char), 20, &beep);
 
 	printf("Starting while-loop...\n");
 	int oldProgress;
-	while(oldProgress < progress){
+	while(progress - oldProgress == BUFFER_SIZE){
 		oldProgress = progress;
-		progress += fread(read, sizeof(char), 1024, beep);
-		fwrite(read, sizeof(char), 1024, soundDriver);
+		progress += fread(read, sizeof(char), BUFFER_SIZE, beep);
+		fwrite(read, sizeof(char), BUFFER_SIZE, soundDriver);
 	}
 
 	printf("Done with while-loop and freeing files...\n");
