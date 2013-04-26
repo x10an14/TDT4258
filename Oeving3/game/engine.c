@@ -11,20 +11,21 @@ int gameOver = 0;
 Objects* generateObjects(int amountOfPlayers){
 
 	playBeep();
+	playBeep();
 
 	container = (Objects*) malloc(sizeof(Objects));
 
-	// playBeep();
+	playBeep();
 
 	insertPlayers(container, amountOfPlayers);
 	turnOnLEDS();
 
-	// playBeep();
+	playBeep();
 
 
 	insertFirstEnemy(container);
 
-	// playBeep();
+	playBeep();
 
 
 	return container;
